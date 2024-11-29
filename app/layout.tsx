@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Social Authentication",
@@ -13,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-normal">{children}</body>
+      <body>
+        <Theme accentColor="gray" grayColor="slate" appearance="light">
+          {children}
+        </Theme>
+      </body>
     </html>
   );
 }
