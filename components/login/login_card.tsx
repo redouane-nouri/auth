@@ -2,8 +2,10 @@ import {
   ArrowRightIcon,
   LockClosedIcon,
   PersonIcon,
+  ArrowTopRightIcon,
 } from "@radix-ui/react-icons";
 import {
+  Badge,
   Box,
   Button,
   Card,
@@ -12,8 +14,9 @@ import {
   Heading,
   Text,
   TextField,
+  Strong,
 } from "@radix-ui/themes";
-import { FaGoogle, FaGithub, FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 
 const LoginCard = () => {
   return (
@@ -29,6 +32,9 @@ const LoginCard = () => {
                   <PersonIcon />
                 </TextField.Slot>
               </TextField.Root>
+              <Text color="crimson" size="1">
+                Username Required
+              </Text>
             </Box>
             <Box>
               <Text>Password</Text>
@@ -37,11 +43,26 @@ const LoginCard = () => {
                   <LockClosedIcon />
                 </TextField.Slot>
               </TextField.Root>
+              <Text color="crimson" size="1">
+                Password Required
+              </Text>
             </Box>
+            <Badge color="crimson" className="!p-3">
+              Invalid Username or Password
+            </Badge>
             <Button highContrast>
               Log In
               <ArrowRightIcon />
             </Button>
+            <Flex align="center">
+              <Text size="2">
+                No Account?
+                <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
+                  Sign Up Now!
+                </Strong>
+              </Text>
+              <ArrowTopRightIcon />
+            </Flex>
             <Text align="center">- Or -</Text>
             <Button variant="outline" highContrast>
               <FaGithub />
