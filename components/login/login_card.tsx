@@ -21,7 +21,7 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 const LoginCard = () => {
   return (
     <Box>
-      <Container size="1" className="mt-40">
+      <Container size="1">
         <Card>
           <Flex direction="column" gapY="4">
             <Heading>Login</Heading>
@@ -56,7 +56,7 @@ const LoginCard = () => {
             </Button>
             <Flex align="center">
               <Text size="2">
-                No Account?
+                No account?
                 <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
                   Sign Up Now!
                 </Strong>
