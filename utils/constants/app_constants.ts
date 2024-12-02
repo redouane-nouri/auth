@@ -1,4 +1,4 @@
-export const languages_app_constant: readonly language_app_interface[] = [
+export const languages_app_constant: readonly language_app_type[] = [
   { value: "ar", label: "العربية" },
   { value: "en", label: "English" },
   { value: "es", label: "Español" },

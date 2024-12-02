@@ -1,4 +1,4 @@
-type language_app_interface = {
+type language_app_type = {
   value: string;
   label: string;
 };
