@@ -1,8 +1,8 @@
 import {
   ArrowRightIcon,
+  ArrowTopRightIcon,
   LockClosedIcon,
   PersonIcon,
-  ArrowTopRightIcon,
 } from "@radix-ui/react-icons";
 import {
   Badge,
@@ -12,11 +12,11 @@ import {
   Container,
   Flex,
   Heading,
+  Strong,
   Text,
   TextField,
-  Strong,
 } from "@radix-ui/themes";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { social_providers_app_constant } from "../../utils/constants/app_constants";
 
 const LoginCard = () => {
   return (
@@ -64,18 +64,12 @@ const LoginCard = () => {
               <ArrowTopRightIcon />
             </Flex>
             <Text align="center">- Or -</Text>
-            <Button variant="outline" highContrast>
-              <FaGithub />
-              GitHub
-            </Button>
-            <Button variant="outline" highContrast>
-              <FaGoogle />
-              Google
-            </Button>
-            <Button variant="outline" highContrast>
-              <FaFacebook />
-              Facebook
-            </Button>
+            {social_providers_app_constant.map((social_provider, index) => (
+              <Button key={index} variant="outline" highContrast>
+                {<social_provider.icon />}
+                {social_provider.name}
+              </Button>
+            ))}
           </Flex>
         </Card>
       </Container>
