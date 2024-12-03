@@ -3,23 +3,30 @@ import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import type { Metadata } from "next";
 import Header from "../components/layout/header";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Social Authentication",
   description: "Social Authentication using Auth.js",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
+  const messages = await getMessages();
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <Theme accentColor="gray" grayColor="slate" appearance="light">
-          <Header />
-          {children}
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            {children}
+          </NextIntlClientProvider>
         </Theme>
       </body>
     </html>

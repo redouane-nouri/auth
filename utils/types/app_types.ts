@@ -6,6 +6,6 @@ export type language_app_type = {
 };
 
 export type social_provider_app_type = {
-  name: string;
+  label: string;
   icon: IconType;
 };
