@@ -1,9 +1,20 @@
 "use client";
 
 import { SunIcon } from "@radix-ui/react-icons";
-import { Flex, IconButton, Select } from "@radix-ui/themes";
+import {
+  Avatar,
+  Blockquote,
+  Box,
+  Button,
+  Flex,
+  IconButton,
+  Select,
+  Strong,
+  Text,
+} from "@radix-ui/themes";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { map_value_to_label_app_constant } from "../../utils/constants/app_constants";
 import { language_values_app_enum } from "../../utils/enums/app_enums";
@@ -13,6 +24,10 @@ const Header = () => {
     To refresh the page once the user changes the language because next-intl is SSR.
   */
   const router = useRouter();
+  /*
+    To know which label & href to setup (home or connect/logout)
+  */
+  const path_name = usePathname();
   /*
     This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
@@ -54,32 +69,42 @@ const Header = () => {
   }, []);
 
   return (
-    <Flex px="3" gap="2" py="2" justify="end">
-      <Select.Root
-        value={locale}
-        onValueChange={(value) => {
-          handle_language_value_changed(value as language_values_app_enum);
-        }}
-      >
-        <Select.Trigger />
-        <Select.Content position="popper">
-          <Select.Group>
-            {Object.entries(map_value_to_label_app_constant).map(
-              ([value, label]) => (
-                <Select.Item key={value} value={value}>
-                  {label}
-                </Select.Item>
-              ),
-            )}
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
+    <Flex px="3" py="2" justify="between" align="center">
+      <Blockquote>
+        <Strong>Social Authentication</Strong>
+      </Blockquote>
+      <Flex gap="2">
+        <Link href={`${path_name === "/" ? "/connect" : "/"}`}>
+          <Button variant="surface" highContrast>
+            {path_name === "/" ? "Connect" : "Home"}
+          </Button>
+        </Link>
+        <Select.Root
+          value={locale}
+          onValueChange={(value) => {
+            handle_language_value_changed(value as language_values_app_enum);
+          }}
+        >
+          <Select.Trigger />
+          <Select.Content position="popper">
+            <Select.Group>
+              {Object.entries(map_value_to_label_app_constant).map(
+                ([value, label]) => (
+                  <Select.Item key={value} value={value}>
+                    {label}
+                  </Select.Item>
+                ),
+              )}
+            </Select.Group>
+          </Select.Content>
+        </Select.Root>
 
-      <IconButton variant="surface">
-        <SunIcon />
-      </IconButton>
-      {/* to use in dark mode
+        <IconButton variant="surface">
+          <SunIcon />
+        </IconButton>
+        {/* to use in dark mode
       <MoonIcon /> */}
+      </Flex>
     </Flex>
   );
 };
