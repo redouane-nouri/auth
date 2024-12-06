@@ -1,25 +1,32 @@
 "use client";
 
-import { SunIcon } from "@radix-ui/react-icons";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
-  Avatar,
   Blockquote,
-  Box,
   Button,
   Flex,
   IconButton,
   Select,
   Strong,
-  Text,
 } from "@radix-ui/themes";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { map_value_to_label_app_constant } from "../../utils/constants/app_constants";
-import { language_values_app_enum } from "../../utils/enums/app_enums";
+import {
+  language_values_app_enum,
+  theme_appearance_app_enum,
+} from "../../utils/enums/app_enums";
+import { theme_appearance_type } from "../../utils/types/app_types";
 
-const Header = () => {
+const Header = ({
+  appearance,
+  set_appearance,
+}: {
+  appearance: theme_appearance_type;
+  set_appearance: React.Dispatch<React.SetStateAction<theme_appearance_type>>;
+}) => {
   /*
     To refresh the page once the user changes the language because next-intl is SSR.
   */
@@ -35,7 +42,6 @@ const Header = () => {
   const [locale, set_locale] = useState<language_values_app_enum>(
     language_values_app_enum.EN,
   );
-
   /*
     The handler of the select changing event.
     Once the user chooses a languge from the select menu, this handler will be triggered and:
@@ -43,7 +49,7 @@ const Header = () => {
       - Changes the local state.
       - Refresh the page using next router because next-intl is SSR.
   */
-  const handle_language_value_changed = (value: language_values_app_enum) => {
+  const handle_language_value_update = (value: language_values_app_enum) => {
     set_locale(value);
     Cookies.set("NEXT_LOCALE", value, {
       expires: 365,
@@ -52,7 +58,28 @@ const Header = () => {
     });
     router.refresh();
   };
+  /*
+    The handler of event invoked by the user when clicking on theme changer button.
+    It changes the apperance state of the theme component and saving the user's preferred appearance.
+  */
+  const handle_theme_appearance_update = () => {
+    const new_appearance =
+      appearance === theme_appearance_app_enum.DARK
+        ? theme_appearance_app_enum.LIGHT
+        : theme_appearance_app_enum.DARK;
 
+    set_appearance(new_appearance);
+    /*
+      Cookie is used instead of localStorage to enable SSR-based theme selection.
+      With localStorage, the theme defaults to light until client-side hydration applies the user's preference, causing a flash of incorrect theme.
+      Cookie ensure the server sends the page with the correct theme pre-applied.
+    */
+    Cookies.set("appearance", new_appearance, {
+      expires: 365,
+      path: "/",
+      sameSite: "Lax",
+    });
+  };
   /*
     This will be executed the first time the page is loaded to check if there is any valid value of a user perefered language in the `NEXT_LOCALE` cookie, if does not exist or invalid value then default to `en`.
   */
@@ -82,7 +109,7 @@ const Header = () => {
         <Select.Root
           value={locale}
           onValueChange={(value) => {
-            handle_language_value_changed(value as language_values_app_enum);
+            handle_language_value_update(value as language_values_app_enum);
           }}
         >
           <Select.Trigger />
@@ -99,11 +126,18 @@ const Header = () => {
           </Select.Content>
         </Select.Root>
 
-        <IconButton variant="surface">
-          <SunIcon />
+        <IconButton
+          variant="surface"
+          onClick={() => {
+            handle_theme_appearance_update();
+          }}
+        >
+          {appearance === theme_appearance_app_enum.DARK ? (
+            <MoonIcon />
+          ) : (
+            <SunIcon />
+          )}
         </IconButton>
-        {/* to use in dark mode
-      <MoonIcon /> */}
       </Flex>
     </Flex>
   );

@@ -19,3 +19,8 @@ export enum social_providers_labels_app_enum {
   GOOGLE = "Google",
   FACEBOOK = "Facebook",
 }
+
+export enum theme_appearance_app_enum {
+  DARK = "dark",
+  LIGHT = "light",
+}

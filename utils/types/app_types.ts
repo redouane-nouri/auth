@@ -9,3 +9,5 @@ export type social_provider_app_type = {
   label: string;
   icon: IconType;
 };
+
+export type theme_appearance_type = "dark" | "light";
