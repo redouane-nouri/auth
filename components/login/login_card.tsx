@@ -1,6 +1,5 @@
 import {
   ArrowRightIcon,
-  ArrowTopRightIcon,
   LockClosedIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
@@ -16,58 +15,59 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
+import { useTranslations } from "next-intl";
 import { social_providers_app_constant } from "../../utils/constants/app_constants";
 
 const LoginCard = () => {
+  const t = useTranslations("login_card");
   return (
     <Box>
       <Container size="1">
         <Card>
           <Flex direction="column" gapY="4">
-            <Heading>Login</Heading>
+            <Heading>{t("login_heading")}</Heading>
             <Box>
-              <Text>Username</Text>
-              <TextField.Root placeholder="Enter your username..." size="2">
+              <Text>{t("username_label")}</Text>
+              <TextField.Root placeholder={t("username_placeholder")} size="2">
                 <TextField.Slot>
                   <PersonIcon />
                 </TextField.Slot>
               </TextField.Root>
               <Text color="crimson" size="1">
-                Username Required
+                {t("username_required_hint")}
               </Text>
             </Box>
             <Box>
-              <Text>Password</Text>
-              <TextField.Root placeholder="Enter your password...">
+              <Text>{t("password_label")}</Text>
+              <TextField.Root placeholder={t("password_placeholder")}>
                 <TextField.Slot>
                   <LockClosedIcon />
                 </TextField.Slot>
               </TextField.Root>
               <Text color="crimson" size="1">
-                Password Required
+                {t("password_required_hint")}
               </Text>
             </Box>
             <Badge color="crimson" className="!p-3">
-              Invalid Username or Password
+              {t("invalid_credentials")}
             </Badge>
             <Button highContrast>
-              Log In
+              {t("log_in")}
               <ArrowRightIcon />
             </Button>
             <Flex align="center">
               <Text size="2">
-                No account?
+                {t("no_account?")}
                 <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
-                  Sign Up Now!
+                  {t("sign_up_now!")}
                 </Strong>
               </Text>
-              <ArrowTopRightIcon />
             </Flex>
-            <Text align="center">- Or -</Text>
+            <Text align="center">{t("- Or -")}</Text>
             {social_providers_app_constant.map((social_provider, index) => (
               <Button key={index} variant="outline" highContrast>
                 {<social_provider.icon />}
-                {social_provider.name}
+                {social_provider.label}
               </Button>
             ))}
           </Flex>

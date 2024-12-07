@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
 import { cookies } from "next/headers";
-import { language_values_app_enum } from "../utils/enums/app_enums";
+import { language_values_app_enum } from "../../utils/enums/app_enums";
 
 export default getRequestConfig(async () => {
   /*
@@ -8,7 +8,6 @@ export default getRequestConfig(async () => {
   */
   let next_locale = (await cookies()).get("NEXT_LOCALE")
     ?.value as language_values_app_enum;
-
   /*
     Whitelisting:
     Ensuring the value of the language cookie is one of the languages values we suport (prevent injection).
@@ -20,6 +19,6 @@ export default getRequestConfig(async () => {
 
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    messages: (await import(`../../messages/${locale}.json`)).default,
   };
 });

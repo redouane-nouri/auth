@@ -1,1 +1,16 @@
-{}
+{
+  "login_card": {
+    "login_heading": "Login",
+    "username_label": "Username",
+    "username_placeholder": "Enter your username",
+    "username_required_hint": "Username Required",
+    "password_label": "Username",
+    "password_placeholder": "Enter your username",
+    "password_required_hint": "Username Required",
+    "invalid_credentials": "Invalid Username or Password",
+    "log_in": "Log In",
+    "no_account?": "No Account?",
+    "sign_up_now!": "Sign Up Now!",
+    "- Or -": "- Or -"
+  }
+}

@@ -1,1 +1,16 @@
-{}
+{
+  "login_card": {
+    "login_heading": "تسجيل الدخول",
+    "username_label": "اسم المستخدم",
+    "username_placeholder": "أدخل اسم المستخدم الخاص بك",
+    "username_required_hint": "اسم المستخدم مطلوب",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+    "password_required_hint": "كلمة المرور مطلوبة",
+    "invalid_credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "log_in": "تسجيل الدخول",
+    "no_account?": "ليس لديك حساب؟",
+    "sign_up_now!": "سجل الآن",
+    "- Or -": "- أو -"
+  }
+}

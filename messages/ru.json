@@ -1,1 +1,16 @@
-{}
+{
+  "login_card": {
+    "login_heading": "Вход",
+    "username_label": "Имя пользователя",
+    "username_placeholder": "Введите ваше имя пользователя",
+    "username_required_hint": "Требуется имя пользователя",
+    "password_label": "Пароль",
+    "password_placeholder": "Введите ваш пароль",
+    "password_required_hint": "Требуется пароль",
+    "invalid_credentials": "Неверное имя пользователя или пароль",
+    "log_in": "Войти",
+    "no_account?": "Нет аккаунта?",
+    "sign_up_now!": "Зарегистрируйтесь сейчас!",
+    "- Or -": "- Или -"
+  }
+}

@@ -18,12 +18,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   /*
-    Get the locale from next-intl (ar, en, ru, etc.), which is decided inside the file `../i18n/request.tsx`.
+    Get the locale from next-intl (ar, en, ru, etc.), which is decided inside the file `../lib/i18n/request.tsx`.
     Its value is one of the enum in `language_values_app_enum` found in `../utils/enums/app_enums.ts`.
   */
   const locale = await getLocale();
   /*
-    Get the messages json file from next-intl (ar.json, rn.json, ru.json, etc.), which is decided inside the file `../i18n/request.tsx`.
+    Get the messages json file from next-intl (ar.json, rn.json, ru.json, etc.), which is decided inside the file `../lib/i18n/request.tsx`.
     The file is one of the messages files in `../messages`.
   */
   const messages = await getMessages();
