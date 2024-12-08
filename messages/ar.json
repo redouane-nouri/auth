@@ -12,5 +12,21 @@
     "no_account?": "ليس لديك حساب؟",
     "sign_up_now!": "سجل الآن",
     "- Or -": "- أو -"
+  },
+  "signup_card": {
+    "signup_heading": "التسجيل",
+    "username_label": "اسم المستخدم",
+    "username_placeholder": "أدخل اسم المستخدم",
+    "username_required_hint": "اسم المستخدم مطلوب",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور",
+    "password_required_hint": "كلمة المرور مطلوبة",
+    "confirm_password": "تأكيد كلمة المرور",
+    "confirm_password_hint": "أكد كلمة المرور الخاصة بك...",
+    "password_does_not_match_hint": "كلمة المرور غير متطابقة",
+    "username_exists": "اسم المستخدم موجود بالفعل",
+    "sign_up": "سجل",
+    "you_have_an_account?": "هل لديك حساب؟",
+    "log_in_in_now!": "سجل الدخول الآن"
   }
 }

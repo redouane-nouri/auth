@@ -12,5 +12,21 @@
     "no_account?": "Нет аккаунта?",
     "sign_up_now!": "Зарегистрируйтесь сейчас!",
     "- Or -": "- Или -"
+  },
+  "signup_card": {
+    "signup_heading": "Регистрация",
+    "username_label": "Имя пользователя",
+    "username_placeholder": "Введите имя пользователя",
+    "username_required_hint": "Имя пользователя обязательно",
+    "password_label": "Пароль",
+    "password_placeholder": "Введите ваш пароль",
+    "password_required_hint": "Пароль обязателен",
+    "confirm_password": "Подтвердите пароль",
+    "confirm_password_hint": "Подтвердите ваш пароль...",
+    "password_does_not_match_hint": "Пароли не совпадают",
+    "username_exists": "Имя пользователя уже существует",
+    "sign_up": "Зарегистрироваться",
+    "you_have_an_account?": "У вас уже есть аккаунт?",
+    "log_in_in_now!": "Войдите сейчас!"
   }
 }

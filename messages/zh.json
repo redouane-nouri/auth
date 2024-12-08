@@ -12,5 +12,21 @@
     "no_account?": "没有账户?",
     "sign_up_now!": "立即注册!",
     "- Or -": "- 或 -"
+  },
+  "signup_card": {
+    "signup_heading": "注册",
+    "username_label": "用户名",
+    "username_placeholder": "输入您的用户名",
+    "username_required_hint": "用户名是必填项",
+    "password_label": "密码",
+    "password_placeholder": "输入您的密码",
+    "password_required_hint": "密码是必填项",
+    "confirm_password": "确认密码",
+    "confirm_password_hint": "确认您的密码...",
+    "password_does_not_match_hint": "密码不匹配",
+    "username_exists": "用户名已存在",
+    "sign_up": "注册",
+    "you_have_an_account?": "已有账户？",
+    "log_in_in_now!": "现在登录！"
   }
 }
