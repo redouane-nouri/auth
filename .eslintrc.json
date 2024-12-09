@@ -1,3 +1,10 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    // Rules to lint tests that uses testing-library/react
+    "plugin:testing-library/react",
+    // Rules to lint tests that uses jest-dom
+    "plugin:jest-dom/recommended"
+  ]
 }
