@@ -13,7 +13,7 @@
     "sign_up_now!": "sign up now!",
     "- Or -": "- Or -"
   },
-  "signup_card":{
+  "signup_card": {
     "signup_heading": "Signup",
     "username_label": "Username",
     "username_placeholder": "Enter your username",
@@ -28,5 +28,22 @@
     "sign_up": "Sign Up",
     "you_have_an_account?": "You have an account?",
     "log_in_in_now!": "Log in now!"
+  },
+  "header": {
+    "social_authentication": "Social Authentication",
+    "connect": "Connect",
+    "home": "Home"
+  },
+  "connect": {
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
+  "home": {
+    "home": "Home"
+  },
+  "404": { "page_not_found": "Page not found" },
+  "metadata": {
+    "title": "Social Authentication",
+    "description": "Social Authentication using Auth.js"
   }
 }

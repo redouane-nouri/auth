@@ -1,7 +1,11 @@
-import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
-import React from "react";
+import { Flex, Heading, Text } from "@radix-ui/themes";
+import { useTranslations } from "next-intl";
 
 const NotFoundPage = () => {
+  /*
+    Use `404` transalations.
+  */
+  const t = useTranslations("404");
   return (
     <Flex
       direction="column"
@@ -12,7 +16,7 @@ const NotFoundPage = () => {
       <Heading as="h6" size="9">
         404
       </Heading>
-      <Text size="4">Page Not Found</Text>
+      <Text size="4">{t("page_not_found")}</Text>
     </Flex>
   );
 };

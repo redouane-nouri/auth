@@ -28,5 +28,24 @@
     "sign_up": "سجل",
     "you_have_an_account?": "هل لديك حساب؟",
     "log_in_in_now!": "سجل الدخول الآن"
+  },
+  "header": {
+    "social_authentication": "المصادقة الاجتماعية",
+    "connect": "اتصل",
+    "home": "الرئيسية"
+  },
+  "connect": {
+    "log_in": "تسجيل الدخول",
+    "sign_up": "اشترك"
+  },
+  "home": {
+    "home": "الرئيسية"
+  },
+  "404": {
+    "page_not_found": "الصفحة غير موجودة"
+  },
+  "metadata": {
+    "title": "المصادقة الاجتماعية",
+    "description": "المصادقة الاجتماعية باستخدام Auth.js"
   }
 }

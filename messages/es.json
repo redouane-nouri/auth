@@ -28,5 +28,24 @@
     "sign_up": "Regístrate",
     "you_have_an_account?": "¿Ya tienes una cuenta?",
     "log_in_in_now!": "¡Inicia sesión ahora!"
+  },
+  "header": {
+    "social_authentication": "Autenticación social",
+    "connect": "Conectar",
+    "home": "Inicio"
+  },
+  "connect": {
+    "log_in": "Iniciar sesión",
+    "sign_up": "Regístrate"
+  },
+  "home": {
+    "home": "Inicio"
+  },
+  "404": {
+    "page_not_found": "Página no encontrada"
+  },
+  "metadata": {
+    "title": "Autenticación social",
+    "description": "Autenticación social usando Auth.js"
   }
 }

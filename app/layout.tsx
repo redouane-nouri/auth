@@ -1,16 +1,22 @@
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { NextIntlClientProvider} from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/theme_and_header";
 import { theme_appearance_app_enum } from "../utils/enums/app_enums";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Social Authentication",
-  description: "Social Authentication using Auth.js",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  /*
+    Get `metadata` translations.
+  */
+  const t = await getTranslations("metadata");
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default async function RootLayout({
   children,

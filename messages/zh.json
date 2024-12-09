@@ -28,5 +28,24 @@
     "sign_up": "注册",
     "you_have_an_account?": "已有账户？",
     "log_in_in_now!": "现在登录！"
+  },
+  "header": {
+    "social_authentication": "社交认证",
+    "connect": "连接",
+    "home": "首页"
+  },
+  "connect": {
+    "log_in": "登录",
+    "sign_up": "注册"
+  },
+  "home": {
+    "home": "首页"
+  },
+  "404": {
+    "page_not_found": "页面未找到"
+  },
+  "metadata": {
+    "title": "社交认证",
+    "description": "使用 Auth.js 的社交认证"
   }
 }

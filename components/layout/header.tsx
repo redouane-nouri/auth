@@ -19,6 +19,7 @@ import {
   theme_appearance_app_enum,
 } from "../../utils/enums/app_enums";
 import { theme_appearance_type } from "../../utils/types/app_types";
+import { useTranslations } from "next-intl";
 
 const Header = ({
   appearance,
@@ -94,16 +95,20 @@ const Header = ({
 
     set_locale(language_value);
   }, []);
+  /*
+    Use `header` translations.
+  */
+  const t = useTranslations("header");
 
   return (
     <Flex px="3" py="2" justify="between" align="center">
       <Blockquote>
-        <Strong>Social Authentication</Strong>
+        <Strong>{t("social_authentication")}</Strong>
       </Blockquote>
       <Flex gap="2">
         <Link href={`${path_name === "/" ? "/connect" : "/"}`}>
           <Button variant="surface" highContrast>
-            {path_name === "/" ? "Connect" : "Home"}
+            {path_name === "/" ? t("connect") : t("home")}
           </Button>
         </Link>
         <Select.Root
