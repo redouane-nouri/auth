@@ -19,6 +19,9 @@ import {
 import { useTranslations } from "next-intl";
 
 const SignupCard = () => {
+  /*
+    Using `signup_card` translations.
+  */
   const t = useTranslations("signup_card");
   return (
     <Box>
@@ -27,8 +30,12 @@ const SignupCard = () => {
           <Flex direction="column" gapY="4">
             <Heading>{t("signup_heading")}</Heading>
             <Box>
-              <Text>{t("username_label")}</Text>
-              <TextField.Root placeholder={t("username_placeholder")} size="2">
+              <Text>{t("username_title")}</Text>
+              <TextField.Root
+                aria-label={t("username_placeholder")}
+                placeholder={t("username_placeholder")}
+                size="2"
+              >
                 <TextField.Slot>
                   <PersonIcon />
                 </TextField.Slot>
@@ -38,8 +45,12 @@ const SignupCard = () => {
               </Text>
             </Box>
             <Box>
-              <Text>{t("password_label")}</Text>
-              <TextField.Root placeholder={t("password_placeholder")}>
+              <Text>{t("password_title")}</Text>
+              <TextField.Root
+                aria-label={t("password_placeholder")}
+                placeholder={t("password_placeholder")}
+                type="password"
+              >
                 <TextField.Slot>
                   <LockClosedIcon />
                 </TextField.Slot>

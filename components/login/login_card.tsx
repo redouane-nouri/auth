@@ -1,8 +1,4 @@
-import {
-  ArrowRightIcon,
-  LockClosedIcon,
-  PersonIcon,
-} from "@radix-ui/react-icons";
+import { ArrowRightIcon, LockClosedIcon, PersonIcon } from "@radix-ui/react-icons";
 import {
   Badge,
   Box,
@@ -19,6 +15,9 @@ import { useTranslations } from "next-intl";
 import { social_providers_app_constant } from "../../utils/constants/app_constants";
 
 const LoginCard = () => {
+  /*
+    Using `login_card` translations.
+  */
   const t = useTranslations("login_card");
   return (
     <Box>
@@ -27,8 +26,12 @@ const LoginCard = () => {
           <Flex direction="column" gapY="4">
             <Heading>{t("login_heading")}</Heading>
             <Box>
-              <Text>{t("username_label")}</Text>
-              <TextField.Root placeholder={t("username_placeholder")} size="2">
+              <Text>{t("username_title")}</Text>
+              <TextField.Root
+                aria-label={t("username_placeholder")}
+                placeholder={t("username_placeholder")}
+                size="2"
+              >
                 <TextField.Slot>
                   <PersonIcon />
                 </TextField.Slot>
@@ -38,8 +41,12 @@ const LoginCard = () => {
               </Text>
             </Box>
             <Box>
-              <Text>{t("password_label")}</Text>
-              <TextField.Root placeholder={t("password_placeholder")}>
+              <Text>{t("password_title")}</Text>
+              <TextField.Root
+                aria-label={t("password_placeholder")}
+                placeholder={t("password_placeholder")}
+                type="password"
+              >
                 <TextField.Slot>
                   <LockClosedIcon />
                 </TextField.Slot>
