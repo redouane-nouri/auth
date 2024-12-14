@@ -1,10 +1,10 @@
 {
   "login_card": {
     "login_heading": "Login",
-    "username_label": "Username",
+    "username_title": "Username",
     "username_placeholder": "Enter your username",
     "username_required_hint": "Username required",
-    "password_label": "Password",
+    "password_title": "Password",
     "password_placeholder": "Enter your password",
     "password_required_hint": "password required",
     "invalid_credentials": "Invalid username or password",
@@ -15,10 +15,10 @@
   },
   "signup_card": {
     "signup_heading": "Signup",
-    "username_label": "Username",
+    "username_title": "Username",
     "username_placeholder": "Enter your username",
     "username_required_hint": "Username Required",
-    "password_label": "Password",
+    "password_title": "Password",
     "password_placeholder": "Enter your password",
     "password_required_hint": "Password Required",
     "confirm_password": "Confirm password",

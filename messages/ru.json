@@ -1,10 +1,10 @@
 {
   "login_card": {
     "login_heading": "Вход",
-    "username_label": "Имя пользователя",
+    "username_title": "Имя пользователя",
     "username_placeholder": "Введите ваше имя пользователя",
     "username_required_hint": "Требуется имя пользователя",
-    "password_label": "Пароль",
+    "password_title": "Пароль",
     "password_placeholder": "Введите ваш пароль",
     "password_required_hint": "Требуется пароль",
     "invalid_credentials": "Неверное имя пользователя или пароль",
@@ -15,10 +15,10 @@
   },
   "signup_card": {
     "signup_heading": "Регистрация",
-    "username_label": "Имя пользователя",
+    "username_title": "Имя пользователя",
     "username_placeholder": "Введите имя пользователя",
     "username_required_hint": "Имя пользователя обязательно",
-    "password_label": "Пароль",
+    "password_title": "Пароль",
     "password_placeholder": "Введите ваш пароль",
     "password_required_hint": "Пароль обязателен",
     "confirm_password": "Подтвердите пароль",

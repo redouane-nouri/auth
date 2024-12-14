@@ -1,10 +1,10 @@
 {
   "login_card": {
     "login_heading": "Iniciar sesión",
-    "username_label": "Nombre de usuario",
+    "username_title": "Nombre de usuario",
     "username_placeholder": "Introduce tu nombre de usuario",
     "username_required_hint": "Nombre de usuario requerido",
-    "password_label": "Contraseña",
+    "password_title": "Contraseña",
     "password_placeholder": "Introduce tu contraseña",
     "password_required_hint": "Contraseña requerida",
     "invalid_credentials": "Nombre de usuario o contraseña inválidos",
@@ -15,10 +15,10 @@
   },
   "signup_card": {
     "signup_heading": "Registro",
-    "username_label": "Nombre de usuario",
+    "username_title": "Nombre de usuario",
     "username_placeholder": "Ingrese su nombre de usuario",
     "username_required_hint": "Nombre de usuario requerido",
-    "password_label": "Contraseña",
+    "password_title": "Contraseña",
     "password_placeholder": "Ingrese su contraseña",
     "password_required_hint": "Contraseña requerida",
     "confirm_password": "Confirmar contraseña",
