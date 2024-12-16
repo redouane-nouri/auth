@@ -29,6 +29,24 @@
     "you_have_an_account?": "¿Ya tienes una cuenta?",
     "log_in_in_now!": "¡Inicia sesión ahora!"
   },
+  "signup_validation": {
+    "username_string": "El nombre de usuario debe ser una cadena",
+    "username_min": "El nombre de usuario es obligatorio",
+    "username_max": "El nombre de usuario debe tener 30 caracteres o menos",
+    "username_regex": "El nombre de usuario solo puede contener caracteres alfanuméricos, guiones y guiones bajos",
+    "password_string": "La contraseña debe ser una cadena",
+    "password_min": "La contraseña debe tener al menos 8 caracteres",
+    "password_max": "La contraseña debe tener como máximo 30 caracteres",
+    "password_regex_lowercase": "La contraseña debe contener al menos una letra minúscula",
+    "password_regex_uppercase": "La contraseña debe contener al menos una letra mayúscula",
+    "password_regex_number": "La contraseña debe contener al menos un número",
+    "password_special_character": "La contraseña debe contener al menos un carácter especial: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "valid_attributes": "La solicitud solo acepta los atributos: nombre de usuario, contraseña y confirmar contraseña.",
+    "passwords_dont_match": "Las contraseñas no coinciden",
+    "username_exists": "El nombre de usuario ya existe",
+    "success": "Usuario creado con éxito",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
   "header": {
     "social_authentication": "Autenticación social",
     "connect": "Conectar",
