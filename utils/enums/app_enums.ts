@@ -1,11 +1,3 @@
-export enum language_values_app_enum {
-  AR = "ar",
-  EN = "en",
-  ES = "es",
-  RU = "ru",
-  ZH = "zh",
-}
-
 export enum language_labels_app_enum {
   AR = "العربية",
   EN = "English",

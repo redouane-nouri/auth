@@ -1,5 +1,6 @@
 "use client";
 
+import { language_values_global_enum } from "@/utils/enums/global_enums";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   Blockquote,
@@ -10,16 +11,13 @@ import {
   Strong,
 } from "@radix-ui/themes";
 import Cookies from "js-cookie";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { map_value_to_label_app_constant } from "../../utils/constants/app_constants";
-import {
-  language_values_app_enum,
-  theme_appearance_app_enum,
-} from "../../utils/enums/app_enums";
+import { theme_appearance_app_enum } from "../../utils/enums/app_enums";
 import { theme_appearance_type } from "../../utils/types/app_types";
-import { useTranslations } from "next-intl";
 
 const Header = ({
   appearance,
@@ -40,8 +38,8 @@ const Header = ({
     This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
   */
-  const [locale, set_locale] = useState<language_values_app_enum>(
-    language_values_app_enum.EN,
+  const [locale, set_locale] = useState<language_values_global_enum>(
+    language_values_global_enum.EN
   );
   /*
     The handler of the select changing event.
@@ -50,7 +48,7 @@ const Header = ({
       - Changes the local state.
       - Refresh the page using next router because next-intl is SSR.
   */
-  const handle_language_value_update = (value: language_values_app_enum) => {
+  const handle_language_value_update = (value: language_values_global_enum) => {
     set_locale(value);
     Cookies.set("NEXT_LOCALE", value, {
       expires: 365,
@@ -85,13 +83,13 @@ const Header = ({
     This will be executed the first time the page is loaded to check if there is any valid value of a user perefered language in the `NEXT_LOCALE` cookie, if does not exist or invalid value then default to `en`.
   */
   useEffect(() => {
-    let next_locale = Cookies.get("NEXT_LOCALE") as language_values_app_enum;
+    let next_locale = Cookies.get("NEXT_LOCALE") as language_values_global_enum;
 
-    const language_value = Object.values(language_values_app_enum).includes(
-      next_locale,
+    const language_value = Object.values(language_values_global_enum).includes(
+      next_locale
     )
       ? next_locale
-      : language_values_app_enum.EN;
+      : language_values_global_enum.EN;
 
     set_locale(language_value);
   }, []);
@@ -114,7 +112,7 @@ const Header = ({
         <Select.Root
           value={locale}
           onValueChange={(value) => {
-            handle_language_value_update(value as language_values_app_enum);
+            handle_language_value_update(value as language_values_global_enum);
           }}
         >
           <Select.Trigger />
@@ -125,7 +123,7 @@ const Header = ({
                   <Select.Item key={value} value={value}>
                     {label}
                   </Select.Item>
-                ),
+                )
               )}
             </Select.Group>
           </Select.Content>
