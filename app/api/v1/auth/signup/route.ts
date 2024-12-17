@@ -3,7 +3,117 @@ import { getTranslations } from "next-intl/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "../../../../../lib/prisma/prisma_client";
-
+/**
+ * @swagger
+ * /auth/signup:
+ *   post:
+ *     summary: User Signup
+ *     description: Creates a new user account with input validation and checks for existing usernames.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *               - confirm_password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username of the user.
+ *                 minLength: 1
+ *                 maxLength: 30
+ *                 pattern: "^[a-zA-Z0-9_-]+$"
+ *                 example: redouane_nouri
+ *               password:
+ *                 type: string
+ *                 description: The user's password.
+ *                 minLength: 8
+ *                 maxLength: 30
+ *                 pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!-\\/:-@[-`{-~]).+$"
+ *                 example: Password@123
+ *               confirm_password:
+ *                 type: string
+ *                 description: Must match the `password` field.
+ *                 example: Password@123
+ *     responses:
+ *       201:
+ *         description: User created successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: i18n success message.
+ *       400:
+ *         description: Validation errors in the request input.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: object
+ *                   description: Detailed validation errors.
+ *                   properties:
+ *                     _errors:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     username:
+ *                       type: object
+ *                       properties:
+ *                         _errors:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                     password:
+ *                       type: object
+ *                       properties:
+ *                         _errors:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                     confirm_password:
+ *                       type: object
+ *                       properties:
+ *                         _errors:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                   example:
+ *                     _errors: ["i18n global error 1", "i18n global error 2", "etc."]
+ *                     username: {_errors: ["i18n username is required", "Username must be less than or equal to 30 characters", "etc."]}
+ *                     password: {_errors: ["Password must be a String", "etc."]}
+ *                     confirm_password: {_errors: ["Passwords don't match", "etc."]}
+ *                     
+ *       409:
+ *         description: Username already exists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: i18n user exist message.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: i18n something went wrong message.
+ */
 export async function POST(request: Request) {
   /*
     It has to be here inside a request scope, if not, it will throw error because we are using `await cookies()` inside the `getTranslations()`, and the `cookies()` function is only callable from inside a request scope.
