@@ -1,6 +1,6 @@
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
-import { NextIntlClientProvider} from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/theme_and_header";

@@ -39,7 +39,7 @@ const Header = ({
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
   */
   const [locale, set_locale] = useState<language_values_global_enum>(
-    language_values_global_enum.EN
+    language_values_global_enum.EN,
   );
   /*
     The handler of the select changing event.
@@ -86,7 +86,7 @@ const Header = ({
     let next_locale = Cookies.get("NEXT_LOCALE") as language_values_global_enum;
 
     const language_value = Object.values(language_values_global_enum).includes(
-      next_locale
+      next_locale,
     )
       ? next_locale
       : language_values_global_enum.EN;
@@ -123,7 +123,7 @@ const Header = ({
                   <Select.Item key={value} value={value}>
                     {label}
                   </Select.Item>
-                )
+                ),
               )}
             </Select.Group>
           </Select.Content>

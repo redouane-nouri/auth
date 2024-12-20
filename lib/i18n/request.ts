@@ -14,7 +14,7 @@ export default getRequestConfig(async () => {
     Default to english if the value provided not included in `language_values_app_enum`.
   */
   const locale = Object.values(language_values_global_enum).includes(
-    next_locale
+    next_locale,
   )
     ? next_locale
     : language_values_global_enum.EN;

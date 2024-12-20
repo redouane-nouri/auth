@@ -1,4 +1,8 @@
-import { ArrowRightIcon, LockClosedIcon, PersonIcon } from "@radix-ui/react-icons";
+import {
+  ArrowRightIcon,
+  LockClosedIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
 import {
   Badge,
   Box,
