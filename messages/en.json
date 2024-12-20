@@ -29,6 +29,25 @@
     "you_have_an_account?": "You have an account?",
     "log_in_in_now!": "Log in now!"
   },
+  "signup_validation": {
+    "username_string": "Username must be a string",
+    "username_min": "Username is required",
+    "username_max": "Username must be less than or equal to 30 characters",
+    "username_regex": "Username can only contain alphanumeric characters, dashes, and underscores",
+    "password_string": "Password must be a String",
+    "password_min": "Password must be at least 8 characters long",
+    "password_max": "Password must be at most 30 characters long",
+    "password_regex_lowercase": "Password must contain at least one lowercase letter",
+    "password_regex_uppercase": "Password must contain at least one uppercase letter",
+    "password_regex_number": "Password must contain at least one number",
+    "password_special_character": "Password must contain at least one special character: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "valid_attributes": "The request accepts only: username, password, and confirm_password attributes.",
+    "passwords_dont_match": "Passwords don't match",
+    "confirm_password_string": "Confirm Password mut be a String",
+    "username_exists": "Username already exists",
+    "success": "User created successfully",
+    "error": "Something went wrong. Please try again"
+  },
   "header": {
     "social_authentication": "Social Authentication",
     "connect": "Connect",
