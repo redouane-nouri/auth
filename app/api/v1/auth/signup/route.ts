@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "../../../../../lib/prisma/prisma_client";
 /**
@@ -92,7 +92,6 @@ import prisma from "../../../../../lib/prisma/prisma_client";
  *                     username: {_errors: ["i18n username is required", "Username must be less than or equal to 30 characters", "etc."]}
  *                     password: {_errors: ["Password must be a String", "etc."]}
  *                     confirm_password: {_errors: ["Passwords don't match", "etc."]}
- *                     
  *       409:
  *         description: Username already exists.
  *         content:
@@ -114,7 +113,7 @@ import prisma from "../../../../../lib/prisma/prisma_client";
  *                   type: string
  *                   example: i18n something went wrong message.
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   /*
     It has to be here inside a request scope, if not, it will throw error because we are using `await cookies()` inside the `getTranslations()`, and the `cookies()` function is only callable from inside a request scope.
   */
@@ -143,7 +142,7 @@ export async function POST(request: Request) {
           4th Group [{-~] Match ASCII code from 123 to 126: {|}~
         */
         .regex(/[!-\/:-@[-`{-~]/, t("password_special_character")),
-      confirm_password: z.string({ message: t("username_string") }),
+      confirm_password: z.string({ message: t("confirm_password_string") }),
     })
     .strict(t("valid_attributes"))
     .refine((data) => data.password === data.confirm_password, {
@@ -168,7 +167,7 @@ export async function POST(request: Request) {
         {
           error: result.error.format(),
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
     /*
@@ -177,7 +176,7 @@ export async function POST(request: Request) {
     if (await prisma.user.findUnique({ where: { username: body.username } })) {
       return NextResponse.json(
         { error: t("username_exists") },
-        { status: 409 }
+        { status: 409 },
       );
     }
     /*

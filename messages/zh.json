@@ -43,6 +43,7 @@
     "password_special_character": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
     "valid_attributes": "请求仅接受以下属性: 用户名、密码和确认密码。",
     "passwords_dont_match": "两次输入的密码不一致",
+    "confirm_password_string": "确认密码必须是字符串",
     "username_exists": "用户名已存在",
     "success": "用户创建成功",
     "error": "出现问题，请重试"
