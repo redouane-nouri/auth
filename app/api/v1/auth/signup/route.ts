@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "../../../../../lib/prisma/prisma_client";
+import { get_user_signup_schema } from "../../../../../utils/functions/global_functions";
 /**
  * @swagger
  * /auth/signup:
@@ -119,36 +119,9 @@ export async function POST(request: NextRequest) {
   */
   const t = await getTranslations("signup_validation");
   /*
-    The schema to be used for input validation with i18n messages
+    The schema to be used for signup input validation with i18n messages
   */
-  const user_signup_schema = z
-    .object({
-      username: z
-        .string({ message: t("username_string") })
-        .min(1, t("username_min"))
-        .max(30, t("username_max"))
-        .regex(/^[a-zA-Z0-9_-]+$/, t("username_regex")),
-      password: z
-        .string({ message: t("password_string") })
-        .min(8, t("password_min"))
-        .max(30, t("password_max"))
-        .regex(/[a-z]/, t("password_regex_lowercase"))
-        .regex(/[A-Z]/, t("password_regex_uppercase"))
-        .regex(/[0-9]/, t("password_regex_number"))
-        /*
-          1st Group [!-\/] Match ASCII code from 33 to 47: !"#$%&'()*+,-./
-          2nd Group [:-@] Match ASCII code from 58 to 64: :;<=>?@
-          3rd Group [[-`] Match ASCII code from 91 to 96: [\]^_`
-          4th Group [{-~] Match ASCII code from 123 to 126: {|}~
-        */
-        .regex(/[!-\/:-@[-`{-~]/, t("password_special_character")),
-      confirm_password: z.string({ message: t("confirm_password_string") }),
-    })
-    .strict(t("valid_attributes"))
-    .refine((data) => data.password === data.confirm_password, {
-      message: t("passwords_dont_match"),
-      path: ["confirm_password"],
-    });
+  const user_signup_schema = get_user_signup_schema(t);
 
   try {
     /*
