@@ -47,7 +47,7 @@ const SignupCard = () => {
     Get Zod validation schema with the i18n messages.
   */
   const user_signup_schema = get_user_signup_schema(
-    useTranslations("signup_validation")
+    useTranslations("signup_validation"),
   );
   /*
     Signup button click handler.
@@ -131,8 +131,8 @@ const SignupCard = () => {
               {mutation.isError && (
                 <Badge color="crimson" className="!p-3">
                   {axios.isAxiosError(mutation.error)
-                    ? mutation.error.response?.data?.error ??
-                      "An unexpected error occurred. Please try again"
+                    ? (mutation.error.response?.data?.error ??
+                      "An unexpected error occurred. Please try again")
                     : "An unexpected error occurred."}
                 </Badge>
               )}
