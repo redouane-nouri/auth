@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowRightIcon,
-  ArrowTopRightIcon,
   LockClosedIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
@@ -14,7 +13,6 @@ import {
   Container,
   Flex,
   Heading,
-  Strong,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -49,7 +47,7 @@ const SignupCard = () => {
     Get Zod validation schema with the i18n messages.
   */
   const user_signup_schema = get_user_signup_schema(
-    useTranslations("signup_validation"),
+    useTranslations("signup_validation")
   );
   /*
     Signup button click handler.
@@ -133,8 +131,8 @@ const SignupCard = () => {
               {mutation.isError && (
                 <Badge color="crimson" className="!p-3">
                   {axios.isAxiosError(mutation.error)
-                    ? (mutation.error.response?.data?.error ??
-                      "An unexpected error occurred. Please try again")
+                    ? mutation.error.response?.data?.error ??
+                      "An unexpected error occurred. Please try again"
                     : "An unexpected error occurred."}
                 </Badge>
               )}
@@ -147,15 +145,6 @@ const SignupCard = () => {
                 {t("sign_up")}
                 <ArrowRightIcon />
               </Button>
-              <Flex align="center">
-                <Text size="2">
-                  {t("you_have_an_account?")}
-                  <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
-                    {t("log_in_in_now!")}
-                  </Strong>
-                </Text>
-                <ArrowTopRightIcon />
-              </Flex>
             </Flex>
           </form>
         </Card>
