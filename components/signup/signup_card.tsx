@@ -87,7 +87,11 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.username && (
-                  <Text color="crimson" size="1">
+                  <Text
+                    data-testid="username_hint_span"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.username.message}
                   </Text>
                 )}
@@ -105,7 +109,11 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.password && (
-                  <Text color="crimson" size="1">
+                  <Text
+                    data-testid="password_hint_span"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.password.message}
                   </Text>
                 )}
@@ -115,7 +123,7 @@ const SignupCard = () => {
                 <Text></Text>
                 <TextField.Root
                   {...register("confirm_password")}
-                  placeholder={t("confirm_password_hint")}
+                  placeholder={t("confirm_password_placeholder")}
                   type="password"
                 >
                   <TextField.Slot>
@@ -123,13 +131,21 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.confirm_password && (
-                  <Text color="crimson" size="1">
+                  <Text
+                    data-testid="confirm_password_hint_span"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.confirm_password.message}
                   </Text>
                 )}
               </Box>
               {mutation.isError && (
-                <Badge color="crimson" className="!p-3">
+                <Badge
+                  data-testkd="error_badge"
+                  color="crimson"
+                  className="!p-3"
+                >
                   {axios.isAxiosError(mutation.error)
                     ? (mutation.error.response?.data?.error ??
                       "An unexpected error occurred. Please try again")
@@ -137,11 +153,20 @@ const SignupCard = () => {
                 </Badge>
               )}
               {mutation.isSuccess && (
-                <Badge color="grass" className="!p-3">
+                <Badge
+                  data-testid="success_badge"
+                  color="grass"
+                  className="!p-3"
+                >
                   {mutation.data.data?.message}
                 </Badge>
               )}
-              <Button type="submit" loading={mutation.isPending} highContrast>
+              <Button
+                type="submit"
+                data-testid="submit_button"
+                loading={mutation.isPending}
+                highContrast
+              >
                 {t("sign_up")}
                 <ArrowRightIcon />
               </Button>
