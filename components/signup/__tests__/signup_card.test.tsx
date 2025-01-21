@@ -116,4 +116,61 @@ describe("Signup Card", () => {
       );
     }
   );
+  /*
+    A regex error message should be displayed when the regex is violated for username or password
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display username and password regex hints in %s language",
+    async (language_value_enum) => {
+      /*
+        Set the current language so mock useTranslation function will return the messages with the current language
+      */
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      /*
+        Arrange
+      */
+      render(<SignupCard />);
+      /*
+        Act by inserting non valid regex for both username and password
+      */
+      const password_input = screen.getByTestId("password_input");
+      const username_input = screen.getByTestId("username_input");
+      await userEvent.type(username_input, "invalid#!@#");
+      await userEvent.type(password_input, "lowercase");
+      await userEvent.click(screen.getByTestId("submit_button"));
+      const username_hint_span = screen.getByTestId("username_hint_span");
+      const password_hint_span = screen.getByTestId("password_hint_span");
+      /*
+        Assert that username and password regex message is displayed with the correct language and place.
+      */
+      expect(username_hint_span).toHaveTextContent(t.username_regex);
+      expect(password_hint_span).toHaveTextContent(t.password_regex_uppercase);
+      /*
+        Add uppercase letters
+      */
+      await userEvent.clear(password_input);
+      await userEvent.type(password_input, "lowercaseUPPERCASE");
+      expect(password_hint_span).toHaveTextContent(t.password_regex_number);
+      /*
+        Add numbers
+      */
+      await userEvent.clear(password_input);
+      await userEvent.type(password_input, "lowercaseUPPERCASE123");
+      expect(password_hint_span).toHaveTextContent(
+        t.password_special_character
+      );
+      /*
+        respect the regex for username and password (by adding special chars for password), then expect to have not hint messages.
+      */
+      await userEvent.clear(username_input);
+      await userEvent.clear(password_input);
+      await userEvent.type(username_input, "username");
+      await userEvent.type(password_input, "lowercaseUPPERCASE123!@#");
+      expect(screen.queryByTestId("username_hint_span")).toBeNull();
+      expect(screen.queryByTestId("password_hint_span")).toBeNull();
+    }
+  );
 });
