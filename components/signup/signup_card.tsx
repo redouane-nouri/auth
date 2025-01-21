@@ -30,7 +30,7 @@ const SignupCard = () => {
   */
   const mutation = useMutation({
     mutationFn: (data: z.infer<typeof user_signup_schema>) => {
-      return Axios.post("/auth/signup", data);
+      return Axios.post("/api/v1/auth/signup", data);
     },
     onSuccess() {
       /*
@@ -81,6 +81,7 @@ const SignupCard = () => {
                   placeholder={t("username_placeholder")}
                   {...register("username")}
                   size="2"
+                  data-testid="username_input"
                 >
                   <TextField.Slot>
                     <PersonIcon />
@@ -103,6 +104,7 @@ const SignupCard = () => {
                   aria-label={t("password_placeholder")}
                   placeholder={t("password_placeholder")}
                   type="password"
+                  data-testid="password_input"
                 >
                   <TextField.Slot>
                     <LockClosedIcon />
@@ -125,6 +127,7 @@ const SignupCard = () => {
                   {...register("confirm_password")}
                   placeholder={t("confirm_password_placeholder")}
                   type="password"
+                  data-testid="confirm_password_input"
                 >
                   <TextField.Slot>
                     <LockClosedIcon />

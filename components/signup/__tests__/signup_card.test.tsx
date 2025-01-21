@@ -80,4 +80,40 @@ describe("Signup Card", () => {
       );
     }
   );
+  /*
+    A maximum error message should be displayed when the max length is exceeded (30 char)
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display username and password max length is exceeded hints in %s language",
+    async (language_value_enum) => {
+      /*
+        Set the current language so mock useTranslation function will return the messages with the current language
+      */
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      const long_string =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      /*
+        Arrange
+      */
+      render(<SignupCard />);
+      /*
+        Act by inserting long string in username & password inputs.
+      */
+      await userEvent.type(screen.getByTestId("username_input"), long_string);
+      await userEvent.type(screen.getByTestId("password_input"), long_string);
+      await userEvent.click(screen.getByTestId("submit_button"));
+      /*
+        Assert that username and password max length message is displayed with the correct language and place.
+      */
+      expect(screen.getByTestId("username_hint_span")).toHaveTextContent(
+        t.username_max
+      );
+      expect(screen.getByTestId("password_hint_span")).toHaveTextContent(
+        t.password_max
+      );
+    }
+  );
 });
