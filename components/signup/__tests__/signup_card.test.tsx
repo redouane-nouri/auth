@@ -54,12 +54,12 @@ describe("Signup Card", () => {
   it.each(Object.values(language_values_global_enum))(
     "Should display username and password required hints in %s language",
     async (language_value_enum) => {
-      /*
-        Set the current language so mock useTranslation function will return the messages with the current language
-      */
       translations_object.set_current_language(
         language_value_enum as language_values_global_enum
       );
+      /*
+        Get the messages with the current language to compare with.
+      */
       const t = translations_object.get_messages().signup_validation;
       /*
         Arrange
@@ -86,9 +86,6 @@ describe("Signup Card", () => {
   it.each(Object.values(language_values_global_enum))(
     "Should display username and password max length is exceeded hints in %s language",
     async (language_value_enum) => {
-      /*
-        Set the current language so mock useTranslation function will return the messages with the current language
-      */
       translations_object.set_current_language(
         language_value_enum as language_values_global_enum
       );
@@ -122,9 +119,6 @@ describe("Signup Card", () => {
   it.each(Object.values(language_values_global_enum))(
     "Should display username and password regex hints in %s language",
     async (language_value_enum) => {
-      /*
-        Set the current language so mock useTranslation function will return the messages with the current language
-      */
       translations_object.set_current_language(
         language_value_enum as language_values_global_enum
       );
@@ -171,6 +165,37 @@ describe("Signup Card", () => {
       await userEvent.type(password_input, "lowercaseUPPERCASE123!@#");
       expect(screen.queryByTestId("username_hint_span")).toBeNull();
       expect(screen.queryByTestId("password_hint_span")).toBeNull();
+    }
+  );
+  /*
+    A confirm password does not match should be displayed when password and confirm password are not equal
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display confirm password does not match with password in %s language",
+    async (language_value_enum) => {
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      /*
+        Arrange
+      */
+      render(<SignupCard />);
+      /*
+        Act by inserting non equal passwords
+      */
+      await userEvent.type(screen.getByTestId("password_input"), "Password1@");
+      await userEvent.type(
+        screen.getByTestId("confirm_password_input"),
+        "Password2@"
+      );
+      await userEvent.click(screen.getByTestId("submit_button"));
+      /*
+        Assert password does not match is displayed
+      */
+      expect(
+        screen.getByTestId("confirm_password_hint_span")
+      ).toHaveTextContent(t.passwords_dont_match);
     }
   );
 });
