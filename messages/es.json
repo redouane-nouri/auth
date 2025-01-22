@@ -21,7 +21,8 @@
     "password_placeholder": "Ingrese su contraseña",
     "confirm_password": "Confirmar contraseña",
     "confirm_password_placeholder": "Confirme su contraseña",
-    "sign_up": "Regístrate"
+    "sign_up": "Regístrate",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signup_validation": {
     "username_string": "El nombre de usuario debe ser una cadena",

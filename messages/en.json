@@ -21,7 +21,8 @@
     "password_placeholder": "Enter your password",
     "confirm_password": "Confirm password",
     "confirm_password_placeholder": "Confirm your password",
-    "sign_up": "Sign Up"
+    "sign_up": "Sign Up",
+    "error": "Something went wrong. Please try again"
   },
   "signup_validation": {
     "username_string": "Username must be a string",

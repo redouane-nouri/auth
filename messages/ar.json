@@ -21,7 +21,8 @@
     "password_placeholder": "أدخل كلمة المرور",
     "confirm_password": "تأكيد كلمة المرور",
     "confirm_password_placeholder": "أكد كلمة المرور الخاصة بك",
-    "sign_up": "سجل"
+    "sign_up": "سجل",
+    "error": "حدث خطأ ما. حاول مرة أخرى"
   },
   "signup_validation": {
     "username_string": "يجب أن يكون اسم المستخدم سلسلة نصية",

@@ -21,7 +21,8 @@
     "password_placeholder": "Введите ваш пароль",
     "confirm_password": "Подтвердите пароль",
     "confirm_password_placeholder": "Подтвердите ваш пароль",
-    "sign_up": "Зарегистрироваться"
+    "sign_up": "Зарегистрироваться",
+    "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз"
   },
   "signup_validation": {
     "username_string": "Имя пользователя должно быть строкой",
