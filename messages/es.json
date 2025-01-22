@@ -17,17 +17,12 @@
     "signup_heading": "Registro",
     "username_title": "Nombre de usuario",
     "username_placeholder": "Ingrese su nombre de usuario",
-    "username_required_hint": "Nombre de usuario requerido",
     "password_title": "Contraseña",
     "password_placeholder": "Ingrese su contraseña",
-    "password_required_hint": "Contraseña requerida",
     "confirm_password": "Confirmar contraseña",
-    "confirm_password_hint": "Confirme su contraseña...",
-    "password_does_not_match_hint": "La contraseña no coincide",
-    "username_exists": "El nombre de usuario ya existe",
+    "confirm_password_placeholder": "Confirme su contraseña",
     "sign_up": "Regístrate",
-    "you_have_an_account?": "¿Ya tienes una cuenta?",
-    "log_in_in_now!": "¡Inicia sesión ahora!"
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signup_validation": {
     "username_string": "El nombre de usuario debe ser una cadena",

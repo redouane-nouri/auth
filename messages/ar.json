@@ -17,17 +17,12 @@
     "signup_heading": "التسجيل",
     "username_title": "اسم المستخدم",
     "username_placeholder": "أدخل اسم المستخدم",
-    "username_required_hint": "اسم المستخدم مطلوب",
     "password_title": "كلمة المرور",
     "password_placeholder": "أدخل كلمة المرور",
-    "password_required_hint": "كلمة المرور مطلوبة",
     "confirm_password": "تأكيد كلمة المرور",
-    "confirm_password_hint": "أكد كلمة المرور الخاصة بك...",
-    "password_does_not_match_hint": "كلمة المرور غير متطابقة",
-    "username_exists": "اسم المستخدم موجود بالفعل",
+    "confirm_password_placeholder": "أكد كلمة المرور الخاصة بك",
     "sign_up": "سجل",
-    "you_have_an_account?": "هل لديك حساب؟",
-    "log_in_in_now!": "سجل الدخول الآن"
+    "error": "حدث خطأ ما. حاول مرة أخرى"
   },
   "signup_validation": {
     "username_string": "يجب أن يكون اسم المستخدم سلسلة نصية",

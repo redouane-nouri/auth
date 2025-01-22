@@ -17,17 +17,12 @@
     "signup_heading": "Signup",
     "username_title": "Username",
     "username_placeholder": "Enter your username",
-    "username_required_hint": "Username Required",
     "password_title": "Password",
     "password_placeholder": "Enter your password",
-    "password_required_hint": "Password Required",
     "confirm_password": "Confirm password",
-    "confirm_password_hint": "Confirm your password...",
-    "password_does_not_match_hint": "Password does not match",
-    "username_exists": "Username already exists",
+    "confirm_password_placeholder": "Confirm your password",
     "sign_up": "Sign Up",
-    "you_have_an_account?": "You have an account?",
-    "log_in_in_now!": "Log in now!"
+    "error": "Something went wrong. Please try again"
   },
   "signup_validation": {
     "username_string": "Username must be a string",
