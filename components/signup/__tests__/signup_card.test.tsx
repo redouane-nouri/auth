@@ -45,7 +45,7 @@ describe("Signup Card", () => {
         Set the current language so mock useTranslation function will return the messages with the current language
       */
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       /*
         Arrange
@@ -55,7 +55,7 @@ describe("Signup Card", () => {
         Assert
       */
       expect(container).toMatchSnapshot();
-    }
+    },
   );
   /*
     A click on the signup button with empty data should display username and password hints
@@ -64,7 +64,7 @@ describe("Signup Card", () => {
     "Should display username and password required hints in %s language",
     async (language_value_enum) => {
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       /*
         Get the messages with the current language to compare with.
@@ -82,12 +82,12 @@ describe("Signup Card", () => {
         Assert that username and password min message (required) is displayed with the correct language and place
       */
       expect(screen.getByTestId("username_hint_span")).toHaveTextContent(
-        t.username_min
+        t.username_min,
       );
       expect(screen.getByTestId("password_hint_span")).toHaveTextContent(
-        t.password_min
+        t.password_min,
       );
-    }
+    },
   );
   /*
     A maximum error message should be displayed when the max length is exceeded (30 char)
@@ -96,7 +96,7 @@ describe("Signup Card", () => {
     "Should display username and password max length is exceeded hints in %s language",
     async (language_value_enum) => {
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       const long_string =
@@ -115,12 +115,12 @@ describe("Signup Card", () => {
         Assert that username and password max length message is displayed with the correct language and place.
       */
       expect(screen.getByTestId("username_hint_span")).toHaveTextContent(
-        t.username_max
+        t.username_max,
       );
       expect(screen.getByTestId("password_hint_span")).toHaveTextContent(
-        t.password_max
+        t.password_max,
       );
-    }
+    },
   );
   /*
     A regex error message should be displayed when the regex is violated for username or password
@@ -129,7 +129,7 @@ describe("Signup Card", () => {
     "Should display username and password regex hints in %s language",
     async (language_value_enum) => {
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       /*
@@ -163,7 +163,7 @@ describe("Signup Card", () => {
       await userEvent.clear(password_input);
       await userEvent.type(password_input, "lowercaseUPPERCASE123");
       expect(password_hint_span).toHaveTextContent(
-        t.password_special_character
+        t.password_special_character,
       );
       /*
         respect the regex for username and password (by adding special chars for password), then expect to have not hint messages.
@@ -174,7 +174,7 @@ describe("Signup Card", () => {
       await userEvent.type(password_input, "lowercaseUPPERCASE123!@#");
       expect(screen.queryByTestId("username_hint_span")).toBeNull();
       expect(screen.queryByTestId("password_hint_span")).toBeNull();
-    }
+    },
   );
   /*
     A confirm password does not match should be displayed when password and confirm password are not equal
@@ -183,7 +183,7 @@ describe("Signup Card", () => {
     "Should display confirm password does not match with password in %s language",
     async (language_value_enum) => {
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       /*
@@ -196,16 +196,16 @@ describe("Signup Card", () => {
       await userEvent.type(screen.getByTestId("password_input"), "Password1@");
       await userEvent.type(
         screen.getByTestId("confirm_password_input"),
-        "Password2@"
+        "Password2@",
       );
       await userEvent.click(screen.getByTestId("submit_button"));
       /*
         Assert password does not match is displayed
       */
       expect(
-        screen.getByTestId("confirm_password_hint_span")
+        screen.getByTestId("confirm_password_hint_span"),
       ).toHaveTextContent(t.passwords_dont_match);
-    }
+    },
   );
   /*
     Unexpected error is displayed correctly
@@ -223,7 +223,7 @@ describe("Signup Card", () => {
         error: "unexpected error.",
       }));
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       /*
@@ -234,7 +234,7 @@ describe("Signup Card", () => {
         Assert unexpected error is displayed.
       */
       expect(screen.getByTestId("error_badge")).toHaveTextContent(t.error);
-    }
+    },
   );
   /*
     Mock isAxiosError to true to trigger axios error.
@@ -256,7 +256,7 @@ describe("Signup Card", () => {
         error: { response: { data: { error: "Axios error" } } },
       }));
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       /*
@@ -267,9 +267,9 @@ describe("Signup Card", () => {
         Assert axios error is displayed.
       */
       expect(screen.getByTestId("error_badge")).toHaveTextContent(
-        "Axios error"
+        "Axios error",
       );
-    }
+    },
   );
   /*
     To check success creation message is displayed correctly.
@@ -278,7 +278,7 @@ describe("Signup Card", () => {
     "Should display success creation message in %s language",
     async (language_value_enum) => {
       translations_object.set_current_language(
-        language_value_enum as language_values_global_enum
+        language_value_enum as language_values_global_enum,
       );
       const t = translations_object.get_messages().signup_validation;
       /*
@@ -298,6 +298,6 @@ describe("Signup Card", () => {
         Assert success message is displayed.
       */
       expect(screen.getByTestId("success_badge")).toHaveTextContent(t.success);
-    }
+    },
   );
 });

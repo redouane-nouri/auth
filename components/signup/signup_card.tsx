@@ -145,14 +145,13 @@ const SignupCard = () => {
               </Box>
               {mutation.isError && (
                 <Badge
-                  data-testkd="error_badge"
+                  data-testid="error_badge"
                   color="crimson"
                   className="!p-3"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (mutation.error.response?.data?.error ??
-                      "An unexpected error occurred. Please try again")
-                    : "An unexpected error occurred."}
+                    ? (mutation.error.response?.data?.error ?? t("error"))
+                    : t("error")}
                 </Badge>
               )}
               {mutation.isSuccess && (
