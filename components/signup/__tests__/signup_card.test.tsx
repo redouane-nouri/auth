@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import axios from "axios";
 import ar_messages from "../../../messages/ar.json";
 import { translations_class } from "../../../utils/classes/translations";
 import { language_values_global_enum } from "../../../utils/enums/global_enums";
@@ -19,11 +20,19 @@ jest.mock("next-intl", () => ({
     translations_object.translations_mock(name_space),
 }));
 /*
-  Mock useMutation to prevent runtime error
+  Initial Mock Implemntation
 */
 jest.mock("@tanstack/react-query", () => ({
-  useMutation: () => ({ isError: false, isSuccess: false, isPending: false }),
+  useMutation: jest.fn(() => ({
+    isError: false,
+    isSuccess: false,
+    isPending: false,
+  })),
 }));
+/*
+  To control the mock implementation of the mutation as needed.
+*/
+const { useMutation } = require("@tanstack/react-query");
 
 describe("Signup Card", () => {
   /*
@@ -196,6 +205,70 @@ describe("Signup Card", () => {
       expect(
         screen.getByTestId("confirm_password_hint_span")
       ).toHaveTextContent(t.passwords_dont_match);
+    }
+  );
+  /*
+    Unexpected error is displayed correctly
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display unexpected creation error message in %s language",
+    async (language_value_enum) => {
+      /*
+        Mock to return an excpected error
+      */
+      useMutation.mockImplementation(() => ({
+        isError: true,
+        isSuccess: false,
+        isPending: false,
+        error: "unexpected error.",
+      }));
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      /*
+        Arrange
+      */
+      render(<SignupCard />);
+      /*
+        Assert unexpected error is displayed.
+      */
+      expect(screen.getByTestId("error_badge")).toHaveTextContent(t.error);
+    }
+  );
+  /*
+    Mock isAxiosError to true to trigger axios error.
+  */
+  jest.spyOn(axios, "isAxiosError").mockReturnValue(true);
+  /*
+    To check axios Error creation is displayed correctly.
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display axios error creation message in %s language",
+    async (language_value_enum) => {
+      /*
+        Mock to return an axios error
+      */
+      useMutation.mockImplementation(() => ({
+        isError: true,
+        isSuccess: false,
+        isPending: false,
+        error: { response: { data: { error: "Axios error" } } },
+      }));
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      /*
+        Arrange.
+      */
+      render(<SignupCard />);
+      /*
+        Assert axios error is displayed.
+      */
+      expect(screen.getByTestId("error_badge")).toHaveTextContent(
+        "Axios error"
+      );
     }
   );
 });
