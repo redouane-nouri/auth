@@ -271,4 +271,33 @@ describe("Signup Card", () => {
       );
     }
   );
+  /*
+    To check success creation message is displayed correctly.
+  */
+  it.each(Object.values(language_values_global_enum))(
+    "Should display success creation message in %s language",
+    async (language_value_enum) => {
+      translations_object.set_current_language(
+        language_value_enum as language_values_global_enum
+      );
+      const t = translations_object.get_messages().signup_validation;
+      /*
+        Mock to return an success creation message.
+      */
+      useMutation.mockImplementation(() => ({
+        isError: false,
+        isSuccess: true,
+        isPending: false,
+        data: { data: { message: t.success } },
+      }));
+      /*
+        Arrange.
+      */
+      render(<SignupCard />);
+      /*
+        Assert success message is displayed.
+      */
+      expect(screen.getByTestId("success_badge")).toHaveTextContent(t.success);
+    }
+  );
 });
