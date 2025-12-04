@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import ar_messages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes/translations";
-import { LanguageCode } from "../../../utils/enums/global-enums";
+import { LanguageCode } from "../../../utils/enums/global";
 import SignupCard from "../signup_card";
 /*
   translation object will be used to provide translation for the i18n messages.

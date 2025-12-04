@@ -1,4 +1,4 @@
-import { LanguageCode } from "@/utils/enums/global-enums";
+import { LanguageCode } from "@/utils/enums/global";
 import { getRequestConfig } from "next-intl/server";
 import { cookies } from "next/headers";
 

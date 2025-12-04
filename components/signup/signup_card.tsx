@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Axios } from "../../lib/axios/axios";
-import { getUserSignupSchema } from "../../utils/functions/global-functions";
+import { getUserSignupSchema } from "../../utils/functions/global";
 
 const SignupCard = () => {
   /*

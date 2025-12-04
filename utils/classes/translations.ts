@@ -3,7 +3,7 @@ import enMessages from "../../messages/en.json";
 import esMessages from "../../messages/es.json";
 import ruMessages from "../../messages/ru.json";
 import zhMessages from "../../messages/zh.json";
-import { LanguageCode } from "../enums/global-enums";
+import { LanguageCode } from "../enums/global";
 /*
  This class is used to simulate the next-intl i18n in Jest tests to ensure using the correct language in each test.
 */

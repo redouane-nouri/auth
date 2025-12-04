@@ -1,6 +1,6 @@
 "use client";
 
-import { LanguageCode } from "@/utils/enums/global-enums";
+import { LanguageCode } from "@/utils/enums/global";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   Blockquote,
@@ -15,9 +15,9 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LanguageCodeToLabel } from "../../utils/constants/app-constants";
-import { ThemeAppearance } from "../../utils/enums/app-enums";
-import { Appearance } from "../../utils/types/app-types";
+import { LanguageCodeToLabel } from "../../utils/constants/app";
+import { ThemeAppearance } from "../../utils/enums/app";
+import { Appearance } from "../../utils/types/app";
 
 const Header = ({
   appearance,

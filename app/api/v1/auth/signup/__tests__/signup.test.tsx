@@ -1,4 +1,4 @@
-import { LanguageCode } from "@/utils/enums/global-enums";
+import { LanguageCode } from "@/utils/enums/global";
 import prisma from "../../../../../../lib/prisma/prisma_client";
 import ar_messages from "../../../../../../messages/ar.json";
 import { Translation } from "../../../../../../utils/classes/translations";
