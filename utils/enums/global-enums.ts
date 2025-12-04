@@ -1,4 +1,4 @@
-export enum language_values_global_enum {
+export enum LanguageCode {
   AR = "ar",
   EN = "en",
   ES = "es",

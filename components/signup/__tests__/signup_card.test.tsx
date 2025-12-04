@@ -2,13 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import ar_messages from "../../../messages/ar.json";
-import { translations_class } from "../../../utils/classes/translations";
-import { language_values_global_enum } from "../../../utils/enums/global_enums";
+import { Translation } from "../../../utils/classes/translations";
+import { LanguageCode } from "../../../utils/enums/global-enums";
 import SignupCard from "../signup_card";
 /*
   translation object will be used to provide translation for the i18n messages.
 */
-const translations_object = new translations_class();
+const translations_object = new Translation();
 /*
  Mocking the useTranslations function from next-intl to return the translations.
 */
@@ -17,7 +17,7 @@ jest.mock("next-intl", () => ({
    using the lazy loading to avoid jest throwing an error because jest.mock run before the translations_object get initiated.
   */
   useTranslations: (name_space: keyof typeof ar_messages) =>
-    translations_object.translations_mock(name_space),
+    translations_object.translationsMock(name_space),
 }));
 /*
   Initial Mock Implemntation
@@ -38,14 +38,14 @@ describe("Signup Card", () => {
   /*
     Snapshot Testing that the Signup card is rendered with the correct language messages
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should render UI with %s language",
     (language_value_enum) => {
       /*
         Set the current language so mock useTranslation function will return the messages with the current language
       */
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
       /*
         Arrange
@@ -60,16 +60,16 @@ describe("Signup Card", () => {
   /*
     A click on the signup button with empty data should display username and password hints
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display username and password required hints in %s language",
     async (language_value_enum) => {
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
       /*
         Get the messages with the current language to compare with.
       */
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Arrange
       */
@@ -92,13 +92,13 @@ describe("Signup Card", () => {
   /*
     A maximum error message should be displayed when the max length is exceeded (30 char)
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display username and password max length is exceeded hints in %s language",
     async (language_value_enum) => {
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       const long_string =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       /*
@@ -125,13 +125,13 @@ describe("Signup Card", () => {
   /*
     A regex error message should be displayed when the regex is violated for username or password
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display username and password regex hints in %s language",
     async (language_value_enum) => {
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Arrange
       */
@@ -179,13 +179,13 @@ describe("Signup Card", () => {
   /*
     A confirm password does not match should be displayed when password and confirm password are not equal
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display confirm password does not match with password in %s language",
     async (language_value_enum) => {
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Arrange
       */
@@ -210,7 +210,7 @@ describe("Signup Card", () => {
   /*
     Unexpected error is displayed correctly
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display unexpected creation error message in %s language",
     async (language_value_enum) => {
       /*
@@ -222,10 +222,10 @@ describe("Signup Card", () => {
         isPending: false,
         error: "unexpected error.",
       }));
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Arrange
       */
@@ -243,7 +243,7 @@ describe("Signup Card", () => {
   /*
     To check axios Error creation is displayed correctly.
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display axios error creation message in %s language",
     async (language_value_enum) => {
       /*
@@ -255,10 +255,10 @@ describe("Signup Card", () => {
         isPending: false,
         error: { response: { data: { error: "Axios error" } } },
       }));
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Arrange.
       */
@@ -274,13 +274,13 @@ describe("Signup Card", () => {
   /*
     To check success creation message is displayed correctly.
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "Should display success creation message in %s language",
     async (language_value_enum) => {
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         Mock to return an success creation message.
       */

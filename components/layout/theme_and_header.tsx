@@ -2,7 +2,7 @@
 
 import { Theme } from "@radix-ui/themes";
 import React, { useState } from "react";
-import { theme_appearance_type } from "../../utils/types/app_types";
+import { Appearance } from "../../utils/types/app-types";
 import Header from "./header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 /*
@@ -12,14 +12,13 @@ const ThemeAndHeader = ({
   theme_appearance,
   children,
 }: {
-  theme_appearance: theme_appearance_type;
+  theme_appearance: Appearance;
   children: React.ReactNode;
 }) => {
   /*
     This state will be used by the header component to change the theme appearance once the user clicks on the theme changer button.
   */
-  const [appearance, set_appearance] =
-    useState<theme_appearance_type>(theme_appearance);
+  const [appearance, set_appearance] = useState<Appearance>(theme_appearance);
   /*
     The query client instance to handle react query's data fetching, cashing, etc.
   */

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma_client";
-import { get_user_signup_schema } from "../../../../../utils/functions/global_functions";
+import { getUserSignupSchema } from "../../../../../utils/functions/global-functions";
 /**
  * @swagger
  * /auth/signup:
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
   /*
     The schema to be used for signup input validation with i18n messages
   */
-  const user_signup_schema = get_user_signup_schema(t);
+  const user_signup_schema = getUserSignupSchema(t);
 
   try {
     /*

@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Axios } from "../../lib/axios/axios";
-import { get_user_signup_schema } from "../../utils/functions/global_functions";
+import { getUserSignupSchema } from "../../utils/functions/global-functions";
 
 const SignupCard = () => {
   /*
@@ -46,7 +46,7 @@ const SignupCard = () => {
   /*
     Get Zod validation schema with the i18n messages.
   */
-  const user_signup_schema = get_user_signup_schema(
+  const user_signup_schema = getUserSignupSchema(
     useTranslations("signup_validation"),
   );
   /*

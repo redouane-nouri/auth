@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/theme_and_header";
-import { theme_appearance_app_enum } from "../utils/enums/app_enums";
+import { ThemeAppearance } from "../utils/enums/app-enums";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -38,10 +38,9 @@ export default async function RootLayout({
     Check if the `appearance` cookie is provided and its value is an enum in `theme_appearance_app_enum`. If not then default to 'light' appearance.
   */
   const appearance =
-    (await cookies()).get("appearance")?.value ===
-    theme_appearance_app_enum.DARK
-      ? theme_appearance_app_enum.DARK
-      : theme_appearance_app_enum.LIGHT;
+    (await cookies()).get("appearance")?.value === ThemeAppearance.DARK
+      ? ThemeAppearance.DARK
+      : ThemeAppearance.LIGHT;
 
   return (
     <html lang={locale}>

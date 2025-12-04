@@ -5,7 +5,7 @@ import { z } from "zod";
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const get_user_signup_schema = (t: any) => {
+export const getUserSignupSchema = (t: any) => {
   return z
     .object({
       username: z

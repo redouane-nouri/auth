@@ -1,4 +1,4 @@
-export enum language_labels_app_enum {
+export enum LanguageLabel {
   AR = "العربية",
   EN = "English",
   ES = "Español",
@@ -6,13 +6,13 @@ export enum language_labels_app_enum {
   ZH = "中文",
 }
 
-export enum social_providers_labels_app_enum {
+export enum SocialProviderLabel {
   GITHUB = "GitHub",
   GOOGLE = "Google",
   FACEBOOK = "Facebook",
 }
 
-export enum theme_appearance_app_enum {
+export enum ThemeAppearance {
   DARK = "dark",
   LIGHT = "light",
 }

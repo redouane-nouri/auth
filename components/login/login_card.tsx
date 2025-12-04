@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import { social_providers_app_constant } from "../../utils/constants/app_constants";
+import { socialProviders } from "../../utils/constants/app-constants";
 
 const LoginCard = () => {
   /*
@@ -75,7 +75,7 @@ const LoginCard = () => {
               </Text>
             </Flex>
             <Text align="center">{t("- Or -")}</Text>
-            {social_providers_app_constant.map((social_provider, index) => (
+            {socialProviders.map((social_provider, index) => (
               <Button key={index} variant="outline" highContrast>
                 {<social_provider.icon />}
                 {social_provider.label}

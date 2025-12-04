@@ -1,6 +1,6 @@
 "use client";
 
-import { language_values_global_enum } from "@/utils/enums/global_enums";
+import { LanguageCode } from "@/utils/enums/global-enums";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   Blockquote,
@@ -15,16 +15,16 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { map_value_to_label_app_constant } from "../../utils/constants/app_constants";
-import { theme_appearance_app_enum } from "../../utils/enums/app_enums";
-import { theme_appearance_type } from "../../utils/types/app_types";
+import { LanguageCodeToLabel } from "../../utils/constants/app-constants";
+import { ThemeAppearance } from "../../utils/enums/app-enums";
+import { Appearance } from "../../utils/types/app-types";
 
 const Header = ({
   appearance,
   set_appearance,
 }: {
-  appearance: theme_appearance_type;
-  set_appearance: React.Dispatch<React.SetStateAction<theme_appearance_type>>;
+  appearance: Appearance;
+  set_appearance: React.Dispatch<React.SetStateAction<Appearance>>;
 }) => {
   /*
     To refresh the page once the user changes the language because next-intl is SSR.
@@ -38,9 +38,7 @@ const Header = ({
     This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
   */
-  const [locale, set_locale] = useState<language_values_global_enum>(
-    language_values_global_enum.EN,
-  );
+  const [locale, set_locale] = useState<LanguageCode>(LanguageCode.EN);
   /*
     The handler of the select changing event.
     Once the user chooses a languge from the select menu, this handler will be triggered and:
@@ -48,7 +46,7 @@ const Header = ({
       - Changes the local state.
       - Refresh the page using next router because next-intl is SSR.
   */
-  const handle_language_value_update = (value: language_values_global_enum) => {
+  const handle_language_value_update = (value: LanguageCode) => {
     set_locale(value);
     Cookies.set("NEXT_LOCALE", value, {
       expires: 365,
@@ -63,9 +61,9 @@ const Header = ({
   */
   const handle_theme_appearance_update = () => {
     const new_appearance =
-      appearance === theme_appearance_app_enum.DARK
-        ? theme_appearance_app_enum.LIGHT
-        : theme_appearance_app_enum.DARK;
+      appearance === ThemeAppearance.DARK
+        ? ThemeAppearance.LIGHT
+        : ThemeAppearance.DARK;
 
     set_appearance(new_appearance);
     /*
@@ -83,13 +81,11 @@ const Header = ({
     This will be executed the first time the page is loaded to check if there is any valid value of a user perefered language in the `NEXT_LOCALE` cookie, if does not exist or invalid value then default to `en`.
   */
   useEffect(() => {
-    let next_locale = Cookies.get("NEXT_LOCALE") as language_values_global_enum;
+    let next_locale = Cookies.get("NEXT_LOCALE") as LanguageCode;
 
-    const language_value = Object.values(language_values_global_enum).includes(
-      next_locale,
-    )
+    const language_value = Object.values(LanguageCode).includes(next_locale)
       ? next_locale
-      : language_values_global_enum.EN;
+      : LanguageCode.EN;
 
     set_locale(language_value);
   }, []);
@@ -112,19 +108,17 @@ const Header = ({
         <Select.Root
           value={locale}
           onValueChange={(value) => {
-            handle_language_value_update(value as language_values_global_enum);
+            handle_language_value_update(value as LanguageCode);
           }}
         >
           <Select.Trigger />
           <Select.Content position="popper">
             <Select.Group>
-              {Object.entries(map_value_to_label_app_constant).map(
-                ([value, label]) => (
-                  <Select.Item key={value} value={value}>
-                    {label}
-                  </Select.Item>
-                ),
-              )}
+              {Object.entries(LanguageCodeToLabel).map(([value, label]) => (
+                <Select.Item key={value} value={value}>
+                  {label}
+                </Select.Item>
+              ))}
             </Select.Group>
           </Select.Content>
         </Select.Root>
@@ -135,11 +129,7 @@ const Header = ({
             handle_theme_appearance_update();
           }}
         >
-          {appearance === theme_appearance_app_enum.DARK ? (
-            <MoonIcon />
-          ) : (
-            <SunIcon />
-          )}
+          {appearance === ThemeAppearance.DARK ? <MoonIcon /> : <SunIcon />}
         </IconButton>
       </Flex>
     </Flex>

@@ -1,12 +1,12 @@
-import { language_values_global_enum } from "@/utils/enums/global_enums";
+import { LanguageCode } from "@/utils/enums/global-enums";
 import prisma from "../../../../../../lib/prisma/prisma_client";
 import ar_messages from "../../../../../../messages/ar.json";
-import { translations_class } from "../../../../../../utils/classes/translations";
+import { Translation } from "../../../../../../utils/classes/translations";
 import { POST as post_signup_handler } from "../../signup/route";
 /*
   translation object will be used to provide translation for the i18n messages.
 */
-const translations_object = new translations_class();
+const translations_object = new Translation();
 /*
  Mocking the getTranslations function from next-intl/server to return the translations and the api endpoint will use them and also will not throw an error.
 */
@@ -15,7 +15,7 @@ jest.mock("next-intl/server", () => ({
    using the lazy loading to avoid jest throwing an error because jest.mock run before the translations_object get initiated.
   */
   getTranslations: (name_space: keyof typeof ar_messages) =>
-    translations_object.translations_mock(name_space),
+    translations_object.translationsMock(name_space),
 }));
 /*
   Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values. 
@@ -54,16 +54,16 @@ describe("POST - Singup API", () => {
   /*
     Testing the API with all the valid languages.
   */
-  it.each(Object.values(language_values_global_enum))(
+  it.each(Object.values(LanguageCode))(
     "should respond with the correct status, errors, and success message in %s language for all the use cases",
     async (language_value_enum) => {
       /*
        Changing the current language to the one choosen in the test.
       */
-      translations_object.set_current_language(
-        language_value_enum as language_values_global_enum,
+      translations_object.setCurrentLanguage(
+        language_value_enum as LanguageCode,
       );
-      const t = translations_object.get_messages().signup_validation;
+      const t = translations_object.getMessages().signup_validation;
       /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signup_validation namespace in the i18n messages JSON file choosen.
         The try catch block is returning this error.
