@@ -4,7 +4,7 @@ import axios from "axios";
 import arMessages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes/translations";
 import { LanguageCode } from "../../../utils/enums/global";
-import SignupCard from "../signup_card";
+import SignupCard from "../signupCard";
 /*
   translation object will be used to provide translation for the i18n messages.
 */
@@ -14,7 +14,7 @@ const translationsObject = new Translation();
 */
 jest.mock("next-intl", () => ({
   /*
-   using the lazy loading to avoid jest throwing an error because jest.mock run before the translations_object get initiated.
+   using the lazy loading to avoid jest throwing an error because jest.mock run before the translationsObject get initiated.
   */
   useTranslations: (nameSpace: keyof typeof arMessages) =>
     translationsObject.translationsMock(nameSpace),

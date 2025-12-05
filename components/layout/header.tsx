@@ -21,10 +21,10 @@ import { Appearance } from "../../utils/types/app";
 
 const Header = ({
   appearance,
-  set_appearance,
+  setAppearance,
 }: {
   appearance: Appearance;
-  set_appearance: React.Dispatch<React.SetStateAction<Appearance>>;
+  setAppearance: React.Dispatch<React.SetStateAction<Appearance>>;
 }) => {
   /*
     To refresh the page once the user changes the language because next-intl is SSR.
@@ -33,12 +33,12 @@ const Header = ({
   /*
     To know which label & href to setup (home or connect/logout)
   */
-  const path_name = usePathname();
+  const pathName = usePathname();
   /*
     This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
   */
-  const [locale, set_locale] = useState<LanguageCode>(LanguageCode.EN);
+  const [locale, setLocale] = useState<LanguageCode>(LanguageCode.EN);
   /*
     The handler of the select changing event.
     Once the user chooses a languge from the select menu, this handler will be triggered and:
@@ -46,8 +46,8 @@ const Header = ({
       - Changes the local state.
       - Refresh the page using next router because next-intl is SSR.
   */
-  const handle_language_value_update = (value: LanguageCode) => {
-    set_locale(value);
+  const handleLanguageValueUpdate = (value: LanguageCode) => {
+    setLocale(value);
     Cookies.set("NEXT_LOCALE", value, {
       expires: 365,
       path: "/",
@@ -59,19 +59,19 @@ const Header = ({
     The handler of event invoked by the user when clicking on theme changer button.
     It changes the apperance state of the theme component and saving the user's preferred appearance.
   */
-  const handle_theme_appearance_update = () => {
-    const new_appearance =
+  const handleThemeAppearanceUpdate = () => {
+    const newAppearance =
       appearance === ThemeAppearance.DARK
         ? ThemeAppearance.LIGHT
         : ThemeAppearance.DARK;
 
-    set_appearance(new_appearance);
+    setAppearance(newAppearance);
     /*
       Cookie is used instead of localStorage to enable SSR-based theme selection.
       With localStorage, the theme defaults to light until client-side hydration applies the user's preference, causing a flash of incorrect theme.
       Cookie ensure the server sends the page with the correct theme pre-applied.
     */
-    Cookies.set("appearance", new_appearance, {
+    Cookies.set("appearance", newAppearance, {
       expires: 365,
       path: "/",
       sameSite: "Lax",
@@ -81,13 +81,13 @@ const Header = ({
     This will be executed the first time the page is loaded to check if there is any valid value of a user perefered language in the `NEXT_LOCALE` cookie, if does not exist or invalid value then default to `en`.
   */
   useEffect(() => {
-    let next_locale = Cookies.get("NEXT_LOCALE") as LanguageCode;
+    let nextLocale = Cookies.get("NEXT_LOCALE") as LanguageCode;
 
-    const language_value = Object.values(LanguageCode).includes(next_locale)
-      ? next_locale
+    const languageValue = Object.values(LanguageCode).includes(nextLocale)
+      ? nextLocale
       : LanguageCode.EN;
 
-    set_locale(language_value);
+    setLocale(languageValue);
   }, []);
   /*
     Use `header` translations.
@@ -97,18 +97,18 @@ const Header = ({
   return (
     <Flex px="3" py="2" justify="between" align="center">
       <Blockquote>
-        <Strong>{t("social_authentication")}</Strong>
+        <Strong>{t("socialAuthentication")}</Strong>
       </Blockquote>
       <Flex gap="2">
-        <Link href={`${path_name === "/" ? "/connect" : "/"}`}>
+        <Link href={`${pathName === "/" ? "/connect" : "/"}`}>
           <Button variant="surface" highContrast>
-            {path_name === "/" ? t("connect") : t("home")}
+            {pathName === "/" ? t("connect") : t("home")}
           </Button>
         </Link>
         <Select.Root
           value={locale}
           onValueChange={(value) => {
-            handle_language_value_update(value as LanguageCode);
+            handleLanguageValueUpdate(value as LanguageCode);
           }}
         >
           <Select.Trigger />
@@ -126,7 +126,7 @@ const Header = ({
         <IconButton
           variant="surface"
           onClick={() => {
-            handle_theme_appearance_update();
+            handleThemeAppearanceUpdate();
           }}
         >
           {appearance === ThemeAppearance.DARK ? <MoonIcon /> : <SunIcon />}

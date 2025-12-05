@@ -20,7 +20,7 @@ import { socialProviders } from "../../utils/constants/app";
 
 const LoginCard = () => {
   /*
-    Using `login_card` translations.
+    Using `loginCard` translations.
   */
   const t = useTranslations("loginCard");
   return (

@@ -16,7 +16,7 @@ const NotFoundPage = () => {
       <Heading as="h6" size="9">
         404
       </Heading>
-      <Text size="4">{t("page_not_found")}</Text>
+      <Text size="4">{t("pageNotFound")}</Text>
     </Flex>
   );
 };

@@ -9,29 +9,29 @@ export const getUserSignupSchema = (t: any) => {
   return z
     .object({
       username: z
-        .string({ message: t("username_string") })
-        .min(1, t("username_min"))
-        .max(30, t("username_max"))
-        .regex(/^[a-zA-Z0-9_-]+$/, t("username_regex")),
+        .string({ message: t("usernameString") })
+        .min(1, t("usernameMin"))
+        .max(30, t("usernameMax"))
+        .regex(/^[a-zA-Z0-9_-]+$/, t("usernameRegex")),
       password: z
-        .string({ message: t("password_string") })
-        .min(8, t("password_min"))
-        .max(30, t("password_max"))
-        .regex(/[a-z]/, t("password_regex_lowercase"))
-        .regex(/[A-Z]/, t("password_regex_uppercase"))
-        .regex(/[0-9]/, t("password_regex_number"))
+        .string({ message: t("passwordString") })
+        .min(8, t("passwordMin"))
+        .max(30, t("passwordMax"))
+        .regex(/[a-z]/, t("passwordRegexLowercase"))
+        .regex(/[A-Z]/, t("passwordRegexUppercase"))
+        .regex(/[0-9]/, t("passwordRegexNumber"))
         /*
           1st Group [!-\/] Match ASCII code from 33 to 47: !"#$%&'()*+,-./
           2nd Group [:-@] Match ASCII code from 58 to 64: :;<=>?@
           3rd Group [[-`] Match ASCII code from 91 to 96: [\]^_`
           4th Group [{-~] Match ASCII code from 123 to 126: {|}~
         */
-        .regex(/[!-\/:-@[-`{-~]/, t("password_special_character")),
-      confirm_password: z.string({ message: t("confirm_password_string") }),
+        .regex(/[!-\/:-@[-`{-~]/, t("passwordSpecialCharacter")),
+      confirmPassword: z.string({ message: t("confirmPasswordString") }),
     })
-    .strict(t("valid_attributes"))
-    .refine((data) => data.password === data.confirm_password, {
-      message: t("passwords_dont_match"),
-      path: ["confirm_password"],
+    .strict(t("validAttributes"))
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("passwordsDontMatch"),
+      path: ["confirmPassword"],
     });
 };

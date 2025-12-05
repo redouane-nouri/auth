@@ -6,17 +6,15 @@ export default getRequestConfig(async () => {
   /*
     Getting the value of the NEXT_LOCAL cookie which we are using to store the user's prefered language.
   */
-  let next_locale = (await cookies()).get("NEXT_LOCALE")
+  let nextLocale = (await cookies()).get("NEXT_LOCALE")
     ?.value as LanguageCode;
   /*
     Whitelisting:
-    Ensuring the value of the language cookie is one of the languages values we suport (prevent injection).
-    Default to english if the value provided not included in `language_values_app_enum`.
+    Ensuring the value of the language cookie is one of the language values we support (prevent injection).
+    Default to english if the value provided not included in `LanguageCode`.
   */
-  const locale = Object.values(LanguageCode).includes(
-    next_locale,
-  )
-    ? next_locale
+  const locale = Object.values(LanguageCode).includes(nextLocale)
+    ? nextLocale
     : LanguageCode.EN;
 
   return {

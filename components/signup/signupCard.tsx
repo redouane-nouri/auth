@@ -40,7 +40,7 @@ const SignupCard = () => {
     },
   });
   /*
-    Using `signup_card` translations.
+    Using `signupCard` translations.
   */
   const t = useTranslations("signupCard");
   /*
