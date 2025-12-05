@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import { socialProviders } from "../../utils/constants/app";
+import { socialProviders } from "../../utils/constants";
 
 const LoginCard = () => {
   /*

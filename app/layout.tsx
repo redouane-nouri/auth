@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/themeAndHeader";
-import { ThemeAppearance } from "../utils/enums/app";
+import { ThemeAppearance } from "../utils/enums";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prismaClient";
-import { getUserSignupSchema } from "../../../../../utils/functions/global";
+import { getUserSignupSchema } from "../../../../../utils/functions";
 /**
  * @swagger
  * /auth/signup:

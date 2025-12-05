@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import arMessages from "../../../messages/ar.json";
-import { Translation } from "../../../utils/classes/translations";
-import { LanguageCode } from "../../../utils/enums/global";
+import { Translation } from "../../../utils/classes";
+import { LanguageCode } from "@/utils/enums";
 import SignupCard from "../signupCard";
 /*
   translation object will be used to provide translation for the i18n messages.

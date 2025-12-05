@@ -2,7 +2,7 @@
 
 import { Theme } from "@radix-ui/themes";
 import React, { useState } from "react";
-import { Appearance } from "../../utils/types/app";
+import { Appearance } from "../../utils/types";
 import Header from "./header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 /*

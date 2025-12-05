@@ -2,9 +2,9 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import {
   LanguageLabel,
   SocialProviderLabel,
-} from "../enums/app";
-import { LanguageCode } from "../enums/global";
-import { SocialProvider } from "../types/app";
+} from "./enums";
+import { LanguageCode } from "./enums";
+import { SocialProvider } from "./types";
 
 export const LanguageCodeToLabel: Record<
   LanguageCode,

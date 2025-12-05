@@ -16,3 +16,10 @@ export enum ThemeAppearance {
   DARK = "dark",
   LIGHT = "light",
 }
+export enum LanguageCode {
+  AR = "ar",
+  EN = "en",
+  ES = "es",
+  RU = "ru",
+  ZH = "zh"
+}
