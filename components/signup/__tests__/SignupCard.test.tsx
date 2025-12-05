@@ -4,7 +4,7 @@ import axios from "axios";
 import arMessages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes";
 import { LanguageCode } from "@/utils/enums";
-import SignupCard from "../signupCard";
+import SignupCard from "../SignupCard";
 /*
   translation object will be used to provide translation for the i18n messages.
 */

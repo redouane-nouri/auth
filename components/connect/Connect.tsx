@@ -1,7 +1,7 @@
 import { Box, Container, Tabs } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import LoginCard from "../../components/login/loginCard";
-import SignupCard from "../../components/signup/signupCard";
+import LoginCard from "../login/LoginCard";
+import SignupCard from "../signup/SignupCard";
 
 export default function ConnectComponent() {
   /*

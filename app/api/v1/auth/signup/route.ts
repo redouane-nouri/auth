@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../../lib/prisma/prismaClient";
+import prisma from "../../../../../lib/prisma/prisma-client";
 import { getUserSignupSchema } from "../../../../../utils/functions";
 /**
  * @swagger

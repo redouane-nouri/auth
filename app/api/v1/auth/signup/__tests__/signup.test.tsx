@@ -1,5 +1,5 @@
 import { LanguageCode } from "@/utils/enums";
-import prisma from "../../../../../../lib/prisma/prismaClient";
+import prisma from "../../../../../../lib/prisma/prisma-client";
 import arMessages from "../../../../../../messages/ar.json";
 import { Translation } from "../../../../../../utils/classes";
 import { POST as postSignupHandler } from "../../signup/route";
@@ -23,7 +23,7 @@ jest.mock("next-intl/server", () => ({
 /*
   Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values. 
 */
-jest.mock("../../../../../../lib/prisma/prismaClient", () => ({
+jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
   user: {
     findUnique: jest.fn(),
     create: jest.fn(),

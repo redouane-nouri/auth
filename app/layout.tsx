@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import ThemeAndHeader from "../components/layout/themeAndHeader";
+import ThemeAndHeader from "../components/layout/ThemeAndHeader";
 import { ThemeAppearance } from "../utils/enums";
 import "./globals.css";
 
