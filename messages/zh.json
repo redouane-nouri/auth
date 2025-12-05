@@ -1,62 +1,62 @@
 {
-  "login_card": {
-    "login_heading": "登录",
-    "username_title": "用户名",
-    "username_placeholder": "输入您的用户名",
-    "username_required_hint": "用户名为必填项",
-    "password_title": "密码",
-    "password_placeholder": "输入您的密码",
-    "password_required_hint": "密码为必填项",
-    "invalid_credentials": "用户名或密码无效",
-    "log_in": "登录",
-    "no_account?": "没有账户?",
-    "sign_up_now!": "立即注册!",
-    "- Or -": "- 或 -"
+  "loginCard": {
+    "loginHeading": "登录",
+    "usernameTitle": "用户名",
+    "usernamePlaceholder": "输入您的用户名",
+    "usernameRequiredHint": "用户名为必填项",
+    "passwordTitle": "密码",
+    "passwordPlaceholder": "输入您的密码",
+    "passwordRequiredHint": "密码为必填项",
+    "invalidCredentials": "用户名或密码无效",
+    "logIn": "登录",
+    "noAccount": "没有账户?",
+    "signUpNow": "立即注册!",
+    "orSeparator": "- 或 -"
   },
-  "signup_card": {
-    "signup_heading": "注册",
-    "username_title": "用户名",
-    "username_placeholder": "输入您的用户名",
-    "password_title": "密码",
-    "password_placeholder": "输入您的密码",
-    "confirm_password": "确认密码",
-    "confirm_password_placeholder": "确认您的密码",
-    "sign_up": "注册",
+  "signupCard": {
+    "signupHeading": "注册",
+    "usernameTitle": "用户名",
+    "usernamePlaceholder": "输入您的用户名",
+    "passwordTitle": "密码",
+    "passwordPlaceholder": "输入您的密码",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "确认您的密码",
+    "signUp": "注册",
     "error": "出现问题，请重试"
   },
-  "signup_validation": {
-    "username_string": "用户名必须是字符串",
-    "username_min": "用户名是必填项",
-    "username_max": "用户名必须小于或等于30个字符",
-    "username_regex": "用户名只能包含字母数字字符、连字符和下划线",
-    "password_string": "密码必须是字符串",
-    "password_min": "密码长度至少为8个字符",
-    "password_max": "密码长度最多为30个字符",
-    "password_regex_lowercase": "密码必须包含至少一个小写字母",
-    "password_regex_uppercase": "密码必须包含至少一个大写字母",
-    "password_regex_number": "密码必须包含至少一个数字",
-    "password_special_character": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "valid_attributes": "请求仅接受以下属性: 用户名、密码和确认密码。",
-    "passwords_dont_match": "两次输入的密码不一致",
-    "confirm_password_string": "确认密码必须是字符串",
-    "username_exists": "用户名已存在",
+  "signupValidation": {
+    "usernameString": "用户名必须是字符串",
+    "usernameMin": "用户名是必填项",
+    "usernameMax": "用户名必须小于或等于30个字符",
+    "usernameRegex": "用户名只能包含字母数字字符、连字符和下划线",
+    "passwordString": "密码必须是字符串",
+    "passwordMin": "密码长度至少为8个字符",
+    "passwordMax": "密码长度最多为30个字符",
+    "passwordRegexLowercase": "密码必须包含至少一个小写字母",
+    "passwordRegexUppercase": "密码必须包含至少一个大写字母",
+    "passwordRegexNumber": "密码必须包含至少一个数字",
+    "passwordSpecialCharacter": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "validAttributes": "请求仅接受以下属性: 用户名、密码和确认密码。",
+    "passwordsDontMatch": "两次输入的密码不一致",
+    "confirmPasswordString": "确认密码必须是字符串",
+    "usernameExists": "用户名已存在",
     "success": "用户创建成功",
     "error": "出现问题，请重试"
   },
   "header": {
-    "social_authentication": "社交认证",
+    "socialAuthentication": "社交认证",
     "connect": "连接",
     "home": "首页"
   },
   "connect": {
-    "log_in": "登录",
-    "sign_up": "注册"
+    "logIn": "登录",
+    "signUp": "注册"
   },
   "home": {
     "home": "首页"
   },
   "404": {
-    "page_not_found": "页面未找到"
+    "pageNotFound": "页面未找到"
   },
   "metadata": {
     "title": "社交认证",

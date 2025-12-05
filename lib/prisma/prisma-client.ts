@@ -2,14 +2,14 @@ import { PrismaClient } from "@prisma/client";
 /*
  Prisma client Singleton factory function.
 */
-const prisma_client_singleton = () => {
+const prismaClientSingleton = () => {
   return new PrismaClient();
 };
 /*
  declare the global this that has prisma client inside it.
 */
 declare const globalThis: {
-  prisma_global: ReturnType<typeof prisma_client_singleton>;
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
 } & typeof global;
 
 /*
@@ -17,8 +17,8 @@ declare const globalThis: {
 
  The solution in this case is to instantiate a single instance PrismaClient and save it on the globalThis object. Then we keep a check to only instantiate PrismaClient if it's not on the globalThis object otherwise use the same instance again if already present to prevent instantiating extra PrismaClient instances.
 */
-const prisma = globalThis.prisma_global ?? prisma_client_singleton();
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 export default prisma;
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma_global = prisma;
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;

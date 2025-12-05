@@ -37,7 +37,7 @@ exports[`Signup Card Should render UI with ar language 1`] = `
                   <input
                     aria-label="أدخل اسم المستخدم"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="username_input"
+                    data-testid="usernameInput"
                     name="username"
                     placeholder="أدخل اسم المستخدم"
                     spellcheck="false"
@@ -76,7 +76,7 @@ exports[`Signup Card Should render UI with ar language 1`] = `
                   <input
                     aria-label="أدخل كلمة المرور"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="password_input"
+                    data-testid="passwordInput"
                     name="password"
                     placeholder="أدخل كلمة المرور"
                     spellcheck="false"
@@ -114,8 +114,8 @@ exports[`Signup Card Should render UI with ar language 1`] = `
                 >
                   <input
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="confirm_password_input"
-                    name="confirm_password"
+                    data-testid="confirmPasswordInput"
+                    name="confirmPassword"
                     placeholder="أكد كلمة المرور الخاصة بك"
                     spellcheck="false"
                     type="password"
@@ -143,7 +143,7 @@ exports[`Signup Card Should render UI with ar language 1`] = `
               <button
                 class="rt-reset rt-BaseButton rt-r-size-2 rt-variant-solid rt-high-contrast rt-Button"
                 data-accent-color=""
-                data-testid="submit_button"
+                data-testid="submitButton"
                 type="submit"
               >
                 سجل
@@ -208,7 +208,7 @@ exports[`Signup Card Should render UI with en language 1`] = `
                   <input
                     aria-label="Enter your username"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="username_input"
+                    data-testid="usernameInput"
                     name="username"
                     placeholder="Enter your username"
                     spellcheck="false"
@@ -247,7 +247,7 @@ exports[`Signup Card Should render UI with en language 1`] = `
                   <input
                     aria-label="Enter your password"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="password_input"
+                    data-testid="passwordInput"
                     name="password"
                     placeholder="Enter your password"
                     spellcheck="false"
@@ -285,8 +285,8 @@ exports[`Signup Card Should render UI with en language 1`] = `
                 >
                   <input
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="confirm_password_input"
-                    name="confirm_password"
+                    data-testid="confirmPasswordInput"
+                    name="confirmPassword"
                     placeholder="Confirm your password"
                     spellcheck="false"
                     type="password"
@@ -314,7 +314,7 @@ exports[`Signup Card Should render UI with en language 1`] = `
               <button
                 class="rt-reset rt-BaseButton rt-r-size-2 rt-variant-solid rt-high-contrast rt-Button"
                 data-accent-color=""
-                data-testid="submit_button"
+                data-testid="submitButton"
                 type="submit"
               >
                 Sign Up
@@ -379,7 +379,7 @@ exports[`Signup Card Should render UI with es language 1`] = `
                   <input
                     aria-label="Ingrese su nombre de usuario"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="username_input"
+                    data-testid="usernameInput"
                     name="username"
                     placeholder="Ingrese su nombre de usuario"
                     spellcheck="false"
@@ -418,7 +418,7 @@ exports[`Signup Card Should render UI with es language 1`] = `
                   <input
                     aria-label="Ingrese su contraseña"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="password_input"
+                    data-testid="passwordInput"
                     name="password"
                     placeholder="Ingrese su contraseña"
                     spellcheck="false"
@@ -456,8 +456,8 @@ exports[`Signup Card Should render UI with es language 1`] = `
                 >
                   <input
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="confirm_password_input"
-                    name="confirm_password"
+                    data-testid="confirmPasswordInput"
+                    name="confirmPassword"
                     placeholder="Confirme su contraseña"
                     spellcheck="false"
                     type="password"
@@ -485,7 +485,7 @@ exports[`Signup Card Should render UI with es language 1`] = `
               <button
                 class="rt-reset rt-BaseButton rt-r-size-2 rt-variant-solid rt-high-contrast rt-Button"
                 data-accent-color=""
-                data-testid="submit_button"
+                data-testid="submitButton"
                 type="submit"
               >
                 Regístrate
@@ -550,7 +550,7 @@ exports[`Signup Card Should render UI with ru language 1`] = `
                   <input
                     aria-label="Введите имя пользователя"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="username_input"
+                    data-testid="usernameInput"
                     name="username"
                     placeholder="Введите имя пользователя"
                     spellcheck="false"
@@ -589,7 +589,7 @@ exports[`Signup Card Should render UI with ru language 1`] = `
                   <input
                     aria-label="Введите ваш пароль"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="password_input"
+                    data-testid="passwordInput"
                     name="password"
                     placeholder="Введите ваш пароль"
                     spellcheck="false"
@@ -627,8 +627,8 @@ exports[`Signup Card Should render UI with ru language 1`] = `
                 >
                   <input
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="confirm_password_input"
-                    name="confirm_password"
+                    data-testid="confirmPasswordInput"
+                    name="confirmPassword"
                     placeholder="Подтвердите ваш пароль"
                     spellcheck="false"
                     type="password"
@@ -656,7 +656,7 @@ exports[`Signup Card Should render UI with ru language 1`] = `
               <button
                 class="rt-reset rt-BaseButton rt-r-size-2 rt-variant-solid rt-high-contrast rt-Button"
                 data-accent-color=""
-                data-testid="submit_button"
+                data-testid="submitButton"
                 type="submit"
               >
                 Зарегистрироваться
@@ -721,7 +721,7 @@ exports[`Signup Card Should render UI with zh language 1`] = `
                   <input
                     aria-label="输入您的用户名"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="username_input"
+                    data-testid="usernameInput"
                     name="username"
                     placeholder="输入您的用户名"
                     spellcheck="false"
@@ -760,7 +760,7 @@ exports[`Signup Card Should render UI with zh language 1`] = `
                   <input
                     aria-label="输入您的密码"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="password_input"
+                    data-testid="passwordInput"
                     name="password"
                     placeholder="输入您的密码"
                     spellcheck="false"
@@ -798,8 +798,8 @@ exports[`Signup Card Should render UI with zh language 1`] = `
                 >
                   <input
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="confirm_password_input"
-                    name="confirm_password"
+                    data-testid="confirmPasswordInput"
+                    name="confirmPassword"
                     placeholder="确认您的密码"
                     spellcheck="false"
                     type="password"
@@ -827,7 +827,7 @@ exports[`Signup Card Should render UI with zh language 1`] = `
               <button
                 class="rt-reset rt-BaseButton rt-r-size-2 rt-variant-solid rt-high-contrast rt-Button"
                 data-accent-color=""
-                data-testid="submit_button"
+                data-testid="submitButton"
                 type="submit"
               >
                 注册

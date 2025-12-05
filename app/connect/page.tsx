@@ -1,5 +1,5 @@
-import ConnectComponent from "../../components/connect/connect";
+import Connect from "../../components/connect/Connect";
 
 export default function ConnectPage() {
-  return <ConnectComponent />;
+  return <Connect />;
 }

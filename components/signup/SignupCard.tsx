@@ -22,14 +22,14 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Axios } from "../../lib/axios/axios";
-import { get_user_signup_schema } from "../../utils/functions/global_functions";
+import { getUserSignupSchema } from "../../utils/functions";
 
 const SignupCard = () => {
   /*
     The mutation instance that will be use to signup post request.
   */
   const mutation = useMutation({
-    mutationFn: (data: z.infer<typeof user_signup_schema>) => {
+    mutationFn: (data: z.infer<typeof userSignupSchema>) => {
       return Axios.post("/api/v1/auth/signup", data);
     },
     onSuccess() {
@@ -40,19 +40,19 @@ const SignupCard = () => {
     },
   });
   /*
-    Using `signup_card` translations.
+    Using `signupCard` translations.
   */
-  const t = useTranslations("signup_card");
+  const t = useTranslations("signupCard");
   /*
     Get Zod validation schema with the i18n messages.
   */
-  const user_signup_schema = get_user_signup_schema(
-    useTranslations("signup_validation"),
+  const userSignupSchema = getUserSignupSchema(
+    useTranslations("signupValidation"),
   );
   /*
     Signup button click handler.
   */
-  const handle_submit = (data: z.infer<typeof user_signup_schema>) => {
+  const handleSubmitForm = (data: z.infer<typeof userSignupSchema>) => {
     mutation.mutate(data);
   };
   /*
@@ -63,25 +63,25 @@ const SignupCard = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof user_signup_schema>>({
-    resolver: zodResolver(user_signup_schema),
+  } = useForm<z.infer<typeof userSignupSchema>>({
+    resolver: zodResolver(userSignupSchema),
   });
 
   return (
     <Box>
       <Container size="1">
         <Card>
-          <form onSubmit={handleSubmit(handle_submit)}>
+          <form onSubmit={handleSubmit(handleSubmitForm)}>
             <Flex direction="column" gapY="4">
-              <Heading>{t("signup_heading")}</Heading>
+              <Heading>{t("signupHeading")}</Heading>
               <Box>
-                <Text>{t("username_title")}</Text>
+                <Text>{t("usernameTitle")}</Text>
                 <TextField.Root
-                  aria-label={t("username_placeholder")}
-                  placeholder={t("username_placeholder")}
+                  aria-label={t("usernamePlaceholder")}
+                  placeholder={t("usernamePlaceholder")}
                   {...register("username")}
                   size="2"
-                  data-testid="username_input"
+                  data-testid="usernameInput"
                 >
                   <TextField.Slot>
                     <PersonIcon />
@@ -89,7 +89,7 @@ const SignupCard = () => {
                 </TextField.Root>
                 {errors.username && (
                   <Text
-                    data-testid="username_hint_span"
+                    data-testid="usernameHint"
                     color="crimson"
                     size="1"
                   >
@@ -98,13 +98,13 @@ const SignupCard = () => {
                 )}
               </Box>
               <Box>
-                <Text>{t("password_title")}</Text>
+                <Text>{t("passwordTitle")}</Text>
                 <TextField.Root
                   {...register("password")}
-                  aria-label={t("password_placeholder")}
-                  placeholder={t("password_placeholder")}
+                  aria-label={t("passwordPlaceholder")}
+                  placeholder={t("passwordPlaceholder")}
                   type="password"
-                  data-testid="password_input"
+                  data-testid="passwordInput"
                 >
                   <TextField.Slot>
                     <LockClosedIcon />
@@ -112,7 +112,7 @@ const SignupCard = () => {
                 </TextField.Root>
                 {errors.password && (
                   <Text
-                    data-testid="password_hint_span"
+                    data-testid="passwordHint"
                     color="crimson"
                     size="1"
                   >
@@ -121,31 +121,31 @@ const SignupCard = () => {
                 )}
               </Box>
               <Box>
-                {t("confirm_password")}
+                {t("confirmPassword")}
                 <Text></Text>
                 <TextField.Root
-                  {...register("confirm_password")}
-                  placeholder={t("confirm_password_placeholder")}
+                  {...register("confirmPassword")}
+                  placeholder={t("confirmPasswordPlaceholder")}
                   type="password"
-                  data-testid="confirm_password_input"
+                  data-testid="confirmPasswordInput"
                 >
                   <TextField.Slot>
                     <LockClosedIcon />
                   </TextField.Slot>
                 </TextField.Root>
-                {errors.confirm_password && (
+                {errors.confirmPassword && (
                   <Text
-                    data-testid="confirm_password_hint_span"
+                    data-testid="confirmPasswordHint"
                     color="crimson"
                     size="1"
                   >
-                    {errors.confirm_password.message}
+                    {errors.confirmPassword.message}
                   </Text>
                 )}
               </Box>
               {mutation.isError && (
                 <Badge
-                  data-testid="error_badge"
+                  data-testid="errorBadge"
                   color="crimson"
                   className="!p-3"
                 >
@@ -156,7 +156,7 @@ const SignupCard = () => {
               )}
               {mutation.isSuccess && (
                 <Badge
-                  data-testid="success_badge"
+                  data-testid="successBadge"
                   color="grass"
                   className="!p-3"
                 >
@@ -165,11 +165,11 @@ const SignupCard = () => {
               )}
               <Button
                 type="submit"
-                data-testid="submit_button"
+                data-testid="submitButton"
                 loading={mutation.isPending}
                 highContrast
               >
-                {t("sign_up")}
+                {t("signUp")}
                 <ArrowRightIcon />
               </Button>
             </Flex>

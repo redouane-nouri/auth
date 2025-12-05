@@ -1,9 +1,9 @@
 import { Box, Container, Tabs } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import LoginCard from "../../components/login/login_card";
-import SignupCard from "../../components/signup/signup_card";
+import LoginCard from "../login/LoginCard";
+import SignupCard from "../signup/SignupCard";
 
-export default function ConnectComponent() {
+export default function Connect() {
   /*
     Use `connect` translations.
   */
@@ -14,10 +14,10 @@ export default function ConnectComponent() {
         <Tabs.Root className="TabsRoot" defaultValue="login">
           <Tabs.List className="TabsList mb-3">
             <Tabs.Trigger className="TabsTrigger" value="login">
-              {t("log_in")}
+              {t("logIn")}
             </Tabs.Trigger>
             <Tabs.Trigger className="TabsTrigger" value="signup">
-              {t("sign_up")}
+              {t("signUp")}
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content className="TabsContent" value="login">

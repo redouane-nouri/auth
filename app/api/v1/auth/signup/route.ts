@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../../lib/prisma/prisma_client";
-import { get_user_signup_schema } from "../../../../../utils/functions/global_functions";
+import prisma from "../../../../../lib/prisma/prisma-client";
+import { getUserSignupSchema } from "../../../../../utils/functions";
 /**
  * @swagger
  * /auth/signup:
@@ -20,7 +20,7 @@ import { get_user_signup_schema } from "../../../../../utils/functions/global_fu
  *             required:
  *               - username
  *               - password
- *               - confirm_password
+ *               - confirmPassword
  *             properties:
  *               username:
  *                 type: string
@@ -28,7 +28,7 @@ import { get_user_signup_schema } from "../../../../../utils/functions/global_fu
  *                 minLength: 1
  *                 maxLength: 30
  *                 pattern: "^[a-zA-Z0-9_-]+$"
- *                 example: redouane_nouri
+ *                 example: redouaneNouri
  *               password:
  *                 type: string
  *                 description: The user's password.
@@ -36,7 +36,7 @@ import { get_user_signup_schema } from "../../../../../utils/functions/global_fu
  *                 maxLength: 30
  *                 pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!-\\/:-@[-`{-~]).+$"
  *                 example: Password@123
- *               confirm_password:
+ *               confirmPassword:
  *                 type: string
  *                 description: Must match the `password` field.
  *                 example: Password@123
@@ -80,7 +80,7 @@ import { get_user_signup_schema } from "../../../../../utils/functions/global_fu
  *                           type: array
  *                           items:
  *                             type: string
- *                     confirm_password:
+ *                     confirmPassword:
  *                       type: object
  *                       properties:
  *                         _errors:
@@ -91,7 +91,7 @@ import { get_user_signup_schema } from "../../../../../utils/functions/global_fu
  *                     _errors: ["i18n global error 1", "i18n global error 2", "etc."]
  *                     username: {_errors: ["i18n username is required", "Username must be less than or equal to 30 characters", "etc."]}
  *                     password: {_errors: ["Password must be a String", "etc."]}
- *                     confirm_password: {_errors: ["Passwords don't match", "etc."]}
+ *                     confirmPassword: {_errors: ["Passwords don't match", "etc."]}
  *       409:
  *         description: Username already exists.
  *         content:
@@ -117,11 +117,11 @@ export async function POST(request: NextRequest) {
   /*
     It has to be here inside a request scope, if not, it will throw error because we are using `await cookies()` inside the `getTranslations()`, and the `cookies()` function is only callable from inside a request scope.
   */
-  const t = await getTranslations("signup_validation");
+  const t = await getTranslations("signupValidation");
   /*
     The schema to be used for signup input validation with i18n messages
   */
-  const user_signup_schema = get_user_signup_schema(t);
+  const userSignupSchema = getUserSignupSchema(t);
 
   try {
     /*
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
     /*
       Invoke the zod parsing process
     */
-    const result = user_signup_schema.safeParse(body);
+    const result = userSignupSchema.safeParse(body);
     /*
       If the parsing failed, then send back the erros with 400 status for bad request.
     */
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
     */
     if (await prisma.user.findUnique({ where: { username: body.username } })) {
       return NextResponse.json(
-        { error: t("username_exists") },
+        { error: t("usernameExists") },
         { status: 409 },
       );
     }
