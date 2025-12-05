@@ -2,7 +2,7 @@ import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
 import arMessages from "../../../../../../messages/ar.json";
 import { Translation } from "../../../../../../utils/classes";
-import { POST as postSignupHandler } from "../../signup/route";
+import { POST as postSignupHandler } from "../route";
 /*
   translation object will be used to provide translation for the i18n messages.
 */

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import LoginCard from "../login/LoginCard";
 import SignupCard from "../signup/SignupCard";
 
-export default function ConnectComponent() {
+export default function Connect() {
   /*
     Use `connect` translations.
   */
