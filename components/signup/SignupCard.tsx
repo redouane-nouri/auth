@@ -75,25 +75,25 @@ const SignupCard = () => {
             <Flex direction="column" gapY="4">
               <Heading>{t("signupHeading")}</Heading>
               <Box>
-                <Text>{t("usernameTitle")}</Text>
+                <Text>{t("emailTitle")}</Text>
                 <TextField.Root
-                  aria-label={t("usernamePlaceholder")}
-                  placeholder={t("usernamePlaceholder")}
-                  {...register("username")}
+                  aria-label={t("emailPlaceholder")}
+                  placeholder={t("emailPlaceholder")}
+                  {...register("email")}
                   size="2"
-                  data-testid="usernameInput"
+                  data-testid="emailInput"
                 >
                   <TextField.Slot>
                     <PersonIcon />
                   </TextField.Slot>
                 </TextField.Root>
-                {errors.username && (
+                {errors.email && (
                   <Text
-                    data-testid="usernameHint"
+                    data-testid="emailHint"
                     color="crimson"
                     size="1"
                   >
-                    {errors.username.message}
+                    {errors.email.message}
                   </Text>
                 )}
               </Box>

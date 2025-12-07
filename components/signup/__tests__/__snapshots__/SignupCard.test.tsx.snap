@@ -28,18 +28,14 @@ exports[`Signup Card Should render UI with ar language 1`] = `
               >
                 <span
                   class="rt-Text"
-                >
-                  اسم المستخدم
-                </span>
+                />
                 <div
                   class="rt-TextFieldRoot rt-r-size-2 rt-variant-surface"
                 >
                   <input
-                    aria-label="أدخل اسم المستخدم"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="usernameInput"
-                    name="username"
-                    placeholder="أدخل اسم المستخدم"
+                    data-testid="emailInput"
+                    name="email"
                     spellcheck="false"
                   />
                   <div
@@ -200,17 +196,17 @@ exports[`Signup Card Should render UI with en language 1`] = `
                 <span
                   class="rt-Text"
                 >
-                  Username
+                  Email
                 </span>
                 <div
                   class="rt-TextFieldRoot rt-r-size-2 rt-variant-surface"
                 >
                   <input
-                    aria-label="Enter your username"
+                    aria-label="Enter your email"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="usernameInput"
-                    name="username"
-                    placeholder="Enter your username"
+                    data-testid="emailInput"
+                    name="email"
+                    placeholder="Enter your email"
                     spellcheck="false"
                   />
                   <div
@@ -370,18 +366,14 @@ exports[`Signup Card Should render UI with es language 1`] = `
               >
                 <span
                   class="rt-Text"
-                >
-                  Nombre de usuario
-                </span>
+                />
                 <div
                   class="rt-TextFieldRoot rt-r-size-2 rt-variant-surface"
                 >
                   <input
-                    aria-label="Ingrese su nombre de usuario"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="usernameInput"
-                    name="username"
-                    placeholder="Ingrese su nombre de usuario"
+                    data-testid="emailInput"
+                    name="email"
                     spellcheck="false"
                   />
                   <div
@@ -542,17 +534,17 @@ exports[`Signup Card Should render UI with ru language 1`] = `
                 <span
                   class="rt-Text"
                 >
-                  Имя пользователя
+                  Электронная почта
                 </span>
                 <div
                   class="rt-TextFieldRoot rt-r-size-2 rt-variant-surface"
                 >
                   <input
-                    aria-label="Введите имя пользователя"
+                    aria-label="Введите вашу почту"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="usernameInput"
-                    name="username"
-                    placeholder="Введите имя пользователя"
+                    data-testid="emailInput"
+                    name="email"
+                    placeholder="Введите вашу почту"
                     spellcheck="false"
                   />
                   <div
@@ -713,17 +705,17 @@ exports[`Signup Card Should render UI with zh language 1`] = `
                 <span
                   class="rt-Text"
                 >
-                  用户名
+                  邮箱
                 </span>
                 <div
                   class="rt-TextFieldRoot rt-r-size-2 rt-variant-surface"
                 >
                   <input
-                    aria-label="输入您的用户名"
+                    aria-label="请输入您的邮箱"
                     class="rt-reset rt-TextFieldInput"
-                    data-testid="usernameInput"
-                    name="username"
-                    placeholder="输入您的用户名"
+                    data-testid="emailInput"
+                    name="email"
+                    placeholder="请输入您的邮箱"
                     spellcheck="false"
                   />
                   <div

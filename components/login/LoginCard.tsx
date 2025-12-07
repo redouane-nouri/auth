@@ -30,10 +30,10 @@ const LoginCard = () => {
           <Flex direction="column" gapY="4">
             <Heading>{t("loginHeading")}</Heading>
             <Box>
-              <Text>{t("usernameTitle")}</Text>
+              <Text>{t("emailTitle")}</Text>
               <TextField.Root
-                aria-label={t("usernamePlaceholder")}
-                placeholder={t("usernamePlaceholder")}
+                aria-label={t("emailPlaceholder")}
+                placeholder={t("emailPlaceholder")}
                 size="2"
               >
                 <TextField.Slot>
@@ -41,7 +41,7 @@ const LoginCard = () => {
                 </TextField.Slot>
               </TextField.Root>
               <Text color="crimson" size="1">
-                {t("usernameRequiredHint")}
+                {t("emailRequiredHint")}
               </Text>
             </Box>
             <Box>

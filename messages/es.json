@@ -1,9 +1,9 @@
 {
   "loginCard": {
     "loginHeading": "Iniciar sesión",
-    "usernameTitle": "Nombre de usuario",
-    "usernamePlaceholder": "Introduce tu nombre de usuario",
-    "usernameRequiredHint": "Nombre de usuario requerido",
+    "emailTitle": "Correo electrónico",
+    "emailPlaceholder": "Introduce tu correo electrónico",
+    "emailRequiredHint": "Correo electrónico requerido",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Introduce tu contraseña",
     "passwordRequiredHint": "Contraseña requerida",
@@ -15,8 +15,6 @@
   },
   "signupCard": {
     "signupHeading": "Registro",
-    "usernameTitle": "Nombre de usuario",
-    "usernamePlaceholder": "Ingrese su nombre de usuario",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Ingrese su contraseña",
     "confirmPassword": "Confirmar contraseña",
@@ -25,10 +23,6 @@
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signupValidation": {
-    "usernameString": "El nombre de usuario debe ser una cadena",
-    "usernameMin": "El nombre de usuario es obligatorio",
-    "usernameMax": "El nombre de usuario debe tener 30 caracteres o menos",
-    "usernameRegex": "El nombre de usuario solo puede contener caracteres alfanuméricos, guiones y guiones bajos",
     "passwordString": "La contraseña debe ser una cadena",
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "passwordMax": "La contraseña debe tener como máximo 30 caracteres",
@@ -36,21 +30,23 @@
     "passwordRegexUppercase": "La contraseña debe contener al menos una letra mayúscula",
     "passwordRegexNumber": "La contraseña debe contener al menos un número",
     "passwordSpecialCharacter": "La contraseña debe contener al menos un carácter especial: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "La solicitud solo acepta los atributos: nombre de usuario, contraseña y confirmar contraseña.",
+    "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordsDontMatch": "Las contraseñas no coinciden",
     "confirmPasswordString": "La contraseña de confirmación debe ser una cadena",
-    "usernameExists": "El nombre de usuario ya existe",
+    "emailExists": "El correo electrónico ya existe",
+    "emailString": "El correo electrónico debe ser una cadena",
+    "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
     "success": "Usuario creado con éxito",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signinValidation": {
-    "usernameString": "El nombre de usuario debe ser una cadena de texto",
-    "usernameRequired": "El nombre de usuario es obligatorio",
-    "passwordString": "La contraseña debe ser una cadena de texto",
+    "emailString": "El correo electrónico debe ser una cadena",
+    "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
+    "passwordString": "La contraseña debe ser una cadena",
     "passwordRequired": "La contraseña es obligatoria",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
     "success": "Inicio de sesión exitoso",
-    "error": "Algo salió mal. Inténtalo de nuevo"
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "header": {
     "socialAuthentication": "Autenticación social",

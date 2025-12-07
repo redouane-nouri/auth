@@ -5,22 +5,25 @@ import arMessages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes";
 import { LanguageCode } from "@/utils/enums";
 import SignupCard from "../SignupCard";
+
 /*
   translation object will be used to provide translation for the i18n messages.
 */
 const translationsObject = new Translation();
+
 /*
  Mocking the useTranslations function from next-intl to return the translations.
 */
 jest.mock("next-intl", () => ({
   /*
-   using the lazy loading to avoid jest throwing an error because jest.mock run before the translationsObject get initiated.
+   use lazy loading to avoid jest throwing an error because jest.mock runs before the translationsObject is instantiated.
   */
   useTranslations: (nameSpace: keyof typeof arMessages) =>
     translationsObject.translationsMock(nameSpace),
 }));
+
 /*
-  Initial Mock Implemntation
+  Initial mock implementation
 */
 jest.mock("@tanstack/react-query", () => ({
   useMutation: jest.fn(() => ({
@@ -29,6 +32,7 @@ jest.mock("@tanstack/react-query", () => ({
     isPending: false,
   })),
 }));
+
 /*
   To control the mock implementation of the mutation as needed.
 */
@@ -36,13 +40,13 @@ const { useMutation } = require("@tanstack/react-query");
 
 describe("Signup Card", () => {
   /*
-    Snapshot Testing that the Signup card is rendered with the correct language messages
+    Snapshot testing to ensure the SignupCard is rendered with the correct language messages
   */
   it.each(Object.values(LanguageCode))(
     "Should render UI with %s language",
     (languageValueEnum) => {
       /*
-        Set the current language so mock useTranslation function will return the messages with the current language
+        Set the current language so the mocked useTranslations function will return messages for the current language.
       */
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -57,11 +61,12 @@ describe("Signup Card", () => {
       expect(container).toMatchSnapshot();
     },
   );
+
   /*
-    A click on the signup button with empty data should display username and password hints
+    Clicking the signup button with empty data should display email and password required hints
   */
   it.each(Object.values(LanguageCode))(
-    "Should display username and password required hints in %s language",
+    "Should display email and password required hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -79,21 +84,22 @@ describe("Signup Card", () => {
       */
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
-        Assert that username and password min message (required) is displayed with the correct language and place
+        Assert that email and password min message (required) is displayed with the correct language and place
       */
-      expect(screen.getByTestId("usernameHint")).toHaveTextContent(
-        t.usernameMin,
+      expect(screen.getByTestId("emailHint")).toHaveTextContent(
+        t.emailString,
       );
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
       );
     },
   );
+
   /*
     A maximum error message should be displayed when the max length is exceeded (30 char)
   */
   it.each(Object.values(LanguageCode))(
-    "Should display username and password max length is exceeded hints in %s language",
+    "Should display email and password max length is exceeded hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -106,27 +112,28 @@ describe("Signup Card", () => {
       */
       render(<SignupCard />);
       /*
-        Act by inserting long string in username & password inputs.
+        Act by inserting long string in email & password inputs.
       */
-      await userEvent.type(screen.getByTestId("usernameInput"), longString);
+      await userEvent.type(screen.getByTestId("emailInput"), longString);
       await userEvent.type(screen.getByTestId("passwordInput"), longString);
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
-        Assert that username and password max length message is displayed with the correct language and place.
+        Assert that email and password max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("usernameHint")).toHaveTextContent(
-        t.usernameMax,
+      expect(screen.getByTestId("emailHint")).toHaveTextContent(
+        t.emailInvalid,
       );
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMax,
       );
     },
   );
+
   /*
-    A regex error message should be displayed when the regex is violated for username or password
+    A regex error message should be displayed when the regex is violated for email or password
   */
   it.each(Object.values(LanguageCode))(
-    "Should display username and password regex hints in %s language",
+    "Should display email and password regex hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -137,19 +144,19 @@ describe("Signup Card", () => {
       */
       render(<SignupCard />);
       /*
-        Act by inserting non valid regex for both username and password
+        Act by inserting invalid regex for both email and password
       */
       const passwordInput = screen.getByTestId("passwordInput");
-      const usernameInput = screen.getByTestId("usernameInput");
-      await userEvent.type(usernameInput, "invalid#!@#");
+      const emailInput = screen.getByTestId("emailInput");
+      await userEvent.type(emailInput, "invalid#!@#");
       await userEvent.type(passwordInput, "lowercase");
       await userEvent.click(screen.getByTestId("submitButton"));
-      const usernameHintSpan = screen.getByTestId("usernameHint");
+      const emailHintSpan = screen.getByTestId("emailHint");
       const passwordHintSpan = screen.getByTestId("passwordHint");
       /*
-        Assert that username and password regex message is displayed with the correct language and place.
+        Assert that email and password regex message is displayed with the correct language and place.
       */
-      expect(usernameHintSpan).toHaveTextContent(t.usernameRegex);
+      expect(emailHintSpan).toHaveTextContent(t.emailInvalid);
       expect(passwordHintSpan).toHaveTextContent(t.passwordRegexUppercase);
       /*
         Add uppercase letters
@@ -166,16 +173,17 @@ describe("Signup Card", () => {
         t.passwordSpecialCharacter,
       );
       /*
-        respect the regex for username and password (by adding special chars for password), then expect to have not hint messages.
+        Respect the regex for email and password (by adding special chars for password), then expect no hint messages.
       */
-      await userEvent.clear(usernameInput);
+      await userEvent.clear(emailInput);
       await userEvent.clear(passwordInput);
-      await userEvent.type(usernameInput, "username");
+      await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercaseUPPERCASE123!@#");
-      expect(screen.queryByTestId("usernameHint")).toBeNull();
+      expect(screen.queryByTestId("emailHint")).toBeNull();
       expect(screen.queryByTestId("passwordHint")).toBeNull();
     },
   );
+
   /*
     A confirm password does not match should be displayed when password and confirm password are not equal
   */
@@ -191,7 +199,7 @@ describe("Signup Card", () => {
       */
       render(<SignupCard />);
       /*
-        Act by inserting non equal passwords
+        Act by inserting non-equal passwords
       */
       await userEvent.type(screen.getByTestId("passwordInput"), "Password1@");
       await userEvent.type(
@@ -207,6 +215,7 @@ describe("Signup Card", () => {
       ).toHaveTextContent(t.passwordsDontMatch);
     },
   );
+
   /*
     Unexpected error is displayed correctly
   */
@@ -214,7 +223,7 @@ describe("Signup Card", () => {
     "Should display unexpected creation error message in %s language",
     async (languageValueEnum) => {
       /*
-        Mock to return an excpected error
+        Mock to return an expected error
       */
       useMutation.mockImplementation(() => ({
         isError: true,
@@ -236,10 +245,12 @@ describe("Signup Card", () => {
       expect(screen.getByTestId("errorBadge")).toHaveTextContent(t.error);
     },
   );
+
   /*
-    Mock isAxiosError to true to trigger axios error.
+    Mock axios.isAxiosError to true to trigger axios error handling.
   */
   jest.spyOn(axios, "isAxiosError").mockReturnValue(true);
+
   /*
     To check axios Error creation is displayed correctly.
   */
@@ -271,6 +282,7 @@ describe("Signup Card", () => {
       );
     },
   );
+
   /*
     To check success creation message is displayed correctly.
   */
@@ -282,7 +294,7 @@ describe("Signup Card", () => {
       );
       const t = translationsObject.getMessages().signupValidation;
       /*
-        Mock to return an success creation message.
+        Mock to return a success creation message.
       */
       useMutation.mockImplementation(() => ({
         isError: false,

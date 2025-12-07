@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [ Credentials({
-    credentials: {username:{}, pasword:{}},
+    credentials: {email:{}, pasword:{}},
     authorize: async (credentials) => {
       return null;
     },

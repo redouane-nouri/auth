@@ -1,9 +1,9 @@
 {
   "loginCard": {
     "loginHeading": "تسجيل الدخول",
-    "usernameTitle": "اسم المستخدم",
-    "usernamePlaceholder": "أدخل اسم المستخدم الخاص بك",
-    "usernameRequiredHint": "اسم المستخدم مطلوب",
+    "emailTitle": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل البريد الإلكتروني",
+    "emailRequiredHint": "البريد الإلكتروني مطلوب",
     "passwordTitle": "كلمة المرور",
     "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
     "passwordRequiredHint": "كلمة المرور مطلوبة",
@@ -15,8 +15,6 @@
   },
   "signupCard": {
     "signupHeading": "التسجيل",
-    "usernameTitle": "اسم المستخدم",
-    "usernamePlaceholder": "أدخل اسم المستخدم",
     "passwordTitle": "كلمة المرور",
     "passwordPlaceholder": "أدخل كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور",
@@ -25,10 +23,6 @@
     "error": "حدث خطأ ما. حاول مرة أخرى"
   },
   "signupValidation": {
-    "usernameString": "يجب أن يكون اسم المستخدم سلسلة نصية",
-    "usernameMin": "اسم المستخدم مطلوب",
-    "usernameMax": "يجب أن يكون اسم المستخدم أقل من أو يساوي 30 حرفًا",
-    "usernameRegex": "يمكن أن يحتوي اسم المستخدم على أحرف أبجدية رقمية، وشرطات، وشرطات سفلية فقط",
     "passwordString": "يجب أن تكون كلمة المرور سلسلة نصية",
     "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
     "passwordMax": "يجب أن تكون كلمة المرور 30 حرفًا كحد أقصى",
@@ -36,21 +30,23 @@
     "passwordRegexUppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
     "passwordRegexNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
     "passwordSpecialCharacter": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "يقبل الطلب فقط: اسم المستخدم، كلمة المرور، وتأكيد كلمة المرور.",
+    "validAttributes": "يقبل الطلب فقط: البريد الإلكتروني، كلمة المرور، وتأكيد كلمة المرور.",
     "passwordsDontMatch": "كلمتا المرور غير متطابقتين",
     "confirmPasswordString": "يجب أن تكون كلمة المرور المؤكدة سلسلة نصية",
-    "usernameExists": "اسم المستخدم موجود بالفعل",
+    "emailExists": "البريد الإلكتروني موجود بالفعل",
     "success": "تم إنشاء المستخدم بنجاح",
-    "error": "حدث خطأ ما. حاول مرة أخرى"
+    "error": "حدث خطأ ما. حاول مرة أخرى",
+    "emailString": "يجب أن يكون البريد الإلكتروني سلسلة نصية",
+    "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "signinValidation": {
-    "usernameString": "يجب أن يكون اسم المستخدم سلسلة نصية",
-    "usernameRequired": "اسم المستخدم مطلوب",
     "passwordString": "يجب أن تكون كلمة المرور سلسلة نصية",
     "passwordRequired": "كلمة المرور مطلوبة",
     "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "success": "تم تسجيل الدخول بنجاح",
-    "error": "حدث خطأ ما. حاول مرة أخرى"
+    "error": "حدث خطأ ما. حاول مرة أخرى",
+    "emailString": "يجب أن يكون البريد الإلكتروني سلسلة نصية",
+    "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "header": {
     "socialAuthentication": "المصادقة الاجتماعية",

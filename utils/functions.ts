@@ -8,11 +8,10 @@ import { z } from "zod";
 export const getUserSignupSchema = (t: any) => {
   return z
     .object({
-      username: z
-        .string({ message: t("usernameString") })
-        .min(1, t("usernameMin"))
-        .max(30, t("usernameMax"))
-        .regex(/^[a-zA-Z0-9_-]+$/, t("usernameRegex")),
+      email: z
+        .string({ message: t("emailString") })
+        .min(1, t("emailString"))
+        .email(t("emailInvalid")),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
@@ -43,9 +42,10 @@ export const getUserSignupSchema = (t: any) => {
  */
 export const getUserSignInSchema = (t: any) => {
   return z.object({
-    username: z
-      .string({ message: t("usernameString") })
-      .min(1, t("usernameRequired")),
+    email: z
+    .string({ message: t("emailString") })
+    .min(1, t("emailString"))
+    .email(t("emailInvalid")),
       
     password: z
       .string({ message: t("passwordString") })

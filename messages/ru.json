@@ -1,9 +1,9 @@
 {
   "loginCard": {
     "loginHeading": "Вход",
-    "usernameTitle": "Имя пользователя",
-    "usernamePlaceholder": "Введите ваше имя пользователя",
-    "usernameRequiredHint": "Требуется имя пользователя",
+    "emailTitle": "Электронная почта",
+    "emailPlaceholder": "Введите вашу почту",
+    "emailRequiredHint": "Требуется электронная почта",
     "passwordTitle": "Пароль",
     "passwordPlaceholder": "Введите ваш пароль",
     "passwordRequiredHint": "Требуется пароль",
@@ -15,8 +15,8 @@
   },
   "signupCard": {
     "signupHeading": "Регистрация",
-    "usernameTitle": "Имя пользователя",
-    "usernamePlaceholder": "Введите имя пользователя",
+    "emailTitle": "Электронная почта",
+    "emailPlaceholder": "Введите вашу почту",
     "passwordTitle": "Пароль",
     "passwordPlaceholder": "Введите ваш пароль",
     "confirmPassword": "Подтвердите пароль",
@@ -25,10 +25,9 @@
     "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз"
   },
   "signupValidation": {
-    "usernameString": "Имя пользователя должно быть строкой",
-    "usernameMin": "Имя пользователя обязательно",
-    "usernameMax": "Имя пользователя должно быть не длиннее 30 символов",
-    "usernameRegex": "Имя пользователя может содержать только алфавитно-цифровые символы, дефисы и подчеркивания",
+    "emailString": "Электронная почта должна быть строкой",
+    "emailInvalid": "Введите действительный адрес электронной почты",
+    "emailExists": "Данная электронная почта уже используется",
     "passwordString": "Пароль должен быть строкой",
     "passwordMin": "Пароль должен содержать не менее 8 символов",
     "passwordMax": "Пароль должен содержать не более 30 символов",
@@ -36,21 +35,20 @@
     "passwordRegexUppercase": "Пароль должен содержать хотя бы одну заглавную букву",
     "passwordRegexNumber": "Пароль должен содержать хотя бы одну цифру",
     "passwordSpecialCharacter": "Пароль должен содержать хотя бы один специальный символ: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "Запрос принимает только следующие атрибуты: имя пользователя, пароль и подтверждение пароля.",
+    "validAttributes": "Запрос принимает только следующие атрибуты: электронная почта, пароль и подтверждение пароля.",
     "passwordsDontMatch": "Пароли не совпадают",
     "confirmPasswordString": "Подтверждение пароля должно быть строкой",
-    "usernameExists": "Имя пользователя уже существует",
     "success": "Пользователь успешно создан",
     "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз"
   },
   "signinValidation": {
-    "usernameString": "El nombre de usuario debe ser una cadena de texto",
-    "usernameRequired": "El nombre de usuario es obligatorio",
-    "passwordString": "La contraseña debe ser una cadena de texto",
-    "passwordRequired": "La contraseña es obligatoria",
-    "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
-    "success": "Inicio de sesión exitoso",
-    "error": "Algo salió mal. Inténtalo de nuevo"
+    "emailString": "Электронная почта должна быть строкой",
+    "emailInvalid": "Введите действительный адрес электронной почты",
+    "passwordString": "Пароль должен быть строкой",
+    "passwordRequired": "Пароль является обязательным полем",
+    "invalidCredentials": "Неверное имя пользователя или пароль",
+    "success": "Вход выполнен успешно",
+    "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз"
   },
   "header": {
     "socialAuthentication": "Социальная аутентификация",

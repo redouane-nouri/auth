@@ -8,7 +8,7 @@ import { getUserSignupSchema } from "../../../../../utils/functions";
  * /auth/signup:
  *   post:
  *     summary: User Signup
- *     description: Creates a new user account with input validation and checks for existing usernames.
+ *     description: Creates a new user account with input validation and checks for existing emails.
  *     tags:
  *       - Auth
  *     requestBody:
@@ -18,17 +18,15 @@ import { getUserSignupSchema } from "../../../../../utils/functions";
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - email
  *               - password
  *               - confirmPassword
  *             properties:
- *               username:
+ *               email:
  *                 type: string
- *                 description: The username of the user.
- *                 minLength: 1
- *                 maxLength: 30
- *                 pattern: "^[a-zA-Z0-9_-]+$"
- *                 example: redouaneNouri
+ *                 description: The email of the user.
+ *                 format: email
+ *                 example: user@example.com
  *               password:
  *                 type: string
  *                 description: The user's password.
@@ -66,7 +64,7 @@ import { getUserSignupSchema } from "../../../../../utils/functions";
  *                       type: array
  *                       items:
  *                         type: string
- *                     username:
+ *                     email:
  *                       type: object
  *                       properties:
  *                         _errors:
@@ -89,11 +87,11 @@ import { getUserSignupSchema } from "../../../../../utils/functions";
  *                             type: string
  *                   example:
  *                     _errors: ["i18n global error 1", "i18n global error 2", "etc."]
- *                     username: {_errors: ["i18n username is required", "Username must be less than or equal to 30 characters", "etc."]}
+ *                     email: {_errors: ["i18n email is required", "Email must be valid", "etc."]}
  *                     password: {_errors: ["Password must be a String", "etc."]}
  *                     confirmPassword: {_errors: ["Passwords don't match", "etc."]}
  *       409:
- *         description: Username already exists.
+ *         description: Email already exists.
  *         content:
  *           application/json:
  *             schema:
@@ -144,11 +142,11 @@ export async function POST(request: NextRequest) {
       );
     }
     /*
-      If the username already exist then send a 409 status for conflict and an error message.
+      If the email already exist then send a 409 status for conflict and an error message.
     */
-    if (await prisma.user.findUnique({ where: { username: body.username } })) {
+    if (await prisma.user.findUnique({ where: { email: body.email } })) {
       return NextResponse.json(
-        { error: t("usernameExists") },
+        { error: t("emailExists") },
         { status: 409 },
       );
     }
@@ -158,7 +156,7 @@ export async function POST(request: NextRequest) {
     if (
       !(await prisma.user.create({
         data: {
-          username: body.username,
+          email: body.email,
           password: await bcrypt.hash(body.password, 10),
         },
       }))

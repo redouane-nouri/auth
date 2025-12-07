@@ -87,7 +87,7 @@ describe("POST - Singup API", () => {
 
       expect(response.status).toBe(400);
       expect(error._errors).toContain(t.validAttributes);
-      expect(error.username._errors).toContain(t.usernameString);
+      expect(error.email._errors).toContain(t.emailString);
       expect(error.password._errors).toContain(t.passwordString);
       expect(error.confirmPassword._errors).toContain(
         t.confirmPasswordString,
@@ -97,7 +97,7 @@ describe("POST - Singup API", () => {
       */
       response = await postSignupHandler(
         createMockRequest({
-          username: "",
+          email: "",
           password: "",
           confirmPassword: "",
         }),
@@ -105,9 +105,9 @@ describe("POST - Singup API", () => {
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.username._errors).toEqual([
-        t.usernameMin,
-        t.usernameRegex,
+      expect(error.email._errors).toEqual([
+        t.emailString,
+        t.emailInvalid,
       ]);
       expect(error.password._errors).toEqual([
         t.passwordMin,
@@ -121,7 +121,7 @@ describe("POST - Singup API", () => {
       */
       response = await postSignupHandler(
         createMockRequest({
-          username: "abcdefghijklmnopqrstuvwxyz0123456789",
+          email: "abcdefghijklmnopqrstuvwxyz0123456789",
           password: "abcdefghijklmnopqrstuvwxyz0123456789",
           confirmPassword: "any",
         }),
@@ -129,14 +129,14 @@ describe("POST - Singup API", () => {
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.username._errors).toContain(t.usernameMax);
+      expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toContain(t.passwordMax);
       /*
         Should check password matching and return an error message that the passwords does not match with 400 status.
       */
       response = await postSignupHandler(
         createMockRequest({
-          username: "valid",
+          email: "valid",
           password: "Password@123",
           confirmPassword: "notMatching",
         }),
@@ -146,15 +146,15 @@ describe("POST - Singup API", () => {
       expect(response.status).toBe(400);
       expect(error.confirmPassword._errors).toContain(t.passwordsDontMatch);
       /*
-        We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the username exists.
+        We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
       */
       (prisma.user.findUnique as jest.Mock).mockResolvedValue({
-        username: "usernameExists",
+        email: "exists@mail.test",
       });
 
       response = await postSignupHandler(
         createMockRequest({
-          username: "usernameExists",
+          email: "exists@mail.test",
           password: "Password@123",
           confirmPassword: "Password@123",
         }),
@@ -162,15 +162,15 @@ describe("POST - Singup API", () => {
       ({ error } = await response.json());
 
       expect(response.status).toBe(409);
-      expect(error).toBe(t.usernameExists);
+      expect(error).toBe(t.emailExists);
       /*
-        Should return a 500 status and an error message when the username is valid and available to use but the creation failed.
+        Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
       */
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(undefined);
       (prisma.user.create as jest.Mock).mockResolvedValue(undefined);
       response = await postSignupHandler(
         createMockRequest({
-          username: "usernameDoesNotExist",
+          email: "doesntExist@mail.test",
           password: "Password@123",
           confirmPassword: "Password@123",
         }),
@@ -180,14 +180,14 @@ describe("POST - Singup API", () => {
       expect(error).toBe(t.error);
       /*
         A success creation should return a 201 status and a success message.
-        We didn't mock the findUnique because it is already mocked above to return undefined which mean the username is available to use.
+        We didn't mock the findUnique because it is already mocked above to return undefined which mean the email is available to use.
       */
       (prisma.user.create as jest.Mock).mockResolvedValue({
-        username: "username",
+        email: "valid@mail.test",
       });
       response = await postSignupHandler(
         createMockRequest({
-          username: "username",
+          email: "valid@mail.test",
           password: "Password@123",
           confirmPassword: "Password@123",
         }),
