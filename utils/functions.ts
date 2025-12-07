@@ -35,3 +35,20 @@ export const getUserSignupSchema = (t: any) => {
       path: ["confirmPassword"],
     });
 };
+
+/**
+ * Gets the user signin zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getUserSignInSchema = (t: any) => {
+  return z.object({
+    username: z
+      .string({ message: t("usernameString") })
+      .min(1, t("usernameRequired")),
+      
+    password: z
+      .string({ message: t("passwordString") })
+      .min(1, t("passwordRequired")),
+  });
+};
