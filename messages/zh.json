@@ -43,6 +43,15 @@
     "success": "用户创建成功",
     "error": "出现问题，请重试"
   },
+  "signinValidation": {
+    "usernameString": "用户名必须是字符串",
+    "usernameRequired": "用户名是必填项",
+    "passwordString": "密码必须是字符串",
+    "passwordRequired": "密码是必填项",
+    "invalidCredentials": "用户名或密码不正确",
+    "success": "登录成功",
+    "error": "发生错误。请重试"
+  },
   "header": {
     "socialAuthentication": "社交认证",
     "connect": "连接",

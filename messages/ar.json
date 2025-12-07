@@ -43,6 +43,15 @@
     "success": "تم إنشاء المستخدم بنجاح",
     "error": "حدث خطأ ما. حاول مرة أخرى"
   },
+  "signinValidation": {
+    "usernameString": "يجب أن يكون اسم المستخدم سلسلة نصية",
+    "usernameRequired": "اسم المستخدم مطلوب",
+    "passwordString": "يجب أن تكون كلمة المرور سلسلة نصية",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "success": "تم تسجيل الدخول بنجاح",
+    "error": "حدث خطأ ما. حاول مرة أخرى"
+  },
   "header": {
     "socialAuthentication": "المصادقة الاجتماعية",
     "connect": "اتصل",

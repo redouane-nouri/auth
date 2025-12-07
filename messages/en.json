@@ -43,6 +43,15 @@
     "success": "User created successfully",
     "error": "Something went wrong. Please try again"
   },
+  "signinValidation": {
+    "usernameString": "Username must be a string",
+    "usernameRequired": "Username is required",
+    "passwordString": "Password must be a string",
+    "passwordRequired": "Password is required",
+    "invalidCredentials": "Invalid username or password",
+    "success": "Signed in successfully",
+    "error": "Something went wrong. Please try again"
+  },
   "header": {
     "socialAuthentication": "Social Authentication",
     "connect": "Connect",

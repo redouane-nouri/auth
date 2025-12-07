@@ -43,6 +43,15 @@
     "success": "Usuario creado con éxito",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
+  "signinValidation": {
+    "usernameString": "El nombre de usuario debe ser una cadena de texto",
+    "usernameRequired": "El nombre de usuario es obligatorio",
+    "passwordString": "La contraseña debe ser una cadena de texto",
+    "passwordRequired": "La contraseña es obligatoria",
+    "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
+    "success": "Inicio de sesión exitoso",
+    "error": "Algo salió mal. Inténtalo de nuevo"
+  },
   "header": {
     "socialAuthentication": "Autenticación social",
     "connect": "Conectar",
