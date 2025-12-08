@@ -43,12 +43,13 @@ export const getUserSignupSchema = (t: any) => {
 export const getUserSignInSchema = (t: any) => {
   return z.object({
     email: z
-    .string({ message: t("emailString") })
-    .max(60, t("emailMax"))
-    .email(t("emailInvalid")),
-      
+      .string({ message: t("emailString") })
+      .max(60, t("emailMax"))
+      .email(t("emailInvalid")),
+
     password: z
       .string({ message: t("passwordString") })
-      .min(1, t("passwordRequired")),
+      .min(8, t("passwordMin"))
+      .max(60, t("passwordMax")),
   });
 };
