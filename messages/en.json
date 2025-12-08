@@ -1,5 +1,5 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "Login",
     "emailTitle": "Email",
     "emailPlaceholder": "Enter your email",
@@ -45,8 +45,10 @@
   "signinValidation": {
     "emailString": "Email must be a string",
     "emailInvalid": "Enter a valid email address",
+    "passwordMax": "Password must be at most 60 characters long",
+    "passwordMin": "Password must be at least 8 characters long",
+    "emailMax": "Email must be a maximum of 60 characters",
     "passwordString": "Password must be a string",
-    "passwordRequired": "Password is required",
     "invalidCredentials": "Invalid email or password",
     "success": "Signed in successfully",
     "error": "Something went wrong. Please try again"

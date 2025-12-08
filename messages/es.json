@@ -1,5 +1,5 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "Iniciar sesión",
     "emailTitle": "Correo electrónico",
     "emailPlaceholder": "Introduce tu correo electrónico",
@@ -43,8 +43,10 @@
   "signinValidation": {
     "emailString": "El correo electrónico debe ser una cadena",
     "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "passwordString": "La contraseña debe ser una cadena",
-    "passwordRequired": "La contraseña es obligatoria",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
     "success": "Inicio de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"

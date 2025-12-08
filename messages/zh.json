@@ -1,5 +1,5 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "登录",
     "emailTitle": "邮箱",
     "emailPlaceholder": "请输入您的邮箱",
@@ -46,7 +46,9 @@
     "emailString": "邮箱必须是字符串",
     "emailInvalid": "请输入有效的邮箱地址",
     "passwordString": "密码必须是字符串",
-    "passwordRequired": "密码为必填项",
+    "passwordMax": "密码长度最多为30个字符",
+    "passwordMin": "密码长度至少为8个字符",
+    "emailMax": "电子邮件最多可包含 60 个字符",
     "invalidCredentials": "用户名或密码不正确",
     "success": "登录成功",
     "error": "发生错误，请稍后再试"
