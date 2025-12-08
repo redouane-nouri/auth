@@ -105,10 +105,7 @@ describe("POST - Singup API", () => {
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.email._errors).toEqual([
-        t.emailString,
-        t.emailInvalid,
-      ]);
+      expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toEqual([
         t.passwordMin,
         t.passwordRegexLowercase,
@@ -117,26 +114,27 @@ describe("POST - Singup API", () => {
         t.passwordSpecialCharacter,
       ]);
       /*
-        Valid attributes with length > 30 should trigger the max length error.
+        Valid attributes with length > 60 should trigger the max length error.
       */
+     const longString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
       response = await postSignupHandler(
         createMockRequest({
-          email: "abcdefghijklmnopqrstuvwxyz0123456789",
-          password: "abcdefghijklmnopqrstuvwxyz0123456789",
+          email: longString,
+          password: longString,
           confirmPassword: "any",
         }),
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.email._errors).toContain(t.emailInvalid);
+      expect(error.email._errors).toContain(t.emailMax);
       expect(error.password._errors).toContain(t.passwordMax);
       /*
         Should check password matching and return an error message that the passwords does not match with 400 status.
       */
       response = await postSignupHandler(
         createMockRequest({
-          email: "valid",
+          email: "valid@mail.test",
           password: "Password@123",
           confirmPassword: "notMatching",
         }),
@@ -170,7 +168,7 @@ describe("POST - Singup API", () => {
       (prisma.user.create as jest.Mock).mockResolvedValue(undefined);
       response = await postSignupHandler(
         createMockRequest({
-          email: "doesntExist@mail.test",
+          email: "valid@mail.test",
           password: "Password@123",
           confirmPassword: "Password@123",
         }),

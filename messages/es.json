@@ -25,7 +25,8 @@
   "signupValidation": {
     "passwordString": "La contraseña debe ser una cadena",
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
-    "passwordMax": "La contraseña debe tener como máximo 30 caracteres",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
     "passwordRegexLowercase": "La contraseña debe contener al menos una letra minúscula",
     "passwordRegexUppercase": "La contraseña debe contener al menos una letra mayúscula",
     "passwordRegexNumber": "La contraseña debe contener al menos un número",

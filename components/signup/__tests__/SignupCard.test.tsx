@@ -63,7 +63,7 @@ describe("Signup Card", () => {
   );
 
   /*
-    Clicking the signup button with empty data should display email and password required hints
+    Clicking the signup button with empty data should display email is invalid and password is required hints
   */
   it.each(Object.values(LanguageCode))(
     "Should display email and password required hints in %s language",
@@ -87,7 +87,7 @@ describe("Signup Card", () => {
         Assert that email and password min message (required) is displayed with the correct language and place
       */
       expect(screen.getByTestId("emailHint")).toHaveTextContent(
-        t.emailString,
+        t.emailInvalid,
       );
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
@@ -96,7 +96,7 @@ describe("Signup Card", () => {
   );
 
   /*
-    A maximum error message should be displayed when the max length is exceeded (30 char)
+    A maximum error message should be displayed when the max length is exceeded (60 char)
   */
   it.each(Object.values(LanguageCode))(
     "Should display email and password max length is exceeded hints in %s language",
@@ -121,7 +121,7 @@ describe("Signup Card", () => {
         Assert that email and password max length message is displayed with the correct language and place.
       */
       expect(screen.getByTestId("emailHint")).toHaveTextContent(
-        t.emailInvalid,
+        t.emailMax,
       );
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMax,
@@ -130,10 +130,10 @@ describe("Signup Card", () => {
   );
 
   /*
-    A regex error message should be displayed when the regex is violated for email or password
+    A regex error message should be displayed when the regex is for password
   */
   it.each(Object.values(LanguageCode))(
-    "Should display email and password regex hints in %s language",
+    "Should display password regex hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -144,19 +144,17 @@ describe("Signup Card", () => {
       */
       render(<SignupCard />);
       /*
-        Act by inserting invalid regex for both email and password
+        Act by inserting invalid regex for password
       */
       const passwordInput = screen.getByTestId("passwordInput");
       const emailInput = screen.getByTestId("emailInput");
-      await userEvent.type(emailInput, "invalid#!@#");
+      await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercase");
       await userEvent.click(screen.getByTestId("submitButton"));
-      const emailHintSpan = screen.getByTestId("emailHint");
       const passwordHintSpan = screen.getByTestId("passwordHint");
       /*
-        Assert that email and password regex message is displayed with the correct language and place.
+        Assert that password regex message is displayed with the correct language and place.
       */
-      expect(emailHintSpan).toHaveTextContent(t.emailInvalid);
       expect(passwordHintSpan).toHaveTextContent(t.passwordRegexUppercase);
       /*
         Add uppercase letters
@@ -173,7 +171,7 @@ describe("Signup Card", () => {
         t.passwordSpecialCharacter,
       );
       /*
-        Respect the regex for email and password (by adding special chars for password), then expect no hint messages.
+        Respect the email and password constraints then expect no hint messages.
       */
       await userEvent.clear(emailInput);
       await userEvent.clear(passwordInput);

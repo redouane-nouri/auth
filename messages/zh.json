@@ -31,6 +31,7 @@
     "passwordString": "密码必须是字符串",
     "passwordMin": "密码长度至少为8个字符",
     "passwordMax": "密码长度最多为30个字符",
+    "emailMax": "电子邮件最多可包含 60 个字符",
     "passwordRegexLowercase": "密码必须包含至少一个小写字母",
     "passwordRegexUppercase": "密码必须包含至少一个大写字母",
     "passwordRegexNumber": "密码必须包含至少一个数字",

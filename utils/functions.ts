@@ -10,12 +10,12 @@ export const getUserSignupSchema = (t: any) => {
     .object({
       email: z
         .string({ message: t("emailString") })
-        .min(1, t("emailString"))
+        .max(60, t("emailMax"))
         .email(t("emailInvalid")),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
-        .max(30, t("passwordMax"))
+        .max(60, t("passwordMax"))
         .regex(/[a-z]/, t("passwordRegexLowercase"))
         .regex(/[A-Z]/, t("passwordRegexUppercase"))
         .regex(/[0-9]/, t("passwordRegexNumber"))
@@ -44,7 +44,7 @@ export const getUserSignInSchema = (t: any) => {
   return z.object({
     email: z
     .string({ message: t("emailString") })
-    .min(1, t("emailString"))
+    .max(60, t("emailMax"))
     .email(t("emailInvalid")),
       
     password: z
