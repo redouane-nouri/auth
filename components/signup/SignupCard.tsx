@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowRightIcon,
@@ -21,16 +22,16 @@ import axios from "axios";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Axios } from "../../lib/axios/axios";
+import { api } from "../../lib/axios/axios";
 import { getUserSignupSchema } from "../../utils/functions";
 
 const SignupCard = () => {
   /*
-    The mutation instance that will be use to signup post request.
+    The mutation instance that will be used to signup post request.
   */
   const mutation = useMutation({
     mutationFn: (data: z.infer<typeof userSignupSchema>) => {
-      return Axios.post("/api/v1/auth/signup", data);
+      return api.post("/auth/signup", data);
     },
     onSuccess() {
       /*

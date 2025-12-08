@@ -1,6 +1,6 @@
 import { Box, Container, Tabs } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import LoginCard from "../login/LoginCard";
+import SigninCard from "../signin/SigninCard";
 import SignupCard from "../signup/SignupCard";
 
 export default function Connect() {
@@ -21,7 +21,7 @@ export default function Connect() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content className="TabsContent" value="login">
-            <LoginCard />
+            <SigninCard />
           </Tabs.Content>
           <Tabs.Content className="TabsContent" value="signup">
             <SignupCard />
