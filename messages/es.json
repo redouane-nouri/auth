@@ -11,7 +11,8 @@
     "logIn": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
-    "orSeparator": "- O -"
+    "orSeparator": "- O -",
+    "success": "Inicio de sesión exitoso"
   },
   "signupCard": {
     "signupHeading": "Registro",

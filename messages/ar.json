@@ -11,7 +11,8 @@
     "logIn": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
     "signUpNow": "سجل الآن",
-    "orSeparator": "- أو -"
+    "orSeparator": "- أو -",
+    "success": "تم تسجيل الدخول بنجاح"
   },
   "signupCard": {
     "signupHeading": "التسجيل",

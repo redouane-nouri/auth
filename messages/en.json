@@ -11,7 +11,8 @@
     "logIn": "Log In",
     "noAccount": "No account?",
     "signUpNow": "Sign up now!",
-    "orSeparator": "- Or -"
+    "orSeparator": "- Or -",
+    "success": "Signed in successfully"
   },
   "signupCard": {
     "signupHeading": "Signup",

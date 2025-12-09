@@ -11,7 +11,8 @@
     "logIn": "Войти",
     "noAccount": "Нет аккаунта?",
     "signUpNow": "Зарегистрируйтесь сейчас!",
-    "orSeparator": "- Или -"
+    "orSeparator": "- Или -",
+    "success": "Вход выполнен успешно"
   },
   "signupCard": {
     "signupHeading": "Регистрация",

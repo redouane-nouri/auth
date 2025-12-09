@@ -11,7 +11,8 @@
     "logIn": "登录",
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
-    "orSeparator": "- 或 -"
+    "orSeparator": "- 或 -",
+    "success": "登录成功"
   },
   "signupCard": {
     "signupHeading": "注册",
