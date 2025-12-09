@@ -25,8 +25,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const SigninCard = () => {
+  const router = useRouter();
   const t = useTranslations("signinCard");
 
   const SignInSchema = getUserSignInSchema(useTranslations("signinValidation"));
@@ -46,12 +48,14 @@ const SigninCard = () => {
         password: data.password,
         redirect: false,
       });
-  
-      return res;
-    },
-  });
 
-  
+      if(!res.ok || res.code || res.error)
+        throw new Error(res.code || t("error"));
+    },
+    onSuccess(){
+      router.push("/");
+    }
+  });
 
   const handleSubmitForm = (data: z.infer<typeof SignInSchema>) => {
     mutation.mutate(data);
@@ -102,7 +106,15 @@ const SigninCard = () => {
               </Box>
               {mutation.isError && (
                 <Badge color="crimson" className="!p-3">
-                  {t("invalidCredentials")}
+                {mutation.error.message}
+                </Badge>
+              )}
+               {mutation.isSuccess && (
+                <Badge
+                  color="grass"
+                  className="!p-3"
+                >
+                  {t("success")}
                 </Badge>
               )}
               <Button type="submit" loading={mutation.isPending} highContrast>
