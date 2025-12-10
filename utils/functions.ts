@@ -8,6 +8,11 @@ import { z } from "zod";
 export const getUserSignupSchema = (t: any) => {
   return z
     .object({
+      name: z
+        .string({ message: t("nameString") })
+        .trim()
+        .min(1, t("nameRequired"))
+        .max(60, t("nameMax")),
       email: z
         .string({ message: t("emailString") })
         .trim()
