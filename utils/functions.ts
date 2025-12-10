@@ -10,8 +10,10 @@ export const getUserSignupSchema = (t: any) => {
     .object({
       email: z
         .string({ message: t("emailString") })
+        .trim()
         .max(60, t("emailMax"))
-        .email(t("emailInvalid")),
+        .email(t("emailInvalid"))
+        .toLowerCase(),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
@@ -41,15 +43,18 @@ export const getUserSignupSchema = (t: any) => {
  * @returns zod schema
  */
 export const getUserSignInSchema = (t: any) => {
-  return z.object({
-    email: z
-      .string({ message: t("emailString") })
-      .max(60, t("emailMax"))
-      .email(t("emailInvalid")),
-
-    password: z
-      .string({ message: t("passwordString") })
-      .min(8, t("passwordMin"))
-      .max(60, t("passwordMax")),
-  });
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
+      password: z
+        .string({ message: t("passwordString") })
+        .min(8, t("passwordMin"))
+        .max(60, t("passwordMax")),
+    })
+    .strict(t("validAttributes"));
 };
