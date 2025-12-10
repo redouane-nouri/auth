@@ -18,6 +18,8 @@
     "signupHeading": "注册",
     "emailTitle": "邮箱",
     "emailPlaceholder": "请输入您的邮箱",
+    "nameTitle": "姓名",
+    "namePlaceholder": "请输入您的姓名",
     "passwordTitle": "密码",
     "passwordPlaceholder": "输入您的密码",
     "confirmPassword": "确认密码",
@@ -41,7 +43,10 @@
     "passwordsDontMatch": "两次输入的密码不一致",
     "confirmPasswordString": "确认密码必须是字符串",
     "success": "用户创建成功",
-    "error": "出现问题，请重试"
+    "error": "出现问题，请重试",
+    "nameString": "姓名必须是字符串",
+    "nameMax": "姓名最多只能有 60 个字符",
+    "nameRequired": "姓名为必填项"
   },
   "signinValidation": {
     "emailString": "邮箱必须是字符串",
@@ -49,6 +54,7 @@
     "passwordString": "密码必须是字符串",
     "passwordMax": "密码长度最多为30个字符",
     "passwordMin": "密码长度至少为8个字符",
+    "validAttributes": "请求仅接受以下属性: 邮箱、密码和确认密码。",
     "emailMax": "电子邮件最多可包含 60 个字符",
     "invalidCredentials": "用户名或密码不正确",
     "success": "登录成功",

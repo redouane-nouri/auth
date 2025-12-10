@@ -20,6 +20,10 @@
     "passwordPlaceholder": "Ingrese su contraseña",
     "confirmPassword": "Confirmar contraseña",
     "confirmPasswordPlaceholder": "Confirme su contraseña",
+    "emailTitle": "Correo electrónico",
+    "emailPlaceholder": "Ingrese su correo electrónico",
+    "nameTitle": "Nombre",
+    "namePlaceholder": "Ingrese su nombre",
     "signUp": "Regístrate",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
@@ -39,6 +43,9 @@
     "emailString": "El correo electrónico debe ser una cadena",
     "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
     "success": "Usuario creado con éxito",
+    "nameString": "El nombre debe ser una cadena de texto",
+    "nameRequired": "El nombre es obligatorio",
+    "nameMax": "El nombre debe tener un máximo de 60 caracteres",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signinValidation": {
@@ -47,6 +54,7 @@
     "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
     "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordString": "La contraseña debe ser una cadena",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
     "success": "Inicio de sesión exitoso",
