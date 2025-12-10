@@ -138,17 +138,14 @@ export async function POST(request: NextRequest) {
         {
           error: result.error.format(),
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
     /*
       If the email already exist then send a 409 status for conflict and an error message.
     */
     if (await prisma.user.findUnique({ where: { email: body.email } })) {
-      return NextResponse.json(
-        { error: t("emailExists") },
-        { status: 409 },
-      );
+      return NextResponse.json({ error: t("emailExists") }, { status: 409 });
     }
     /*
       Create the user and check the return value. If not created, then return an error with 500 status for internal server error.
@@ -156,6 +153,7 @@ export async function POST(request: NextRequest) {
     if (
       !(await prisma.user.create({
         data: {
+          name: body.name,
           email: body.email,
           password: await bcrypt.hash(body.password, 10),
         },

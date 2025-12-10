@@ -5,6 +5,7 @@ import {
   ArrowRightIcon,
   LockClosedIcon,
   PersonIcon,
+  EnvelopeClosedIcon
 } from "@radix-ui/react-icons";
 import {
   Badge,
@@ -76,6 +77,29 @@ const SignupCard = () => {
             <Flex direction="column" gapY="4">
               <Heading>{t("signupHeading")}</Heading>
               <Box>
+                <Text>{t("nameTitle")}</Text>
+                <TextField.Root
+                  aria-label={t("namePlaceholder")}
+                  placeholder={t("namePlaceholder")}
+                  {...register("name")}
+                  size="2"
+                  data-testid="nameInput"
+                >
+                  <TextField.Slot>
+                    <PersonIcon />
+                  </TextField.Slot>
+                </TextField.Root>
+                {errors.name && (
+                  <Text
+                    data-testid="nameHint"
+                    color="crimson"
+                    size="1"
+                  >
+                    {errors.name.message}
+                  </Text>
+                )}
+              </Box>
+              <Box>
                 <Text>{t("emailTitle")}</Text>
                 <TextField.Root
                   aria-label={t("emailPlaceholder")}
@@ -85,7 +109,7 @@ const SignupCard = () => {
                   data-testid="emailInput"
                 >
                   <TextField.Slot>
-                    <PersonIcon />
+                    <EnvelopeClosedIcon />
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.email && (
