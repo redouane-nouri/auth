@@ -63,10 +63,10 @@ describe("Signup Card", () => {
   );
 
   /*
-    Clicking the signup button with empty data should display email is invalid and password is required hints
+    Clicking the signup button with empty data should display email is invalid, name and password is required hints
   */
   it.each(Object.values(LanguageCode))(
-    "Should display email and password required hints in %s language",
+    "Should display name, email and password required hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -84,8 +84,11 @@ describe("Signup Card", () => {
       */
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
-        Assert that email and password min message (required) is displayed with the correct language and place
+        Assert that name, email and password min message (required) is displayed with the correct language and place
       */
+      expect(screen.getByTestId("nameHint")).toHaveTextContent(
+        t.nameRequired,
+      );
       expect(screen.getByTestId("emailHint")).toHaveTextContent(
         t.emailInvalid,
       );
@@ -99,7 +102,7 @@ describe("Signup Card", () => {
     A maximum error message should be displayed when the max length is exceeded (60 char)
   */
   it.each(Object.values(LanguageCode))(
-    "Should display email and password max length is exceeded hints in %s language",
+    "Should display name, email and password max length is exceeded hints in %s language",
     async (languageValueEnum) => {
       translationsObject.setCurrentLanguage(
         languageValueEnum as LanguageCode,
@@ -114,12 +117,16 @@ describe("Signup Card", () => {
       /*
         Act by inserting long string in email & password inputs.
       */
+      await userEvent.type(screen.getByTestId("nameInput"), longString);
       await userEvent.type(screen.getByTestId("emailInput"), longString);
       await userEvent.type(screen.getByTestId("passwordInput"), longString);
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
-        Assert that email and password max length message is displayed with the correct language and place.
+        Assert that name, email and password max length message is displayed with the correct language and place.
       */
+      expect(screen.getByTestId("nameHint")).toHaveTextContent(
+        t.nameMax,
+      );
       expect(screen.getByTestId("emailHint")).toHaveTextContent(
         t.emailMax,
       );
@@ -148,6 +155,8 @@ describe("Signup Card", () => {
       */
       const passwordInput = screen.getByTestId("passwordInput");
       const emailInput = screen.getByTestId("emailInput");
+      const nameInput = screen.getByTestId("nameInput");
+      await userEvent.type(nameInput, "valid");
       await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercase");
       await userEvent.click(screen.getByTestId("submitButton"));
@@ -175,8 +184,11 @@ describe("Signup Card", () => {
       */
       await userEvent.clear(emailInput);
       await userEvent.clear(passwordInput);
+      await userEvent.clear(nameInput);
+      await userEvent.type(nameInput, "valid");
       await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercaseUPPERCASE123!@#");
+      expect(screen.queryByTestId("nameHint")).toBeNull();
       expect(screen.queryByTestId("emailHint")).toBeNull();
       expect(screen.queryByTestId("passwordHint")).toBeNull();
     },
@@ -199,10 +211,10 @@ describe("Signup Card", () => {
       /*
         Act by inserting non-equal passwords
       */
-      await userEvent.type(screen.getByTestId("passwordInput"), "Password1@");
+      await userEvent.type(screen.getByTestId("passwordInput"), "ValidPassword1@");
       await userEvent.type(
         screen.getByTestId("confirmPasswordInput"),
-        "Password2@",
+        "ValidPassword2@",
       );
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
