@@ -63,9 +63,7 @@ describe("POST - Singup API", () => {
       /*
        Changing the current language to the one choosen in the test.
       */
-      translationsObject.setCurrentLanguage(
-        languageValueEnum as LanguageCode,
-      );
+      translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
       const t = translationsObject.getMessages().signupValidation;
       /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signupValidation namespace in the i18n messages JSON file chosen.
@@ -81,30 +79,31 @@ describe("POST - Singup API", () => {
         An extra attribute should trigger also an error message in the global "_errors" parameter.
       */
       response = await postSignupHandler(
-        createMockRequest({ invalidAttribute: "any" }),
+        createMockRequest({ invalidAttribute: "any" })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
       expect(error._errors).toContain(t.validAttributes);
+      expect(error.name._errors).toContain(t.nameString);
       expect(error.email._errors).toContain(t.emailString);
       expect(error.password._errors).toContain(t.passwordString);
-      expect(error.confirmPassword._errors).toContain(
-        t.confirmPasswordString,
-      );
+      expect(error.confirmPassword._errors).toContain(t.confirmPasswordString);
       /*
         Attributes with 0 length should trigger all zod constraints except the max constraint error message.
       */
       response = await postSignupHandler(
         createMockRequest({
+          name: "",
           email: "",
           password: "",
           confirmPassword: "",
-        }),
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
+      expect(error.name._errors).toContain(t.nameRequired);
       expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toEqual([
         t.passwordMin,
@@ -116,17 +115,20 @@ describe("POST - Singup API", () => {
       /*
         Valid attributes with length > 60 should trigger the max length error.
       */
-     const longString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      const longString =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       response = await postSignupHandler(
         createMockRequest({
+          name: longString,
           email: longString,
           password: longString,
           confirmPassword: "any",
-        }),
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
+      expect(error.name._errors).toContain(t.nameMax);
       expect(error.email._errors).toContain(t.emailMax);
       expect(error.password._errors).toContain(t.passwordMax);
       /*
@@ -134,10 +136,11 @@ describe("POST - Singup API", () => {
       */
       response = await postSignupHandler(
         createMockRequest({
+          name: "valid",
           email: "valid@mail.test",
-          password: "Password@123",
+          password: "Valid@123",
           confirmPassword: "notMatching",
-        }),
+        })
       );
       ({ error } = await response.json());
 
@@ -152,10 +155,11 @@ describe("POST - Singup API", () => {
 
       response = await postSignupHandler(
         createMockRequest({
+          name: "valid",
           email: "exists@mail.test",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       ({ error } = await response.json());
 
@@ -168,10 +172,11 @@ describe("POST - Singup API", () => {
       (prisma.user.create as jest.Mock).mockResolvedValue(undefined);
       response = await postSignupHandler(
         createMockRequest({
+          name: "valid",
           email: "valid@mail.test",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       ({ error } = await response.json());
       expect(response.status).toBe(500);
@@ -185,14 +190,15 @@ describe("POST - Singup API", () => {
       });
       response = await postSignupHandler(
         createMockRequest({
+          name: "valid",
           email: "valid@mail.test",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       let { message } = await response.json();
       expect(response.status).toBe(201);
       expect(message).toBe(t.success);
-    },
+    }
   );
 });
