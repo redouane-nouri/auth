@@ -1,28 +1,99 @@
 import { getUserSignInSchema } from "@/utils/functions";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { encode } from "next-auth/jwt";
 import { getTranslations } from "next-intl/server";
+import { v4 as uuidv4 } from "uuid";
 import prisma from "../prisma/prisma-client";
 import bcrypt from "bcrypt";
-
+/*
+  Customizable code message to show the user in credentials authentication
+*/
 class CredentialsSigninError extends CredentialsSignin {
   constructor(code: string) {
     super();
     this.code = code;
   }
 }
-
+/*
+  Type of the credentials var passed to the authorize method
+*/
 type CredentialsT = {
   email: string;
   password: string;
   csrfToken: string;
   callbackUrl: string;
 };
+/*
+  Prisma Adapter to store and control our own auth information
+*/
+const prismaAdapter = PrismaAdapter(prisma);
+/*
+  Session duration
+*/
+const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  /*
+    To be able to configure our own ednpoint (/api/v1/auth) instead of (/api/auth)
+  */
   basePath: process.env.AUTH_BASEPATH,
+  /*
+    Prisma adapter to control our own db
+  */
+  adapter: prismaAdapter,
+  callbacks: {
+    /*
+      Even we specefied an adapter which authjs automatically uses the "database" strategy, for credentials it uses a "jwt" strategy.
+      So if we want to use "database" strategy for a credentials provider, we need to tag the token as coming from credentials provider and modify it in the next step inside the encode method to use a session token.
+    */
+    async jwt({ token, account }) {
+      if (account?.provider === "credentials") token.credentials = true;
+      return token;
+    },
+  },
+  jwt: {
+    encode: async function (params) {
+      /*
+        If not a credentials auth, then just perform the default jwt encoding.
+      */
+      if (!params.token?.credentials) return encode(params);
+      /*
+        Get user Id
+      */
+      const userId = params.token.sub;
+      /*
+        Throw an error if no ID was provided
+      */
+      if (!userId) throw new Error("User not found");
+      /*
+        Create a session token
+      */
+      const sessionToken = uuidv4();
+      /*
+        Create a session record in our DB
+      */
+      const createdSession = await prismaAdapter.createSession?.({
+        sessionToken,
+        userId,
+        expires: new Date(Date.now() + THIRTY_DAYS),
+      });
+      /*
+        Throw an error of the creation failed
+      */
+      if (!createdSession) throw new Error("Session creation failed");
+      /*
+        Return the session token created
+      */
+      return sessionToken;
+    },
+  },
   providers: [
     Credentials({
+      /*
+        Used for the default login page, since we use our own page, just provide the params we need with empty conf.
+      */
       credentials: { email: {}, password: {} },
       authorize: async (credentials) => {
         /*
@@ -99,7 +170,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   /*
-    Our pages endpoints
+    Our own pages endpoints
   */
   pages: {
     signIn: "/connect",
