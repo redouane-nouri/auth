@@ -5,7 +5,7 @@ import {
   ArrowRightIcon,
   LockClosedIcon,
   PersonIcon,
-  EnvelopeClosedIcon
+  EnvelopeClosedIcon,
 } from "@radix-ui/react-icons";
 import {
   Badge,
@@ -49,7 +49,7 @@ const SignupCard = () => {
     Get Zod validation schema with the i18n messages.
   */
   const userSignupSchema = getUserSignupSchema(
-    useTranslations("signupValidation"),
+    useTranslations("signupValidation")
   );
   /*
     Signup button click handler.
@@ -90,11 +90,7 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.name && (
-                  <Text
-                    data-testid="nameHint"
-                    color="crimson"
-                    size="1"
-                  >
+                  <Text data-testid="nameHint" color="crimson" size="1">
                     {errors.name.message}
                   </Text>
                 )}
@@ -113,11 +109,7 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.email && (
-                  <Text
-                    data-testid="emailHint"
-                    color="crimson"
-                    size="1"
-                  >
+                  <Text data-testid="emailHint" color="crimson" size="1">
                     {errors.email.message}
                   </Text>
                 )}
@@ -136,11 +128,7 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.password && (
-                  <Text
-                    data-testid="passwordHint"
-                    color="crimson"
-                    size="1"
-                  >
+                  <Text data-testid="passwordHint" color="crimson" size="1">
                     {errors.password.message}
                   </Text>
                 )}
@@ -175,8 +163,8 @@ const SignupCard = () => {
                   className="!p-3"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (mutation.error.response?.data?.error ?? t("error"))
-                    : t("error")}
+                    ? mutation.error.response?.data?.error ?? t("error")
+                    : mutation.error.message}
                 </Badge>
               )}
               {mutation.isSuccess && (
