@@ -46,7 +46,8 @@
     "nameMax": "Name must be at most 60 characters",
     "nameRequired": "Name is required",
     "success": "User created successfully",
-    "error": "Something went wrong. Please try again"
+    "error": "Something went wrong. Please try again",
+    "alreadySignedIn": "You are already signed in"
   },
   "signinValidation": {
     "emailString": "Email must be a string",

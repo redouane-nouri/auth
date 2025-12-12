@@ -46,7 +46,8 @@
     "nameString": "يجب أن يكون الاسم سلسلة نصية",
     "nameRequired": "الاسم مطلوب",
     "nameMax": "يجب ألا يزيد الاسم عن 60 حرفًا",
-    "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
+    "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا",
+    "alreadySignedIn": "أنت مسجّل الدخول بالفعل"
   },
   "signinValidation": {
     "passwordString": "يجب أن تكون كلمة المرور سلسلة نصية",

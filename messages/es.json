@@ -46,7 +46,8 @@
     "nameString": "El nombre debe ser una cadena de texto",
     "nameRequired": "El nombre es obligatorio",
     "nameMax": "El nombre debe tener un máximo de 60 caracteres",
-    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "alreadySignedIn": "Ya has iniciado sesión"
   },
   "signinValidation": {
     "emailString": "El correo electrónico debe ser una cadena",

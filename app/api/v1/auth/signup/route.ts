@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma-client";
 import { getUserSignupSchema } from "../../../../../utils/functions";
+import { auth } from "@/lib/auth/auth";
 /**
  * @swagger
  * /auth/signup:
@@ -116,12 +117,21 @@ export async function POST(request: NextRequest) {
     It has to be here inside a request scope, if not, it will throw error because we are using `await cookies()` inside the `getTranslations()`, and the `cookies()` function is only callable from inside a request scope.
   */
   const t = await getTranslations("signupValidation");
-  /*
-    The schema to be used for signup input validation with i18n messages
-  */
-  const userSignupSchema = getUserSignupSchema(t);
 
   try {
+    /*
+      If user already signed in and tries to authenticate send a 409 status for conflict and an already signed in error message.
+    */
+    if (await auth())
+      return NextResponse.json(
+        { error: t("alreadySignedIn") },
+        { status: 409 }
+      );
+
+    /*
+      The schema to be used for signup input validation with i18n messages
+    */
+    const userSignupSchema = getUserSignupSchema(t);
     /*
       Extract the request body
     */

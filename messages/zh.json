@@ -46,7 +46,8 @@
     "error": "出现问题，请重试",
     "nameString": "姓名必须是字符串",
     "nameMax": "姓名最多只能有 60 个字符",
-    "nameRequired": "姓名为必填项"
+    "nameRequired": "姓名为必填项",
+    "alreadySignedIn": "您已经登录了"
   },
   "signinValidation": {
     "emailString": "邮箱必须是字符串",
