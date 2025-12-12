@@ -70,7 +70,10 @@
     "signUp": "注册"
   },
   "home": {
-    "home": "首页"
+    "home": "首页",
+    "signOut": "退出登录",
+    "successSignout": "注销成功",
+    "error": "出现了一些错误，请重试"
   },
   "404": {
     "pageNotFound": "页面未找到"

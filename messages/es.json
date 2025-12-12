@@ -70,7 +70,10 @@
     "signUp": "Regístrate"
   },
   "home": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "signOut": "Cerrar sesión",
+    "successSignout": "Cierre de sesión exitoso",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "404": {
     "pageNotFound": "Página no encontrada"

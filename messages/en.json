@@ -70,7 +70,10 @@
     "signUp": "Sign up"
   },
   "home": {
-    "home": "Home"
+    "home": "Home",
+    "signOut": "Sign Out",
+    "successSignout": "Signed out successfully",
+    "error": "Something went wrong. Please try again"
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {

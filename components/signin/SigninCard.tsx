@@ -49,7 +49,7 @@ const SigninCard = () => {
         redirect: false,
       });
 
-      if(!res.ok || res.code || res.error)
+      if(!res?.ok || res?.code || res?.error)
         throw new Error(res.code || t("error"));
     },
     onSuccess(){
