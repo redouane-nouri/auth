@@ -1,5 +1,6 @@
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
+import { auth } from "../../../../../../lib/auth/auth";
 import arMessages from "../../../../../../messages/ar.json";
 import { Translation } from "../../../../../../utils/classes";
 import { POST as postSignupHandler } from "../route";
@@ -28,6 +29,12 @@ jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
     findUnique: jest.fn(),
     create: jest.fn(),
   },
+}));
+/*
+  Mocking auth function to control test the use case where the user is already signed in and wants to signup
+*/
+jest.mock("../../../../../../lib/auth/auth", () => ({
+  auth: jest.fn(),
 }));
 /*
   Mocking the NextRequest and NextResponse imports in our POST API endpoint to prevent this error: ReferenceError: Request is not defined for NextRequest and Cannot read properties of undefined for NextResponse.
@@ -65,6 +72,10 @@ describe("POST - Singup API", () => {
       */
       translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
       const t = translationsObject.getMessages().signupValidation;
+      /*
+        Set auth session to null to prevent the trigger of already signed up error
+      */
+      (auth as jest.Mock).mockResolvedValue(null);
       /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signupValidation namespace in the i18n messages JSON file chosen.
         The try catch block is returning this error.
@@ -199,6 +210,21 @@ describe("POST - Singup API", () => {
       let { message } = await response.json();
       expect(response.status).toBe(201);
       expect(message).toBe(t.success);
+      /*
+        A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
+      */
+      (auth as jest.Mock).mockResolvedValue({ user: {} });
+      response = await postSignupHandler(
+        createMockRequest({
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
+      );
+      ({ error } = await response.json());
+      expect(response.status).toBe(409);
+      expect(error).toBe(t.alreadySignedIn);
     }
   );
 });
