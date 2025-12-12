@@ -58,7 +58,8 @@
     "passwordString": "La contraseña debe ser una cadena",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
     "success": "Inicio de sesión exitoso",
-    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
     "socialAuthentication": "Autenticación social",

@@ -58,7 +58,8 @@
     "emailMax": "电子邮件最多可包含 60 个字符",
     "invalidCredentials": "用户名或密码不正确",
     "success": "登录成功",
-    "error": "发生错误，请稍后再试"
+    "error": "发生错误，请稍后再试",
+    "alreadySignedIn": "您已经登录了"
   },
   "header": {
     "socialAuthentication": "社交认证",

@@ -58,7 +58,8 @@
     "passwordString": "Password must be a string",
     "invalidCredentials": "Invalid email or password",
     "success": "Signed in successfully",
-    "error": "Something went wrong. Please try again"
+    "error": "Something went wrong. Please try again",
+    "alreadySignedIn": "You are already signed in"
   },
   "header": {
     "socialAuthentication": "Social Authentication",

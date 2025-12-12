@@ -96,16 +96,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       */
       credentials: { email: {}, password: {} },
       authorize: async (credentials) => {
-        /*
-          Extract email and password
-        */
-        const { email, password } = credentials as CredentialsT;
-
         try {
           /*
             Get transaltions function
           */
           const t = await getTranslations("signinValidation");
+          /*
+            If user already signed in throw an error with already signed in message
+          */
+          if (await auth())
+            throw new CredentialsSigninError(t("alreadySignedIn"));
+          /*
+            Extract email and password
+          */
+          const { email, password } = credentials as CredentialsT;
           /*
             Get tuser sigin schema
           */
