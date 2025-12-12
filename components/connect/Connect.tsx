@@ -1,13 +1,13 @@
 import { Box, Container, Tabs } from "@radix-ui/themes";
-import { useTranslations } from "next-intl";
 import SigninCard from "../signin/SigninCard";
 import SignupCard from "../signup/SignupCard";
+import { getTranslations } from "next-intl/server";
 
-export default function Connect() {
+export default async function Connect() {
   /*
     Use `connect` translations.
   */
-  const t = useTranslations("connect");
+  const t = await getTranslations("connect");
   return (
     <Box>
       <Container size="1" className="mt-10">
