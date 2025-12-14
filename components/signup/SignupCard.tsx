@@ -191,6 +191,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   {t("haveAccount")}
                   <Strong
                     onClick={switchToSignin}
+                    data-testid="switchToSigninButton"
                     className="hover:border-b-2 cursor-pointer ml-2 mr-1"
                   >
                     {t("signInNow")}

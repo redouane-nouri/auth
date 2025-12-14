@@ -59,7 +59,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      const { container } = render(<SignupCard />);
+      const { container } = render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert
       */
@@ -81,7 +81,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by clicking on the submit button
       */
@@ -110,7 +110,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting long string in email & password inputs.
       */
@@ -140,7 +140,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting invalid regex for password
       */
@@ -194,7 +194,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting non-equal passwords
       */
@@ -241,7 +241,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert unexpected error is displayed.
       */
@@ -271,14 +271,31 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert axios error is displayed.
       */
       expect(screen.getByTestId("errorBadge")).toHaveTextContent("Axios error");
     }
   );
-
+  /*
+    To check switching to signin works from the "Have an account? Sign in now!" message
+  */
+  it("Should switch to signin page", async () => {
+    const switchToSignin = jest.fn();
+    /*
+      Arrange.
+    */
+    render(<SignupCard switchToSignin={switchToSignin} />);
+    /*
+      Act
+    */
+    await userEvent.click(screen.getByTestId("switchToSigninButton"));
+    /*
+      Assert function has been called
+    */
+    expect(switchToSignin).toHaveBeenCalledTimes(1);
+  });
   /*
     To check success creation message is displayed correctly.
   */
@@ -299,7 +316,7 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert success message is displayed.
       */

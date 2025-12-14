@@ -201,6 +201,21 @@ exports[`Signup Card Should render UI with ar language 1`] = `
                   />
                 </svg>
               </button>
+              <div
+                class="rt-Flex rt-r-ai-center"
+              >
+                <span
+                  class="rt-Text rt-r-size-2"
+                >
+                  لديك حساب؟
+                  <strong
+                    class="rt-Strong hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    data-testid="switchToSigninButton"
+                  >
+                    سجّل الدخول الآن!
+                  </strong>
+                </span>
+              </div>
             </div>
           </form>
         </div>
@@ -411,6 +426,21 @@ exports[`Signup Card Should render UI with en language 1`] = `
                   />
                 </svg>
               </button>
+              <div
+                class="rt-Flex rt-r-ai-center"
+              >
+                <span
+                  class="rt-Text rt-r-size-2"
+                >
+                  Have an account?
+                  <strong
+                    class="rt-Strong hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    data-testid="switchToSigninButton"
+                  >
+                    Sign in now!
+                  </strong>
+                </span>
+              </div>
             </div>
           </form>
         </div>
@@ -621,6 +651,21 @@ exports[`Signup Card Should render UI with es language 1`] = `
                   />
                 </svg>
               </button>
+              <div
+                class="rt-Flex rt-r-ai-center"
+              >
+                <span
+                  class="rt-Text rt-r-size-2"
+                >
+                  ¿Tienes una cuenta?
+                  <strong
+                    class="rt-Strong hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    data-testid="switchToSigninButton"
+                  >
+                    ¡Inicia sesión ahora!
+                  </strong>
+                </span>
+              </div>
             </div>
           </form>
         </div>
@@ -831,6 +876,21 @@ exports[`Signup Card Should render UI with ru language 1`] = `
                   />
                 </svg>
               </button>
+              <div
+                class="rt-Flex rt-r-ai-center"
+              >
+                <span
+                  class="rt-Text rt-r-size-2"
+                >
+                  У вас есть аккаунт?
+                  <strong
+                    class="rt-Strong hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    data-testid="switchToSigninButton"
+                  >
+                    Войти сейчас!
+                  </strong>
+                </span>
+              </div>
             </div>
           </form>
         </div>
@@ -1041,6 +1101,21 @@ exports[`Signup Card Should render UI with zh language 1`] = `
                   />
                 </svg>
               </button>
+              <div
+                class="rt-Flex rt-r-ai-center"
+              >
+                <span
+                  class="rt-Text rt-r-size-2"
+                >
+                  已有账号？
+                  <strong
+                    class="rt-Strong hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    data-testid="switchToSigninButton"
+                  >
+                    立即登录！
+                  </strong>
+                </span>
+              </div>
             </div>
           </form>
         </div>
