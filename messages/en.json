@@ -16,6 +16,8 @@
   },
   "signupCard": {
     "signupHeading": "Signup",
+    "haveAccount": "Have an account?",
+    "signInNow": "Sign in now!",
     "emailTitle": "Email",
     "emailPlaceholder": "Enter your email",
     "nameTitle": "Name",

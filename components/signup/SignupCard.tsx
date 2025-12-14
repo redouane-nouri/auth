@@ -15,6 +15,7 @@ import {
   Container,
   Flex,
   Heading,
+  Strong,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -26,7 +27,7 @@ import { z } from "zod";
 import { api } from "../../lib/axios/axios";
 import { getUserSignupSchema } from "../../utils/functions";
 
-const SignupCard = () => {
+const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
   /*
     The mutation instance that will be used to signup post request.
   */
@@ -185,6 +186,17 @@ const SignupCard = () => {
                 {t("signUp")}
                 <ArrowRightIcon />
               </Button>
+              <Flex align="center">
+                <Text size="2">
+                  {t("haveAccount")}
+                  <Strong
+                    onClick={switchToSignin}
+                    className="hover:border-b-2 cursor-pointer ml-2 mr-1"
+                  >
+                    {t("signInNow")}
+                  </Strong>
+                </Text>
+              </Flex>
             </Flex>
           </form>
         </Card>

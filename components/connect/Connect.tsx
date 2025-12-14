@@ -33,7 +33,7 @@ export default function Connect() {
             <SigninCard switchToSignup={() => setTab("signup")} />
           </Tabs.Content>
           <Tabs.Content className="TabsContent" value="signup">
-            <SignupCard />
+            <SignupCard switchToSignin={() => setTab("login")} />
           </Tabs.Content>
         </Tabs.Root>
       </Container>
