@@ -1,4 +1,4 @@
-import { getUserSignInSchema } from "@/utils/functions";
+import { getSignInWithCredentialsSchema } from "@/utils/functions";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -113,7 +113,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           /*
             Get tuser sigin schema
           */
-          const userSigninSchema = getUserSignInSchema(t);
+          const userSigninSchema = getSignInWithCredentialsSchema(t);
           /*
             Validate email and password through signin schema
           */

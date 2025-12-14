@@ -12,7 +12,8 @@
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
     "orSeparator": "- 或 -",
-    "success": "登录成功"
+    "success": "登录成功",
+    "sendLoginLink": "发送登录链接"
   },
   "signupCard": {
     "haveAccount": "已有账号？",

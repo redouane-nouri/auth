@@ -12,7 +12,8 @@
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
     "orSeparator": "- O -",
-    "success": "Inicio de sesión exitoso"
+    "success": "Inicio de sesión exitoso",
+    "sendLoginLink": "Enviar enlace de inicio de sesión"
   },
   "signupCard": {
     "haveAccount": "¿Tienes una cuenta?",

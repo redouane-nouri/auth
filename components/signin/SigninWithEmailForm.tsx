@@ -2,32 +2,24 @@
 
 import {
   ArrowRightIcon,
-  LockClosedIcon,
   EnvelopeClosedIcon,
+  PaperPlaneIcon,
 } from "@radix-ui/react-icons";
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Badge, Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
-import { getSignInWithCredentialsSchema } from "@/utils/functions";
+import { getSignInWithEmailSchema } from "@/utils/functions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-export default function SiginnWithCredentialsForm() {
+export default function SiginnWithEmailForm() {
   const router = useRouter();
   const t = useTranslations("signinCard");
 
-  const SignInSchema = getSignInWithCredentialsSchema(
+  const SignInWithEmailSchema = getSignInWithEmailSchema(
     useTranslations("signinValidation")
   );
 
@@ -35,15 +27,14 @@ export default function SiginnWithCredentialsForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+  } = useForm<z.infer<typeof SignInWithEmailSchema>>({
+    resolver: zodResolver(SignInWithEmailSchema),
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof SignInSchema>) => {
-      const res = await signIn("credentials", {
+    mutationFn: async (data: z.infer<typeof SignInWithEmailSchema>) => {
+      const res = await signIn("nodemailer", {
         email: data.email,
-        password: data.password,
         redirect: false,
       });
 
@@ -55,14 +46,13 @@ export default function SiginnWithCredentialsForm() {
     },
   });
 
-  const handleSubmitForm = (data: z.infer<typeof SignInSchema>) => {
+  const handleSubmitForm = (data: z.infer<typeof SignInWithEmailSchema>) => {
     mutation.mutate(data);
   };
 
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)}>
       <Flex direction="column" gapY="4">
-        <Heading>{t("loginHeading")}</Heading>
         <Box>
           <Text>{t("emailTitle")}</Text>
           <TextField.Root
@@ -81,24 +71,6 @@ export default function SiginnWithCredentialsForm() {
             </Text>
           )}
         </Box>
-        <Box>
-          <Text>{t("passwordTitle")}</Text>
-          <TextField.Root
-            aria-label={t("passwordPlaceholder")}
-            placeholder={t("passwordPlaceholder")}
-            type="password"
-            {...register("password")}
-          >
-            <TextField.Slot>
-              <LockClosedIcon />
-            </TextField.Slot>
-          </TextField.Root>
-          {errors.password && (
-            <Text color="crimson" size="1">
-              {errors.password.message}
-            </Text>
-          )}
-        </Box>
         {mutation.isError && (
           <Badge color="crimson" className="!p-3">
             {mutation.error.message}
@@ -109,9 +81,15 @@ export default function SiginnWithCredentialsForm() {
             {t("success")}
           </Badge>
         )}
-        <Button type="submit" loading={mutation.isPending} highContrast>
-          {t("logIn")}
-          <ArrowRightIcon />
+        <Button
+          type="submit"
+          variant="ghost"
+          className="mx-[1px]"
+          loading={mutation.isPending}
+          highContrast
+        >
+          {t("sendLoginLink")}
+          <PaperPlaneIcon />
         </Button>
       </Flex>
     </form>

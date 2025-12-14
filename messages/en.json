@@ -9,6 +9,7 @@
     "passwordRequiredHint": "Password required",
     "invalidCredentials": "Invalid email or password",
     "logIn": "Log In",
+    "sendLoginLink": "Send Login Link",
     "noAccount": "No account?",
     "signUpNow": "Sign up now!",
     "orSeparator": "- Or -",

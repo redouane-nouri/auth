@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { api } from "../../lib/axios/axios";
-import { getUserSignupSchema } from "../../utils/functions";
+import { getSignupSchema } from "../../utils/functions";
 
 const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
   /*
@@ -49,9 +49,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
   /*
     Get Zod validation schema with the i18n messages.
   */
-  const userSignupSchema = getUserSignupSchema(
-    useTranslations("signupValidation")
-  );
+  const userSignupSchema = getSignupSchema(useTranslations("signupValidation"));
   /*
     Signup button click handler.
   */

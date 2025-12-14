@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 /**
- * Gets the user signup zod validation schema
+ * Gets signup zod validation schema
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getUserSignupSchema = (t: any) => {
+export const getSignupSchema = (t: any) => {
   return z
     .object({
       name: z
@@ -43,11 +43,11 @@ export const getUserSignupSchema = (t: any) => {
 };
 
 /**
- * Gets the user signin zod validation schema
+ * Gets the signin with credentials zod validation schema
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getUserSignInSchema = (t: any) => {
+export const getSignInWithCredentialsSchema = (t: any) => {
   return z
     .object({
       email: z
@@ -60,6 +60,24 @@ export const getUserSignInSchema = (t: any) => {
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
         .max(60, t("passwordMax")),
+    })
+    .strict(t("validAttributes"));
+};
+
+/**
+ * Gets the signin with email zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getSignInWithEmailSchema = (t: any) => {
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
     })
     .strict(t("validAttributes"));
 };
