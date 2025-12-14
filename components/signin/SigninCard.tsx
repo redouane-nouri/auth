@@ -27,7 +27,7 @@ import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-const SigninCard = () => {
+const SigninCard = ({ switchToSignup }: { switchToSignup: () => void }) => {
   const router = useRouter();
   const t = useTranslations("signinCard");
 
@@ -49,12 +49,12 @@ const SigninCard = () => {
         redirect: false,
       });
 
-      if(!res?.ok || res?.code || res?.error)
+      if (!res?.ok || res?.code || res?.error)
         throw new Error(res.code || t("error"));
     },
-    onSuccess(){
+    onSuccess() {
       router.push("/");
-    }
+    },
   });
 
   const handleSubmitForm = (data: z.infer<typeof SignInSchema>) => {
@@ -106,14 +106,11 @@ const SigninCard = () => {
               </Box>
               {mutation.isError && (
                 <Badge color="crimson" className="!p-3">
-                {mutation.error.message}
+                  {mutation.error.message}
                 </Badge>
               )}
-               {mutation.isSuccess && (
-                <Badge
-                  color="grass"
-                  className="!p-3"
-                >
+              {mutation.isSuccess && (
+                <Badge color="grass" className="!p-3">
                   {t("success")}
                 </Badge>
               )}
@@ -124,7 +121,10 @@ const SigninCard = () => {
               <Flex align="center">
                 <Text size="2">
                   {t("noAccount")}
-                  <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
+                  <Strong
+                    onClick={switchToSignup}
+                    className="hover:border-b-2 cursor-pointer ml-2 mr-1"
+                  >
                     {t("signUpNow")}
                   </Strong>
                 </Text>
