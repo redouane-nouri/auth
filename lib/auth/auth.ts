@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server";
 import { v4 as uuidv4 } from "uuid";
 import prisma from "../prisma/prisma-client";
 import bcrypt from "bcrypt";
-import { createTransport } from "nodemailer";
+import { createTransport, Transporter } from "nodemailer";
 import { render } from "@react-email/render";
 import EmailHtml from "@/components/auth/EmailHtml";
 import React from "react";
@@ -35,6 +35,7 @@ type CredentialsT = {
 function text(url: string, host: string): string {
   return `Sign in to ${host}\n${url}\n\n`;
 }
+let transporter: Transporter | null = null;
 /*
   Prisma Adapter to store and control our own auth information
 */
@@ -124,8 +125,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const { host } = new URL(url);
-        const transport = createTransport(provider.server);
-        const result = await transport.sendMail({
+        if (!transporter) transporter = createTransport(provider.server);
+
+        const result = await transporter.sendMail({
           to: identifier,
           from: provider.from,
           subject: "Signin Link",
