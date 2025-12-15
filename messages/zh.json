@@ -13,7 +13,9 @@
     "signUpNow": "立即注册!",
     "orSeparator": "- 或 -",
     "success": "登录成功",
-    "sendLoginLink": "发送登录链接"
+    "sendLoginLink": "发送登录链接",
+    "error": "出现问题，请重试",
+    "checkInbox": "马上就能登录了！如果该邮箱已注册，您会在收件箱中找到登录链接"
   },
   "signupCard": {
     "haveAccount": "已有账号？",

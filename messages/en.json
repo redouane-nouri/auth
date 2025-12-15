@@ -13,7 +13,9 @@
     "noAccount": "No account?",
     "signUpNow": "Sign up now!",
     "orSeparator": "- Or -",
-    "success": "Signed in successfully"
+    "success": "Signed in successfully",
+    "error": "Something went wrong. Please try again",
+    "checkInbox": "You're almost in! If this email is registered, you'll find a login link in your inbox."
   },
   "signupCard": {
     "signupHeading": "Signup",

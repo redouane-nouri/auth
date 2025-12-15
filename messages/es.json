@@ -13,7 +13,9 @@
     "signUpNow": "¡Regístrate ahora!",
     "orSeparator": "- O -",
     "success": "Inicio de sesión exitoso",
-    "sendLoginLink": "Enviar enlace de inicio de sesión"
+    "sendLoginLink": "Enviar enlace de inicio de sesión",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "checkInbox": "¡Ya casi estás dentro! Si este correo está registrado, encontrarás un enlace de inicio de sesión en tu bandeja de entrada"
   },
   "signupCard": {
     "haveAccount": "¿Tienes una cuenta?",
