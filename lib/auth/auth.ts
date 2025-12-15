@@ -1,6 +1,7 @@
 import { getSignInWithCredentialsSchema } from "@/utils/functions";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Nodemailer from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { encode } from "next-auth/jwt";
 import { getTranslations } from "next-intl/server";
@@ -90,6 +91,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   providers: [
+    Nodemailer({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: Number(process.env.EMAIL_SERVER_PORT),
+        secure: process.env.EMAIL_SERVER_SECURE === "true",
+        auth: {
+          type: "OAuth2",
+          user: process.env.EMAIL_SERVER_AUTH_USER,
+          clientId: process.env.EMAIL_SERVER_AUTH_CLIENT_ID,
+          clientSecret: process.env.EMAIL_SERVER_AUTH_CLIENT_SECRET,
+          refreshToken: process.env.EMAIL_SERVER_AUTH_REFRESH_TOKEN,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
     Credentials({
       /*
         Used for the default login page, since we use our own page, just provide the params we need with empty conf.
