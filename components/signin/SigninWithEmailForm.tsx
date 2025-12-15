@@ -38,11 +38,7 @@ export default function SiginnWithEmailForm() {
         redirect: false,
       });
 
-      if (!res?.ok || res?.code || res?.error)
-        throw new Error(res.code || t("error"));
-    },
-    onSuccess() {
-      router.push("/");
+      if (!res?.ok || res?.code || res?.error) throw new Error(t("error"));
     },
   });
 
@@ -78,7 +74,7 @@ export default function SiginnWithEmailForm() {
         )}
         {mutation.isSuccess && (
           <Badge color="grass" className="!p-3">
-            {t("success")}
+            {t("checkInbox")}
           </Badge>
         )}
         <Button
