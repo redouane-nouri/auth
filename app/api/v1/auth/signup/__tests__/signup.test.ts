@@ -1,5 +1,6 @@
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
+import { auth } from "../../../../../../lib/auth/auth";
 import arMessages from "../../../../../../messages/ar.json";
 import { Translation } from "../../../../../../utils/classes";
 import { POST as postSignupHandler } from "../route";
@@ -28,6 +29,12 @@ jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
     findUnique: jest.fn(),
     create: jest.fn(),
   },
+}));
+/*
+  Mocking auth function to control test the use case where the user is already signed in and wants to signup
+*/
+jest.mock("../../../../../../lib/auth/auth", () => ({
+  auth: jest.fn(),
 }));
 /*
   Mocking the NextRequest and NextResponse imports in our POST API endpoint to prevent this error: ReferenceError: Request is not defined for NextRequest and Cannot read properties of undefined for NextResponse.
@@ -63,10 +70,12 @@ describe("POST - Singup API", () => {
       /*
        Changing the current language to the one choosen in the test.
       */
-      translationsObject.setCurrentLanguage(
-        languageValueEnum as LanguageCode,
-      );
+      translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
       const t = translationsObject.getMessages().signupValidation;
+      /*
+        Set auth session to null to prevent the trigger of already signed up error
+      */
+      (auth as jest.Mock).mockResolvedValue(null);
       /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signupValidation namespace in the i18n messages JSON file chosen.
         The try catch block is returning this error.
@@ -81,34 +90,32 @@ describe("POST - Singup API", () => {
         An extra attribute should trigger also an error message in the global "_errors" parameter.
       */
       response = await postSignupHandler(
-        createMockRequest({ invalidAttribute: "any" }),
+        createMockRequest({ invalidAttribute: "any" })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
       expect(error._errors).toContain(t.validAttributes);
-      expect(error.username._errors).toContain(t.usernameString);
+      expect(error.name._errors).toContain(t.nameString);
+      expect(error.email._errors).toContain(t.emailString);
       expect(error.password._errors).toContain(t.passwordString);
-      expect(error.confirmPassword._errors).toContain(
-        t.confirmPasswordString,
-      );
+      expect(error.confirmPassword._errors).toContain(t.confirmPasswordString);
       /*
         Attributes with 0 length should trigger all zod constraints except the max constraint error message.
       */
       response = await postSignupHandler(
         createMockRequest({
-          username: "",
+          name: "",
+          email: "",
           password: "",
           confirmPassword: "",
-        }),
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.username._errors).toEqual([
-        t.usernameMin,
-        t.usernameRegex,
-      ]);
+      expect(error.name._errors).toContain(t.nameRequired);
+      expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toEqual([
         t.passwordMin,
         t.passwordRegexLowercase,
@@ -117,84 +124,107 @@ describe("POST - Singup API", () => {
         t.passwordSpecialCharacter,
       ]);
       /*
-        Valid attributes with length > 30 should trigger the max length error.
+        Valid attributes with length > 60 should trigger the max length error.
       */
+      const longString =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       response = await postSignupHandler(
         createMockRequest({
-          username: "abcdefghijklmnopqrstuvwxyz0123456789",
-          password: "abcdefghijklmnopqrstuvwxyz0123456789",
+          name: longString,
+          email: longString,
+          password: longString,
           confirmPassword: "any",
-        }),
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
-      expect(error.username._errors).toContain(t.usernameMax);
+      expect(error.name._errors).toContain(t.nameMax);
+      expect(error.email._errors).toContain(t.emailMax);
       expect(error.password._errors).toContain(t.passwordMax);
       /*
         Should check password matching and return an error message that the passwords does not match with 400 status.
       */
       response = await postSignupHandler(
         createMockRequest({
-          username: "valid",
-          password: "Password@123",
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
           confirmPassword: "notMatching",
-        }),
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(400);
       expect(error.confirmPassword._errors).toContain(t.passwordsDontMatch);
       /*
-        We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the username exists.
+        We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
       */
       (prisma.user.findUnique as jest.Mock).mockResolvedValue({
-        username: "usernameExists",
+        email: "exists@mail.test",
       });
 
       response = await postSignupHandler(
         createMockRequest({
-          username: "usernameExists",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          name: "valid",
+          email: "exists@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       ({ error } = await response.json());
 
       expect(response.status).toBe(409);
-      expect(error).toBe(t.usernameExists);
+      expect(error).toBe(t.emailExists);
       /*
-        Should return a 500 status and an error message when the username is valid and available to use but the creation failed.
+        Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
       */
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(undefined);
       (prisma.user.create as jest.Mock).mockResolvedValue(undefined);
       response = await postSignupHandler(
         createMockRequest({
-          username: "usernameDoesNotExist",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       ({ error } = await response.json());
       expect(response.status).toBe(500);
       expect(error).toBe(t.error);
       /*
         A success creation should return a 201 status and a success message.
-        We didn't mock the findUnique because it is already mocked above to return undefined which mean the username is available to use.
+        We didn't mock the findUnique because it is already mocked above to return undefined which mean the email is available to use.
       */
       (prisma.user.create as jest.Mock).mockResolvedValue({
-        username: "username",
+        email: "valid@mail.test",
       });
       response = await postSignupHandler(
         createMockRequest({
-          username: "username",
-          password: "Password@123",
-          confirmPassword: "Password@123",
-        }),
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
       );
       let { message } = await response.json();
       expect(response.status).toBe(201);
       expect(message).toBe(t.success);
-    },
+      /*
+        A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
+      */
+      (auth as jest.Mock).mockResolvedValue({ user: {} });
+      response = await postSignupHandler(
+        createMockRequest({
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        })
+      );
+      ({ error } = await response.json());
+      expect(response.status).toBe(409);
+      expect(error).toBe(t.alreadySignedIn);
+    }
   );
 });

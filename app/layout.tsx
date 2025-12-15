@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/ThemeAndHeader";
 import { ThemeAppearance } from "../utils/enums";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 export async function generateMetadata(): Promise<Metadata> {
   /*
@@ -47,7 +48,14 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeAndHeader themeAppearance={appearance}>
+            {
+             /*
+               Change authjs basepath from /api/auth to /api/v1/auth
+             */
+            }
+            <SessionProvider basePath={process.env.AUTH_BASEPATH}>
             {children}
+            </SessionProvider>
           </ThemeAndHeader>
         </NextIntlClientProvider>
       </body>

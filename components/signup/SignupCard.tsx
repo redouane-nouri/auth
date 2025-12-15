@@ -1,9 +1,11 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowRightIcon,
   LockClosedIcon,
   PersonIcon,
+  EnvelopeClosedIcon,
 } from "@radix-ui/react-icons";
 import {
   Badge,
@@ -13,6 +15,7 @@ import {
   Container,
   Flex,
   Heading,
+  Strong,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -21,16 +24,16 @@ import axios from "axios";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Axios } from "../../lib/axios/axios";
-import { getUserSignupSchema } from "../../utils/functions";
+import { api } from "../../lib/axios/axios";
+import { getSignupSchema } from "../../utils/functions";
 
-const SignupCard = () => {
+const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
   /*
-    The mutation instance that will be use to signup post request.
+    The mutation instance that will be used to signup post request.
   */
   const mutation = useMutation({
     mutationFn: (data: z.infer<typeof userSignupSchema>) => {
-      return Axios.post("/api/v1/auth/signup", data);
+      return api.post("/auth/signup", data);
     },
     onSuccess() {
       /*
@@ -46,9 +49,7 @@ const SignupCard = () => {
   /*
     Get Zod validation schema with the i18n messages.
   */
-  const userSignupSchema = getUserSignupSchema(
-    useTranslations("signupValidation"),
-  );
+  const userSignupSchema = getSignupSchema(useTranslations("signupValidation"));
   /*
     Signup button click handler.
   */
@@ -75,25 +76,40 @@ const SignupCard = () => {
             <Flex direction="column" gapY="4">
               <Heading>{t("signupHeading")}</Heading>
               <Box>
-                <Text>{t("usernameTitle")}</Text>
+                <Text>{t("nameTitle")}</Text>
                 <TextField.Root
-                  aria-label={t("usernamePlaceholder")}
-                  placeholder={t("usernamePlaceholder")}
-                  {...register("username")}
+                  aria-label={t("namePlaceholder")}
+                  placeholder={t("namePlaceholder")}
+                  {...register("name")}
                   size="2"
-                  data-testid="usernameInput"
+                  data-testid="nameInput"
                 >
                   <TextField.Slot>
                     <PersonIcon />
                   </TextField.Slot>
                 </TextField.Root>
-                {errors.username && (
-                  <Text
-                    data-testid="usernameHint"
-                    color="crimson"
-                    size="1"
-                  >
-                    {errors.username.message}
+                {errors.name && (
+                  <Text data-testid="nameHint" color="crimson" size="1">
+                    {errors.name.message}
+                  </Text>
+                )}
+              </Box>
+              <Box>
+                <Text>{t("emailTitle")}</Text>
+                <TextField.Root
+                  aria-label={t("emailPlaceholder")}
+                  placeholder={t("emailPlaceholder")}
+                  {...register("email")}
+                  size="2"
+                  data-testid="emailInput"
+                >
+                  <TextField.Slot>
+                    <EnvelopeClosedIcon />
+                  </TextField.Slot>
+                </TextField.Root>
+                {errors.email && (
+                  <Text data-testid="emailHint" color="crimson" size="1">
+                    {errors.email.message}
                   </Text>
                 )}
               </Box>
@@ -111,11 +127,7 @@ const SignupCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.password && (
-                  <Text
-                    data-testid="passwordHint"
-                    color="crimson"
-                    size="1"
-                  >
+                  <Text data-testid="passwordHint" color="crimson" size="1">
                     {errors.password.message}
                   </Text>
                 )}
@@ -150,8 +162,8 @@ const SignupCard = () => {
                   className="!p-3"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (mutation.error.response?.data?.error ?? t("error"))
-                    : t("error")}
+                    ? mutation.error.response?.data?.error ?? t("error")
+                    : mutation.error.message}
                 </Badge>
               )}
               {mutation.isSuccess && (
@@ -172,6 +184,18 @@ const SignupCard = () => {
                 {t("signUp")}
                 <ArrowRightIcon />
               </Button>
+              <Flex align="center">
+                <Text size="2">
+                  {t("haveAccount")}
+                  <Strong
+                    onClick={switchToSignin}
+                    data-testid="switchToSigninButton"
+                    className="hover:border-b-2 cursor-pointer ml-2 mr-1"
+                  >
+                    {t("signInNow")}
+                  </Strong>
+                </Text>
+              </Flex>
             </Flex>
           </form>
         </Card>

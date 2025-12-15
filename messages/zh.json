@@ -1,9 +1,9 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "登录",
-    "usernameTitle": "用户名",
-    "usernamePlaceholder": "输入您的用户名",
-    "usernameRequiredHint": "用户名为必填项",
+    "emailTitle": "邮箱",
+    "emailPlaceholder": "请输入您的邮箱",
+    "emailRequiredHint": "邮箱必填项",
     "passwordTitle": "密码",
     "passwordPlaceholder": "输入您的密码",
     "passwordRequiredHint": "密码为必填项",
@@ -11,12 +11,20 @@
     "logIn": "登录",
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
-    "orSeparator": "- 或 -"
+    "orSeparator": "- 或 -",
+    "success": "登录成功",
+    "sendLoginLink": "发送登录链接",
+    "error": "出现问题，请重试",
+    "checkInbox": "马上就能登录了！如果该邮箱已注册，您会在收件箱中找到登录链接"
   },
   "signupCard": {
+    "haveAccount": "已有账号？",
+    "signInNow": "立即登录！",
     "signupHeading": "注册",
-    "usernameTitle": "用户名",
-    "usernamePlaceholder": "输入您的用户名",
+    "emailTitle": "邮箱",
+    "emailPlaceholder": "请输入您的邮箱",
+    "nameTitle": "姓名",
+    "namePlaceholder": "请输入您的姓名",
     "passwordTitle": "密码",
     "passwordPlaceholder": "输入您的密码",
     "confirmPassword": "确认密码",
@@ -25,23 +33,39 @@
     "error": "出现问题，请重试"
   },
   "signupValidation": {
-    "usernameString": "用户名必须是字符串",
-    "usernameMin": "用户名是必填项",
-    "usernameMax": "用户名必须小于或等于30个字符",
-    "usernameRegex": "用户名只能包含字母数字字符、连字符和下划线",
+    "emailString": "邮箱必须是字符串",
+    "emailInvalid": "请输入有效的邮箱地址",
+    "emailExists": "邮箱已存在",
     "passwordString": "密码必须是字符串",
     "passwordMin": "密码长度至少为8个字符",
     "passwordMax": "密码长度最多为30个字符",
+    "emailMax": "电子邮件最多可包含 60 个字符",
     "passwordRegexLowercase": "密码必须包含至少一个小写字母",
     "passwordRegexUppercase": "密码必须包含至少一个大写字母",
     "passwordRegexNumber": "密码必须包含至少一个数字",
     "passwordSpecialCharacter": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "请求仅接受以下属性: 用户名、密码和确认密码。",
+    "validAttributes": "请求仅接受以下属性: 邮箱、密码和确认密码。",
     "passwordsDontMatch": "两次输入的密码不一致",
     "confirmPasswordString": "确认密码必须是字符串",
-    "usernameExists": "用户名已存在",
     "success": "用户创建成功",
-    "error": "出现问题，请重试"
+    "error": "出现问题，请重试",
+    "nameString": "姓名必须是字符串",
+    "nameMax": "姓名最多只能有 60 个字符",
+    "nameRequired": "姓名为必填项",
+    "alreadySignedIn": "您已经登录了"
+  },
+  "signinValidation": {
+    "emailString": "邮箱必须是字符串",
+    "emailInvalid": "请输入有效的邮箱地址",
+    "passwordString": "密码必须是字符串",
+    "passwordMax": "密码长度最多为30个字符",
+    "passwordMin": "密码长度至少为8个字符",
+    "validAttributes": "请求仅接受以下属性: 邮箱、密码和确认密码。",
+    "emailMax": "电子邮件最多可包含 60 个字符",
+    "invalidCredentials": "用户名或密码不正确",
+    "success": "登录成功",
+    "error": "发生错误，请稍后再试",
+    "alreadySignedIn": "您已经登录了"
   },
   "header": {
     "socialAuthentication": "社交认证",
@@ -53,7 +77,10 @@
     "signUp": "注册"
   },
   "home": {
-    "home": "首页"
+    "home": "首页",
+    "signOut": "退出登录",
+    "successSignout": "注销成功",
+    "error": "出现了一些错误，请重试"
   },
   "404": {
     "pageNotFound": "页面未找到"

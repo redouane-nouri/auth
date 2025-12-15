@@ -1,9 +1,13 @@
+"use client";
+
 import { Box, Container, Tabs } from "@radix-ui/themes";
-import { useTranslations } from "next-intl";
-import LoginCard from "../login/LoginCard";
+import SigninCard from "../signin/SigninCard";
 import SignupCard from "../signup/SignupCard";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Connect() {
+  const [tab, setTab] = useState("login");
   /*
     Use `connect` translations.
   */
@@ -11,7 +15,12 @@ export default function Connect() {
   return (
     <Box>
       <Container size="1" className="mt-10">
-        <Tabs.Root className="TabsRoot" defaultValue="login">
+        <Tabs.Root
+          className="TabsRoot"
+          defaultValue="login"
+          value={tab}
+          onValueChange={setTab}
+        >
           <Tabs.List className="TabsList mb-3">
             <Tabs.Trigger className="TabsTrigger" value="login">
               {t("logIn")}
@@ -21,10 +30,10 @@ export default function Connect() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content className="TabsContent" value="login">
-            <LoginCard />
+            <SigninCard switchToSignup={() => setTab("signup")} />
           </Tabs.Content>
           <Tabs.Content className="TabsContent" value="signup">
-            <SignupCard />
+            <SignupCard switchToSignin={() => setTab("login")} />
           </Tabs.Content>
         </Tabs.Root>
       </Container>

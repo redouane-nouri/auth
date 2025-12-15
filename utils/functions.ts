@@ -1,22 +1,28 @@
 import { z } from "zod";
 
 /**
- * Gets the user signup zod validation schema
+ * Gets signup zod validation schema
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getUserSignupSchema = (t: any) => {
+export const getSignupSchema = (t: any) => {
   return z
     .object({
-      username: z
-        .string({ message: t("usernameString") })
-        .min(1, t("usernameMin"))
-        .max(30, t("usernameMax"))
-        .regex(/^[a-zA-Z0-9_-]+$/, t("usernameRegex")),
+      name: z
+        .string({ message: t("nameString") })
+        .trim()
+        .min(1, t("nameRequired"))
+        .max(60, t("nameMax")),
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
-        .max(30, t("passwordMax"))
+        .max(60, t("passwordMax"))
         .regex(/[a-z]/, t("passwordRegexLowercase"))
         .regex(/[A-Z]/, t("passwordRegexUppercase"))
         .regex(/[0-9]/, t("passwordRegexNumber"))
@@ -34,4 +40,44 @@ export const getUserSignupSchema = (t: any) => {
       message: t("passwordsDontMatch"),
       path: ["confirmPassword"],
     });
+};
+
+/**
+ * Gets the signin with credentials zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getSignInWithCredentialsSchema = (t: any) => {
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
+      password: z
+        .string({ message: t("passwordString") })
+        .min(8, t("passwordMin"))
+        .max(60, t("passwordMax")),
+    })
+    .strict(t("validAttributes"));
+};
+
+/**
+ * Gets the signin with email zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getSignInWithEmailSchema = (t: any) => {
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
+    })
+    .strict(t("validAttributes"));
 };

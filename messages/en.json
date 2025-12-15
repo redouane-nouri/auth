@@ -1,22 +1,30 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "Login",
-    "usernameTitle": "Username",
-    "usernamePlaceholder": "Enter your username",
-    "usernameRequiredHint": "Username required",
+    "emailTitle": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequiredHint": "Email required",
     "passwordTitle": "Password",
     "passwordPlaceholder": "Enter your password",
     "passwordRequiredHint": "Password required",
-    "invalidCredentials": "Invalid username or password",
+    "invalidCredentials": "Invalid email or password",
     "logIn": "Log In",
+    "sendLoginLink": "Send Login Link",
     "noAccount": "No account?",
     "signUpNow": "Sign up now!",
-    "orSeparator": "- Or -"
+    "orSeparator": "- Or -",
+    "success": "Signed in successfully",
+    "error": "Something went wrong. Please try again",
+    "checkInbox": "You're almost in! If this email is registered, you'll find a login link in your inbox."
   },
   "signupCard": {
     "signupHeading": "Signup",
-    "usernameTitle": "Username",
-    "usernamePlaceholder": "Enter your username",
+    "haveAccount": "Have an account?",
+    "signInNow": "Sign in now!",
+    "emailTitle": "Email",
+    "emailPlaceholder": "Enter your email",
+    "nameTitle": "Name",
+    "namePlaceholder": "Enter your name",
     "passwordTitle": "Password",
     "passwordPlaceholder": "Enter your password",
     "confirmPassword": "Confirm password",
@@ -25,23 +33,39 @@
     "error": "Something went wrong. Please try again"
   },
   "signupValidation": {
-    "usernameString": "Username must be a string",
-    "usernameMin": "Username is required",
-    "usernameMax": "Username must be less than or equal to 30 characters",
-    "usernameRegex": "Username can only contain alphanumeric characters, dashes, and underscores",
+    "emailString": "Email must be a string",
+    "emailInvalid": "Enter a valid email address",
+    "emailExists": "Email already exists",
     "passwordString": "Password must be a String",
     "passwordMin": "Password must be at least 8 characters long",
-    "passwordMax": "Password must be at most 30 characters long",
+    "passwordMax": "Password must be at most 60 characters long",
+    "emailMax": "Email must be a maximum of 60 characters",
     "passwordRegexLowercase": "Password must contain at least one lowercase letter",
     "passwordRegexUppercase": "Password must contain at least one uppercase letter",
     "passwordRegexNumber": "Password must contain at least one number",
     "passwordSpecialCharacter": "Password must contain at least one special character: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "The request accepts only: username, password, and confirmPassword attributes.",
+    "validAttributes": "The request accepts only: email, password, and confirmPassword attributes.",
     "passwordsDontMatch": "Passwords don't match",
     "confirmPasswordString": "Confirm Password must be a String",
-    "usernameExists": "Username already exists",
+    "nameString": "Name must be a string",
+    "nameMax": "Name must be at most 60 characters",
+    "nameRequired": "Name is required",
     "success": "User created successfully",
-    "error": "Something went wrong. Please try again"
+    "error": "Something went wrong. Please try again",
+    "alreadySignedIn": "You are already signed in"
+  },
+  "signinValidation": {
+    "emailString": "Email must be a string",
+    "emailInvalid": "Enter a valid email address",
+    "validAttributes": "The request accepts only: email, password, and confirmPassword attributes.",
+    "passwordMax": "Password must be at most 60 characters long",
+    "passwordMin": "Password must be at least 8 characters long",
+    "emailMax": "Email must be a maximum of 60 characters",
+    "passwordString": "Password must be a string",
+    "invalidCredentials": "Invalid email or password",
+    "success": "Signed in successfully",
+    "error": "Something went wrong. Please try again",
+    "alreadySignedIn": "You are already signed in"
   },
   "header": {
     "socialAuthentication": "Social Authentication",
@@ -53,7 +77,10 @@
     "signUp": "Sign up"
   },
   "home": {
-    "home": "Home"
+    "home": "Home",
+    "signOut": "Sign Out",
+    "successSignout": "Signed out successfully",
+    "error": "Something went wrong. Please try again"
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {

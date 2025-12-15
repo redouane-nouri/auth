@@ -1,9 +1,9 @@
 {
-  "loginCard": {
+  "signinCard": {
     "loginHeading": "Iniciar sesión",
-    "usernameTitle": "Nombre de usuario",
-    "usernamePlaceholder": "Introduce tu nombre de usuario",
-    "usernameRequiredHint": "Nombre de usuario requerido",
+    "emailTitle": "Correo electrónico",
+    "emailPlaceholder": "Introduce tu correo electrónico",
+    "emailRequiredHint": "Correo electrónico requerido",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Introduce tu contraseña",
     "passwordRequiredHint": "Contraseña requerida",
@@ -11,37 +11,61 @@
     "logIn": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
-    "orSeparator": "- O -"
+    "orSeparator": "- O -",
+    "success": "Inicio de sesión exitoso",
+    "sendLoginLink": "Enviar enlace de inicio de sesión",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "checkInbox": "¡Ya casi estás dentro! Si este correo está registrado, encontrarás un enlace de inicio de sesión en tu bandeja de entrada"
   },
   "signupCard": {
+    "haveAccount": "¿Tienes una cuenta?",
+    "signInNow": "¡Inicia sesión ahora!",
     "signupHeading": "Registro",
-    "usernameTitle": "Nombre de usuario",
-    "usernamePlaceholder": "Ingrese su nombre de usuario",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Ingrese su contraseña",
     "confirmPassword": "Confirmar contraseña",
     "confirmPasswordPlaceholder": "Confirme su contraseña",
+    "emailTitle": "Correo electrónico",
+    "emailPlaceholder": "Ingrese su correo electrónico",
+    "nameTitle": "Nombre",
+    "namePlaceholder": "Ingrese su nombre",
     "signUp": "Regístrate",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "signupValidation": {
-    "usernameString": "El nombre de usuario debe ser una cadena",
-    "usernameMin": "El nombre de usuario es obligatorio",
-    "usernameMax": "El nombre de usuario debe tener 30 caracteres o menos",
-    "usernameRegex": "El nombre de usuario solo puede contener caracteres alfanuméricos, guiones y guiones bajos",
     "passwordString": "La contraseña debe ser una cadena",
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
-    "passwordMax": "La contraseña debe tener como máximo 30 caracteres",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
     "passwordRegexLowercase": "La contraseña debe contener al menos una letra minúscula",
     "passwordRegexUppercase": "La contraseña debe contener al menos una letra mayúscula",
     "passwordRegexNumber": "La contraseña debe contener al menos un número",
     "passwordSpecialCharacter": "La contraseña debe contener al menos un carácter especial: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
-    "validAttributes": "La solicitud solo acepta los atributos: nombre de usuario, contraseña y confirmar contraseña.",
+    "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordsDontMatch": "Las contraseñas no coinciden",
     "confirmPasswordString": "La contraseña de confirmación debe ser una cadena",
-    "usernameExists": "El nombre de usuario ya existe",
+    "emailExists": "El correo electrónico ya existe",
+    "emailString": "El correo electrónico debe ser una cadena",
+    "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
     "success": "Usuario creado con éxito",
-    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+    "nameString": "El nombre debe ser una cadena de texto",
+    "nameRequired": "El nombre es obligatorio",
+    "nameMax": "El nombre debe tener un máximo de 60 caracteres",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "alreadySignedIn": "Ya has iniciado sesión"
+  },
+  "signinValidation": {
+    "emailString": "El correo electrónico debe ser una cadena",
+    "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
+    "passwordString": "La contraseña debe ser una cadena",
+    "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
+    "success": "Inicio de sesión exitoso",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo",
+    "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
     "socialAuthentication": "Autenticación social",
@@ -53,7 +77,10 @@
     "signUp": "Regístrate"
   },
   "home": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "signOut": "Cerrar sesión",
+    "successSignout": "Cierre de sesión exitoso",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "404": {
     "pageNotFound": "Página no encontrada"
