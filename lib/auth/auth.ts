@@ -31,10 +31,15 @@ type CredentialsT = {
   callbackUrl: string;
 };
 
-// Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
-function text(url: string, host: string): string {
+/*
+  Email Text body (fallback for email clients that don't render HTML)
+*/
+function emailText(url: string, host: string): string {
   return `Sign in to ${host}\n${url}\n\n`;
 }
+/*
+  Use one transporter instance
+*/
 let transporter: Transporter | null = null;
 /*
   Prisma Adapter to store and control our own auth information
@@ -44,7 +49,9 @@ const prismaAdapter = PrismaAdapter(prisma);
   Session duration
 */
 const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
-
+/*
+  Authjs configuration
+*/
 export const { handlers, signIn, signOut, auth } = NextAuth({
   /*
     To be able to configure our own ednpoint (/api/v1/auth) instead of (/api/auth)
@@ -54,6 +61,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Prisma adapter to control our own db
   */
   adapter: prismaAdapter,
+  /*
+    Callback configuration
+  */
   callbacks: {
     /*
       Even we specefied an adapter which authjs automatically uses the "database" strategy, for credentials it uses a "jwt" strategy.
@@ -100,7 +110,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return sessionToken;
     },
   },
+  /*
+    Providers configuration
+  */
   providers: [
+    /*
+      Configure the Nodemailer provider for signin with magic links suing the .env file
+    */
     Nodemailer({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
@@ -115,23 +131,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       from: process.env.EMAIL_FROM,
+      /*
+        Configurable function to send email
+      */
       async sendVerificationRequest({ identifier, url, provider }) {
+        /*
+          Check if the user exists with email provided
+        */
         const user = await prisma.user.findUnique({
           where: { email: identifier },
         });
-
+        /*
+          If no user just silent return wihtou any hints (it will look like a success but we won't send a login link for unregistered user)
+        */
         if (!user) {
           return;
         }
-
+        /*
+          Extract the host from url
+        */
         const { host } = new URL(url);
+        /*
+          If no  nodemailer transporter found, create one
+        */
         if (!transporter) transporter = createTransport(provider.server);
-
+        /*
+          Send the email
+        */
         const result = await transporter.sendMail({
           to: identifier,
           from: provider.from,
           subject: "Signin Link",
-          text: text(url, host),
+          text: emailText(url, host),
           html: await render(
             React.createElement(EmailHtml, {
               url,
@@ -139,7 +170,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             })
           ),
         });
+        /*
+          reject and pending are arrays where nodemailer puts the email addresses that are not accepted (accepted var contains an array with accepted email addresses)
+        */
         const failed = result.rejected.concat(result.pending).filter(Boolean);
+        /*
+          If there are email addresses failed, throw an error.
+        */
         if (failed.length) {
           throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
         }
@@ -233,5 +270,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   */
   pages: {
     signIn: "/connect",
+    error: "/not-found",
+    verifyRequest: "/connect",
+    signOut: "/",
+    newUser: "/",
   },
 });
