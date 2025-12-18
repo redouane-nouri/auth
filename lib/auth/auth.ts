@@ -12,6 +12,16 @@ import { createTransport, Transporter } from "nodemailer";
 import { render } from "@react-email/render";
 import EmailHtml from "@/components/auth/EmailHtml";
 import React from "react";
+import {
+  AUTH_CREDENTIALS_PROVIDER_NAME,
+  AUTH_ERROR_ENDPOINT,
+  AUTH_NEW_USER_ENDPOINT,
+  AUTH_SIGNIN_ENDPOINT,
+  AUTH_SIGNOUT_ENDPOINT,
+  AUTH_VERIFY_REQUEST_ENDPOINT,
+  AUTH_LOGIN_EMAIL_SUBJECT,
+  AUTH_NODEMAILER_OAUTH2_TYPE,
+} from "@/utils/constants";
 /*
   Customizable code message to show the user in credentials authentication
 */
@@ -70,7 +80,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       So if we want to use "database" strategy for a credentials provider, we need to tag the token as coming from credentials provider and modify it in the next step inside the encode method to use a session token.
     */
     async jwt({ token, account }) {
-      if (account?.provider === "credentials") token.credentials = true;
+      if (account?.provider === AUTH_CREDENTIALS_PROVIDER_NAME)
+        token.credentials = true;
       return token;
     },
   },
@@ -123,7 +134,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         port: Number(process.env.EMAIL_SERVER_PORT),
         secure: process.env.EMAIL_SERVER_SECURE === "true",
         auth: {
-          type: "OAuth2",
+          type: AUTH_NODEMAILER_OAUTH2_TYPE,
           user: process.env.EMAIL_SERVER_AUTH_USER,
           clientId: process.env.EMAIL_SERVER_AUTH_CLIENT_ID,
           clientSecret: process.env.EMAIL_SERVER_AUTH_CLIENT_SECRET,
@@ -161,7 +172,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const result = await transporter.sendMail({
           to: identifier,
           from: provider.from,
-          subject: "Signin Link",
+          subject: AUTH_LOGIN_EMAIL_SUBJECT,
           text: emailText(url, host),
           html: await render(
             React.createElement(EmailHtml, {
@@ -269,10 +280,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Our own pages endpoints
   */
   pages: {
-    signIn: "/connect",
-    error: "/not-found",
-    verifyRequest: "/connect",
-    signOut: "/",
-    newUser: "/",
+    signIn: AUTH_SIGNIN_ENDPOINT,
+    error: AUTH_ERROR_ENDPOINT,
+    verifyRequest: AUTH_VERIFY_REQUEST_ENDPOINT,
+    signOut: AUTH_SIGNIN_ENDPOINT,
+    newUser: AUTH_NEW_USER_ENDPOINT,
   },
 });
