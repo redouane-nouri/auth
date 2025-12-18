@@ -11,6 +11,7 @@ import {
   Button,
   Flex,
   Heading,
+  Strong,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -22,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SiginnWithCredentialsForm() {
   /*
@@ -137,6 +139,14 @@ export default function SiginnWithCredentialsForm() {
           {t("logIn")}
           <ArrowRightIcon />
         </Button>
+        <Text size="2">
+          {t("forgotPassword")}
+          <Link href="/reset-password">
+            <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
+              {t("resetNow")}
+            </Strong>
+          </Link>
+        </Text>
       </Flex>
     </form>
   );

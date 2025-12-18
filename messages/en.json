@@ -12,6 +12,8 @@
     "sendLoginLink": "Send Login Link",
     "noAccount": "No account?",
     "signUpNow": "Sign up now!",
+    "forgotPassword": "Forgot password?",
+    "resetNow": "Reset now!",
     "orSeparator": "- Or -",
     "success": "Signed in successfully",
     "error": "Something went wrong. Please try again",

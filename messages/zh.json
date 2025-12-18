@@ -11,6 +11,8 @@
     "logIn": "登录",
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
+    "forgotPassword": "忘记密码？",
+    "resetNow": "立即重置！",
     "orSeparator": "- 或 -",
     "success": "登录成功",
     "sendLoginLink": "发送登录链接",

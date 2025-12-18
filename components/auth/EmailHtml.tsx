@@ -27,7 +27,7 @@ export default function EmailHtml({
       <Preview>{`Sign in to ${escapedHost}`}</Preview>
       <Body
         style={{
-          backgroundColor: "#f3f4f6",
+          backgroundColor: "white",
           fontFamily: "Helvetica, Arial, sans-serif",
           margin: 0,
           padding: 20,
@@ -38,6 +38,7 @@ export default function EmailHtml({
             maxWidth: 600,
             margin: "0 auto",
             backgroundColor: "#ffffff",
+            border: "1px solid #f3f4f6",
             borderRadius: 12,
             overflow: "hidden",
           }}
