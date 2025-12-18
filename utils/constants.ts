@@ -1,5 +1,9 @@
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
-import { LanguageLabel, SocialProviderLabel } from "./enums";
+import {
+  LanguageLabel,
+  SocialProviderAuthId,
+  SocialProviderLabel,
+} from "./enums";
 import { LanguageCode } from "./enums";
 import { SocialProvider } from "./types";
 
@@ -11,6 +15,7 @@ export const AUTH_VERIFY_REQUEST_ENDPOINT = "/connect";
 export const AUTH_SIGNOUT_ENDPOINT = "/";
 export const AUTH_NEW_USER_ENDPOINT = "/";
 export const AUTH_CREDENTIALS_PROVIDER_NAME = "credentials";
+export const AUTH_NODEMAILER_PROVIDER_NAME = "nodemailer";
 
 export const LanguageCodeToLabel: Record<LanguageCode, LanguageLabel> = {
   [LanguageCode.AR]: LanguageLabel.AR,
@@ -21,7 +26,19 @@ export const LanguageCodeToLabel: Record<LanguageCode, LanguageLabel> = {
 } as const;
 
 export const socialProviders: readonly SocialProvider[] = [
-  { label: SocialProviderLabel.GITHUB, icon: FaGithub },
-  { label: SocialProviderLabel.GOOGLE, icon: FaGoogle },
-  { label: SocialProviderLabel.FACEBOOK, icon: FaFacebook },
+  {
+    id: SocialProviderAuthId.GITHUB,
+    label: SocialProviderLabel.GITHUB,
+    icon: FaGithub,
+  },
+  {
+    id: SocialProviderAuthId.GOOGLE,
+    label: SocialProviderLabel.GOOGLE,
+    icon: FaGoogle,
+  },
+  {
+    id: SocialProviderAuthId.FACEBOOK,
+    label: SocialProviderLabel.FACEBOOK,
+    icon: FaFacebook,
+  },
 ] as const;

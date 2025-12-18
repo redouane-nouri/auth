@@ -24,6 +24,7 @@ import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AUTH_CREDENTIALS_PROVIDER_NAME } from "@/utils/constants";
 
 export default function SiginnWithCredentialsForm() {
   /*
@@ -55,7 +56,7 @@ export default function SiginnWithCredentialsForm() {
   */
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof SignInSchema>) => {
-      const res = await signIn("credentials", {
+      const res = await signIn(AUTH_CREDENTIALS_PROVIDER_NAME, {
         email: data.email,
         password: data.password,
         redirect: false,

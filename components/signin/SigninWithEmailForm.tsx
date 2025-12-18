@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { AUTH_NODEMAILER_PROVIDER_NAME } from "@/utils/constants";
 
 export default function SiginnWithEmailForm() {
   /*
@@ -41,7 +42,7 @@ export default function SiginnWithEmailForm() {
   */
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof SignInWithEmailSchema>) => {
-      const res = await signIn("nodemailer", {
+      const res = await signIn(AUTH_NODEMAILER_PROVIDER_NAME, {
         email: data.email,
         redirect: false,
       });

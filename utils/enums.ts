@@ -12,6 +12,12 @@ export enum SocialProviderLabel {
   FACEBOOK = "Facebook",
 }
 
+export enum SocialProviderAuthId {
+  GITHUB = "github",
+  GOOGLE = "google",
+  FACEBOOK = "facebook",
+}
+
 export enum ThemeAppearance {
   DARK = "dark",
   LIGHT = "light",
@@ -21,5 +27,5 @@ export enum LanguageCode {
   EN = "en",
   ES = "es",
   RU = "ru",
-  ZH = "zh"
+  ZH = "zh",
 }
