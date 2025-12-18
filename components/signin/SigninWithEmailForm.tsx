@@ -16,13 +16,19 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function SiginnWithEmailForm() {
-  const router = useRouter();
+  /*
+    Signin i18n messages
+  */
   const t = useTranslations("signinCard");
-
+  /*
+    Signin with email zod validation shcema
+  */
   const SignInWithEmailSchema = getSignInWithEmailSchema(
     useTranslations("signinValidation")
   );
-
+  /*
+    Register input with react hook form and validation with imported zod schema
+  */
   const {
     register,
     handleSubmit,
@@ -30,18 +36,24 @@ export default function SiginnWithEmailForm() {
   } = useForm<z.infer<typeof SignInWithEmailSchema>>({
     resolver: zodResolver(SignInWithEmailSchema),
   });
-
+  /*
+    Send email with authjs nodemailder provider
+  */
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof SignInWithEmailSchema>) => {
       const res = await signIn("nodemailer", {
         email: data.email,
         redirect: false,
       });
-
+      /*
+        Authjs login api fails if res is not ok or the params code and error are set
+      */
       if (!res?.ok || res?.code || res?.error) throw new Error(t("error"));
     },
   });
-
+  /*
+    Function to call after react hook submit validation
+  */
   const handleSubmitForm = (data: z.infer<typeof SignInWithEmailSchema>) => {
     mutation.mutate(data);
   };

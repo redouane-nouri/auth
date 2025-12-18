@@ -15,6 +15,9 @@ import SiginnWithCredentialsForm from "./SigninWithCredentialsForm";
 import SiginnWithEmailForm from "./SigninWithEmailForm";
 
 const SigninCard = ({ switchToSignup }: { switchToSignup: () => void }) => {
+  /*
+    Login card i18n messages
+  */
   const t = useTranslations("signinCard");
 
   return (
