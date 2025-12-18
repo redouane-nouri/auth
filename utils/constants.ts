@@ -1,11 +1,11 @@
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import {
   LanguageLabel,
-  SocialProviderAuthId,
-  SocialProviderLabel,
+  OAuth2ProviderAuthId,
+  OAuth2ProviderLabel,
 } from "./enums";
 import { LanguageCode } from "./enums";
-import { SocialProvider } from "./types";
+import { OAuth2ProviderT } from "./types";
 
 export const AUTH_LOGIN_EMAIL_SUBJECT = "Signin Link";
 export const AUTH_NODEMAILER_OAUTH2_TYPE = "OAuth2";
@@ -25,20 +25,20 @@ export const LanguageCodeToLabel: Record<LanguageCode, LanguageLabel> = {
   [LanguageCode.ZH]: LanguageLabel.ZH,
 } as const;
 
-export const socialProviders: readonly SocialProvider[] = [
+export const oAuth2Providers: readonly OAuth2ProviderT[] = [
   {
-    id: SocialProviderAuthId.GITHUB,
-    label: SocialProviderLabel.GITHUB,
+    id: OAuth2ProviderAuthId.GITHUB,
+    label: OAuth2ProviderLabel.GITHUB,
     icon: FaGithub,
   },
   {
-    id: SocialProviderAuthId.GOOGLE,
-    label: SocialProviderLabel.GOOGLE,
+    id: OAuth2ProviderAuthId.GOOGLE,
+    label: OAuth2ProviderLabel.GOOGLE,
     icon: FaGoogle,
   },
   {
-    id: SocialProviderAuthId.FACEBOOK,
-    label: SocialProviderLabel.FACEBOOK,
+    id: OAuth2ProviderAuthId.FACEBOOK,
+    label: OAuth2ProviderLabel.FACEBOOK,
     icon: FaFacebook,
   },
 ] as const;

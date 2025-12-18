@@ -70,7 +70,7 @@
     "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
-    "socialAuthentication": "Autenticación social",
+    "authentication": "Autenticación",
     "connect": "Conectar",
     "home": "Inicio"
   },
@@ -88,7 +88,7 @@
     "pageNotFound": "Página no encontrada"
   },
   "metadata": {
-    "title": "Autenticación social",
-    "description": "Autenticación social usando Auth.js"
+    "title": "Autenticación",
+    "description": "Plataforma de autenticación"
   }
 }

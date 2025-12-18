@@ -70,7 +70,7 @@
     "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "header": {
-    "socialAuthentication": "المصادقة الاجتماعية",
+    "authentication": "المصادقة",
     "connect": "اتصل",
     "home": "الرئيسية"
   },
@@ -88,7 +88,7 @@
     "pageNotFound": "الصفحة غير موجودة"
   },
   "metadata": {
-    "title": "المصادقة الاجتماعية",
-    "description": "المصادقة الاجتماعية باستخدام Auth.js"
+    "title": "المصادقة",
+    "description": "منصة المصادقة"
   }
 }

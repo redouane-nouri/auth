@@ -70,7 +70,7 @@
     "alreadySignedIn": "您已经登录了"
   },
   "header": {
-    "socialAuthentication": "社交认证",
+    "authentication": "身份验证",
     "connect": "连接",
     "home": "首页"
   },
@@ -88,7 +88,7 @@
     "pageNotFound": "页面未找到"
   },
   "metadata": {
-    "title": "社交认证",
-    "description": "使用 Auth.js 的社交认证"
+    "title": "身份验证",
+    "description": "身份验证平台"
   }
 }

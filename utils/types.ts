@@ -1,6 +1,6 @@
 import { IconType } from "react-icons/lib";
 
-export type SocialProvider = {
+export type OAuth2ProviderT = {
   id: string;
   label: string;
   icon: IconType;

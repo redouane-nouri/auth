@@ -6,13 +6,13 @@ export enum LanguageLabel {
   ZH = "中文",
 }
 
-export enum SocialProviderLabel {
+export enum OAuth2ProviderLabel {
   GITHUB = "GitHub",
   GOOGLE = "Google",
   FACEBOOK = "Facebook",
 }
 
-export enum SocialProviderAuthId {
+export enum OAuth2ProviderAuthId {
   GITHUB = "github",
   GOOGLE = "google",
   FACEBOOK = "facebook",

@@ -70,7 +70,7 @@
     "alreadySignedIn": "You are already signed in"
   },
   "header": {
-    "socialAuthentication": "Social Authentication",
+    "authentication": "Authentication",
     "connect": "Connect",
     "home": "Home"
   },
@@ -86,7 +86,7 @@
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {
-    "title": "Social Authentication",
-    "description": "Social Authentication using Auth.js"
+    "title": "Authentication",
+    "description": "Authentication Platform"
   }
 }
