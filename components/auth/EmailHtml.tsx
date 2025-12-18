@@ -5,7 +5,6 @@ import {
   Body,
   Container,
   Section,
-  Img,
   Text,
   Link,
 } from "@react-email/components";
@@ -17,6 +16,9 @@ export default function EmailHtml({
   url: string;
   host: string;
 }) {
+  /*
+    Make the host not clickabale  by adding zero width space before the dot, that will break the string.
+  */
   const escapedHost = host.replace(/\./g, "&#8203;.");
 
   return (
@@ -38,11 +40,8 @@ export default function EmailHtml({
             backgroundColor: "#ffffff",
             borderRadius: 12,
             overflow: "hidden",
-            // subtle shadow; some email clients ignore this
-            boxShadow: "0 10px 30px rgba(2,6,23,0.06)",
           }}
         >
-          {/* Header */}
           <Section
             style={{
               padding: 20,
@@ -55,7 +54,6 @@ export default function EmailHtml({
             </Text>
           </Section>
 
-          {/* Hero / CTA card */}
           <Section style={{ padding: "28px 32px", textAlign: "center" }}>
             <Text
               style={{
@@ -79,7 +77,6 @@ export default function EmailHtml({
               Click the button below to sign in.
             </Text>
 
-            {/* Email-safe CTA (table) */}
             <div
               style={{ margin: "0 auto", width: "100%", textAlign: "center" }}
             >
@@ -133,7 +130,6 @@ export default function EmailHtml({
             </Text>
           </Section>
 
-          {/* Support / security note */}
           <Section
             style={{
               padding: "18px 32px",
@@ -150,7 +146,6 @@ export default function EmailHtml({
             </Text>
           </Section>
 
-          {/* Footer */}
           <Section
             style={{
               padding: 14,
