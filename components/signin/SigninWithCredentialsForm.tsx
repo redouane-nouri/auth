@@ -128,7 +128,12 @@ export default function SiginnWithCredentialsForm() {
             {t("success")}
           </Badge>
         )}
-        <Button type="submit" loading={mutation.isPending} highContrast>
+        <Button
+          type="submit"
+          loading={mutation.isPending}
+          disabled={mutation.isSuccess}
+          highContrast
+        >
           {t("logIn")}
           <ArrowRightIcon />
         </Button>

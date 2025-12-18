@@ -30,6 +30,7 @@ export default function Home() {
         <Button
           onClick={() => mutation.mutate()}
           loading={mutation.isPending}
+          disabled={mutation.isSuccess}
           highContrast
         >
           {t("signOut")}

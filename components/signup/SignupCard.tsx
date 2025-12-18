@@ -162,7 +162,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   className="!p-3"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? mutation.error.response?.data?.error ?? t("error")
+                    ? (mutation.error.response?.data?.error ?? t("error"))
                     : mutation.error.message}
                 </Badge>
               )}
@@ -179,6 +179,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 type="submit"
                 data-testid="submitButton"
                 loading={mutation.isPending}
+                disabled={mutation.isSuccess}
                 highContrast
               >
                 {t("signUp")}

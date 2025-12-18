@@ -94,6 +94,7 @@ export default function SiginnWithEmailForm() {
           variant="ghost"
           className="mx-[1px]"
           loading={mutation.isPending}
+          disabled={mutation.isSuccess}
           highContrast
         >
           {t("sendLoginLink")}

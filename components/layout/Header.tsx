@@ -101,7 +101,7 @@ const Header = ({
       </Blockquote>
       <Flex gap="2">
         <Link href={`${pathName === "/" ? "/connect" : "/"}`}>
-          <Button variant="surface" highContrast>
+          <Button tabIndex={-1} variant="surface" highContrast>
             {pathName === "/" ? t("connect") : t("home")}
           </Button>
         </Link>
