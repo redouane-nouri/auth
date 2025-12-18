@@ -24,13 +24,23 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function SiginnWithCredentialsForm() {
+  /*
+    To route the user after successful login
+  */
   const router = useRouter();
+  /*
+    Signin i18n messages
+  */
   const t = useTranslations("signinCard");
-
+  /*
+    Zod validation schema for signin with credentials
+  */
   const SignInSchema = getSignInWithCredentialsSchema(
     useTranslations("signinValidation")
   );
-
+  /*
+    React hook for to register the inputs and validate before submitting zod validation schema resolver
+  */
   const {
     register,
     handleSubmit,
@@ -38,7 +48,9 @@ export default function SiginnWithCredentialsForm() {
   } = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
   });
-
+  /*
+    Login mutation
+  */
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof SignInSchema>) => {
       const res = await signIn("credentials", {
@@ -46,15 +58,22 @@ export default function SiginnWithCredentialsForm() {
         password: data.password,
         redirect: false,
       });
-
+      /*
+        Authjs login api fails if res is not ok or the params code and error are set
+      */
       if (!res?.ok || res?.code || res?.error)
         throw new Error(res.code || t("error"));
     },
     onSuccess() {
+      /*
+        Redirect to home page after successful login
+      */
       router.push("/");
     },
   });
-
+  /*
+    Function to call after react hook submit validation
+  */
   const handleSubmitForm = (data: z.infer<typeof SignInSchema>) => {
     mutation.mutate(data);
   };
