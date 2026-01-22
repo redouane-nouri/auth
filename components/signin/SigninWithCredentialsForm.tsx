@@ -122,12 +122,12 @@ export default function SiginnWithCredentialsForm() {
           )}
         </Box>
         {mutation.isError && (
-          <Badge color="crimson" className="!p-3">
+          <Badge color="crimson" className="!p-3 block whitespace-normal break-words">
             {mutation.error.message}
           </Badge>
         )}
         {mutation.isSuccess && (
-          <Badge color="grass" className="!p-3">
+          <Badge color="grass" className="!p-3 block whitespace-normal break-words">
             {t("success")}
           </Badge>
         )}
