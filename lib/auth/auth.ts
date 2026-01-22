@@ -287,7 +287,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: AUTH_SIGNIN_ENDPOINT,
     error: AUTH_ERROR_ENDPOINT,
     verifyRequest: AUTH_VERIFY_REQUEST_ENDPOINT,
-    signOut: AUTH_SIGNIN_ENDPOINT,
+    signOut: AUTH_SIGNOUT_ENDPOINT,
     newUser: AUTH_NEW_USER_ENDPOINT,
   },
 });
