@@ -11,6 +11,8 @@
     "logIn": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetNow": "¡Restablecer ahora!",
     "orSeparator": "- O -",
     "success": "Inicio de sesión exitoso",
     "sendLoginLink": "Enviar enlace de inicio de sesión",
@@ -68,7 +70,7 @@
     "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
-    "socialAuthentication": "Autenticación social",
+    "authentication": "Autenticación",
     "connect": "Conectar",
     "home": "Inicio"
   },
@@ -86,7 +88,7 @@
     "pageNotFound": "Página no encontrada"
   },
   "metadata": {
-    "title": "Autenticación social",
-    "description": "Autenticación social usando Auth.js"
+    "title": "Autenticación",
+    "description": "Plataforma de autenticación"
   }
 }

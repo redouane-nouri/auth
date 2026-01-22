@@ -7,11 +7,15 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Connect() {
+  /*
+    Used so the user can switch between tabs from the login/signup hints.
+  */
   const [tab, setTab] = useState("login");
   /*
     Use `connect` translations.
   */
   const t = useTranslations("connect");
+
   return (
     <Box>
       <Container size="1" className="mt-10">

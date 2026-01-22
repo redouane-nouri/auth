@@ -159,10 +159,10 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 <Badge
                   data-testid="errorBadge"
                   color="crimson"
-                  className="!p-3"
+                  className="!p-3 block whitespace-normal break-words"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? mutation.error.response?.data?.error ?? t("error")
+                    ? (mutation.error.response?.data?.error ?? t("error"))
                     : mutation.error.message}
                 </Badge>
               )}
@@ -170,7 +170,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 <Badge
                   data-testid="successBadge"
                   color="grass"
-                  className="!p-3"
+                  className="!p-3 block whitespace-normal break-words"
                 >
                   {mutation.data.data?.message}
                 </Badge>
@@ -179,6 +179,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 type="submit"
                 data-testid="submitButton"
                 loading={mutation.isPending}
+                disabled={mutation.isSuccess}
                 highContrast
               >
                 {t("signUp")}

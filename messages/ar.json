@@ -10,6 +10,8 @@
     "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "logIn": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "resetNow": "إعادة التعيين الآن!",
     "signUpNow": "سجل الآن",
     "sendLoginLink": "إرسال رابط تسجيل الدخول",
     "orSeparator": "- أو -",
@@ -68,7 +70,7 @@
     "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "header": {
-    "socialAuthentication": "المصادقة الاجتماعية",
+    "authentication": "المصادقة",
     "connect": "اتصل",
     "home": "الرئيسية"
   },
@@ -86,7 +88,7 @@
     "pageNotFound": "الصفحة غير موجودة"
   },
   "metadata": {
-    "title": "المصادقة الاجتماعية",
-    "description": "المصادقة الاجتماعية باستخدام Auth.js"
+    "title": "المصادقة",
+    "description": "منصة المصادقة"
   }
 }

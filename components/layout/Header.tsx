@@ -97,11 +97,11 @@ const Header = ({
   return (
     <Flex px="3" py="2" justify="between" align="center">
       <Blockquote>
-        <Strong>{t("socialAuthentication")}</Strong>
+        <Strong>{t("authentication")}</Strong>
       </Blockquote>
       <Flex gap="2">
         <Link href={`${pathName === "/" ? "/connect" : "/"}`}>
-          <Button variant="surface" highContrast>
+          <Button tabIndex={-1} variant="surface" highContrast>
             {pathName === "/" ? t("connect") : t("home")}
           </Button>
         </Link>

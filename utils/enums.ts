@@ -6,10 +6,14 @@ export enum LanguageLabel {
   ZH = "中文",
 }
 
-export enum SocialProviderLabel {
+export enum OAuth2ProviderLabel {
   GITHUB = "GitHub",
   GOOGLE = "Google",
-  FACEBOOK = "Facebook",
+}
+
+export enum OAuth2ProviderAuthId {
+  GITHUB = "github",
+  GOOGLE = "google",
 }
 
 export enum ThemeAppearance {
@@ -21,5 +25,5 @@ export enum LanguageCode {
   EN = "en",
   ES = "es",
   RU = "ru",
-  ZH = "zh"
+  ZH = "zh",
 }

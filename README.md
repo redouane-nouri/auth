@@ -1,1 +1,1 @@
-Social Authentication using Auth.js
+Authentication using Auth.js
