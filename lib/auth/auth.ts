@@ -149,7 +149,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       /*
         Configurable function to send email
       */
-      async sendVerificationRequest({ identifier, url, provider }) {
+      async sendVerificationRequest({ identifier, url, token, provider }) {
         /*
           Check if the user exists with email provided
         */
@@ -157,9 +157,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { email: identifier },
         });
         /*
-          If no user just silent return wihtou any hints (it will look like a success but we won't send a login link for unregistered user)
+          If no user delete the created token and silent return wihtout any hints (it will look like a success but we won't send a login link for unregistered user)
         */
         if (!user) {
+          /*
+            Delete the created token
+          */
+          await prisma.verificationToken.deleteMany({
+            where: { identifier },
+          });
+
           return;
         }
         /*
