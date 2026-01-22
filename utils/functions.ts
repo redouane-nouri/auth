@@ -81,3 +81,20 @@ export const getSignInWithEmailSchema = (t: any) => {
     })
     .strict(t("validAttributes"));
 };
+/**
+ * Gets reset password zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getForgotPasswordSchema = (t: any) => {
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
+    })
+    .strict(t("validAttributes"));
+};

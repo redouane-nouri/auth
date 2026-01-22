@@ -127,7 +127,6 @@ export async function POST(request: NextRequest) {
         { error: t("alreadySignedIn") },
         { status: 409 }
       );
-
     /*
       The schema to be used for signup input validation with i18n messages
     */
