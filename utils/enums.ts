@@ -9,13 +9,11 @@ export enum LanguageLabel {
 export enum OAuth2ProviderLabel {
   GITHUB = "GitHub",
   GOOGLE = "Google",
-  FACEBOOK = "Facebook",
 }
 
 export enum OAuth2ProviderAuthId {
   GITHUB = "github",
   GOOGLE = "google",
-  FACEBOOK = "facebook",
 }
 
 export enum ThemeAppearance {

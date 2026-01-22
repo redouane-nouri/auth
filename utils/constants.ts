@@ -37,9 +37,4 @@ export const oAuth2Providers: readonly OAuth2ProviderT[] = [
     label: OAuth2ProviderLabel.GOOGLE,
     icon: FaGoogle,
   },
-  {
-    id: OAuth2ProviderAuthId.FACEBOOK,
-    label: OAuth2ProviderLabel.FACEBOOK,
-    icon: FaFacebook,
-  },
 ] as const;
