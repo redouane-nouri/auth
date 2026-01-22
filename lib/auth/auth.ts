@@ -126,7 +126,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Providers configuration
   */
   providers: [
-    GitHub,
+    GitHub({allowDangerousEmailAccountLinking: process.env.allowGitHubDangerousEmailAccountLinking === "true"}),
     /*
       Configure the Nodemailer provider for signin with magic links suing the .env file
     */
