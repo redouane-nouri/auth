@@ -12,6 +12,7 @@ import { createTransport, Transporter } from "nodemailer";
 import { render } from "@react-email/render";
 import EmailHtml from "@/components/auth/EmailHtml";
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import React from "react";
 import {
   AUTH_CREDENTIALS_PROVIDER_NAME,
@@ -87,7 +88,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   jwt: {
-    encode: async function (params) {
+    encode: async function(params) {
       /*
         If not a credentials auth, then just perform the default jwt encoding.
       */
@@ -126,7 +127,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Providers configuration
   */
   providers: [
-    GitHub({allowDangerousEmailAccountLinking: process.env.allowGitHubDangerousEmailAccountLinking === "true"}),
+    Google({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
+    GitHub({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
     /*
       Configure the Nodemailer provider for signin with magic links suing the .env file
     */
