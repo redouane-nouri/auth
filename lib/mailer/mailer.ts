@@ -1,10 +1,17 @@
 import nodemailer from "nodemailer";
 
 let transporter: nodemailer.Transporter | null = null;
-
+/*
+  Returns a singleton nodemailer transporter for sending emails.
+*/
 export function getMailerTransporter() {
+  /*
+    If the transporter already exists, return it to reuse the same connection
+  */
   if (transporter) return transporter;
-
+  /*
+    Create a new nodemailer transporter using OAuth2 authentication
+  */
   transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER_HOST,
     port: Number(process.env.EMAIL_SERVER_PORT),
@@ -17,6 +24,8 @@ export function getMailerTransporter() {
       refreshToken: process.env.EMAIL_SERVER_AUTH_REFRESH_TOKEN,
     },
   });
-
+  /*
+    Return the created transporter for sending emails
+  */
   return transporter;
 }
