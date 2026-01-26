@@ -14,7 +14,7 @@ export default function ResetPasswordEmail({ token }: { token: string }) {
 
   // Build full URL from env + token
   const baseUrl = process.env.NEXT_PUBLIC_URL!;
-  const resetUrl = `${baseUrl}${process.env.NEXT_PUBLIC_AXIOS_BASEPATH}/password/reset?token=${token}`;
+  const resetUrl = `${baseUrl}/reset-password?token=${token}`;
   const host = baseUrl.replace(/^https?:\/\//, "");
   const escapedHost = host.replace(/\./g, `${ZWSP}.`);
 

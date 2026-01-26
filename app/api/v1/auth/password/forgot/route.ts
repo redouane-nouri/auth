@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
       prepare the reset url 
     */
     const baseUrl = process.env.NEXT_PUBLIC_URL!;
-    const resetUrl = `${baseUrl}${process.env.NEXT_PUBLIC_AXIOS_BASEPATH}/password/reset?token=${rawToken}`;
+    const resetUrl = `${baseUrl}/reset-password?token=${rawToken}`;
     /*
       Send the password reset email, use React email component rendered to HTML, also include plain text fallback
     */
