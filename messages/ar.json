@@ -1,4 +1,18 @@
 {
+  "resetPasswordValidation": {
+    "tokenString": "يجب أن يكون الرمز النصي",
+    "tokenRequired": "الرمز مطلوب",
+    "passwordString": "يجب أن تكون كلمة المرور نصية",
+    "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "passwordMax": "يجب ألا تتجاوز كلمة المرور 60 حرفًا",
+    "passwordRegexLowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+    "passwordRegexUppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+    "passwordRegexNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+    "passwordSpecialCharacter": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "يجب أن يكون تأكيد كلمة المرور نصيًا",
+    "passwordsDontMatch": "كلمتا المرور غير متطابقتين",
+    "validAttributes": "الطلب يقبل فقط: token و password و confirmPassword."
+  },
   "forgotPasswordValidation": {
     "emailString": "يجب أن يكون البريد الإلكتروني نصًا",
     "emailInvalid": "أدخل عنوان بريد إلكتروني صالح",

@@ -1,4 +1,18 @@
 {
+  "resetPasswordValidation": {
+    "tokenString": "令牌必须是字符串",
+    "tokenRequired": "必须提供令牌",
+    "passwordString": "密码必须是字符串",
+    "passwordMin": "密码长度至少为8个字符",
+    "passwordMax": "密码长度最多为60个字符",
+    "passwordRegexLowercase": "密码必须包含至少一个小写字母",
+    "passwordRegexUppercase": "密码必须包含至少一个大写字母",
+    "passwordRegexNumber": "密码必须包含至少一个数字",
+    "passwordSpecialCharacter": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "确认密码必须是字符串",
+    "passwordsDontMatch": "密码不匹配",
+    "validAttributes": "请求只接受以下字段: token、password 和 confirmPassword。"
+  },
   "forgotPasswordValidation": {
     "emailString": "电子邮件必须是字符串",
     "emailInvalid": "请输入有效的电子邮件地址",

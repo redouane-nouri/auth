@@ -1,4 +1,18 @@
 {
+ "resetPasswordValidation": {
+    "tokenString": "Token must be a string",
+    "tokenRequired": "Token is required",
+    "passwordString": "Password must be a string",
+    "passwordMin": "Password must be at least 8 characters long",
+    "passwordMax": "Password must be at most 60 characters long",
+    "passwordRegexLowercase": "Password must contain at least one lowercase letter",
+    "passwordRegexUppercase": "Password must contain at least one uppercase letter",
+    "passwordRegexNumber": "Password must contain at least one number",
+    "passwordSpecialCharacter": "Password must contain at least one special character: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "Confirm Password must be a string",
+    "passwordsDontMatch": "Passwords don't match",
+    "validAttributes": "The request accepts only: token, password, and confirmPassword attributes."
+  },
   "forgotPasswordValidation": {
     "emailString": "Email must be a string",
     "emailInvalid": "Enter a valid email address",

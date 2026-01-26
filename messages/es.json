@@ -1,4 +1,18 @@
 {
+ "resetPasswordValidation": {
+    "tokenString": "El token debe ser una cadena de texto",
+    "tokenRequired": "El token es obligatorio",
+    "passwordString": "La contraseña debe ser una cadena de texto",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "passwordRegexLowercase": "La contraseña debe contener al menos una letra minúscula",
+    "passwordRegexUppercase": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordRegexNumber": "La contraseña debe contener al menos un número",
+    "passwordSpecialCharacter": "La contraseña debe contener al menos un carácter especial: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "La confirmación de la contraseña debe ser una cadena de texto",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "validAttributes": "La solicitud solo acepta los campos: token, password y confirmPassword."
+  },
  "forgotPasswordValidation": {
     "emailString": "El correo electrónico debe ser una cadena de texto",
     "emailInvalid": "Introduce una dirección de correo electrónico válida",

@@ -1,4 +1,18 @@
 {
+ "resetPasswordValidation": {
+    "tokenString": "Токен должен быть строкой",
+    "tokenRequired": "Токен обязателен",
+    "passwordString": "Пароль должен быть строкой",
+    "passwordMin": "Пароль должен содержать не менее 8 символов",
+    "passwordMax": "Пароль должен содержать не более 60 символов",
+    "passwordRegexLowercase": "Пароль должен содержать хотя бы одну строчную букву",
+    "passwordRegexUppercase": "Пароль должен содержать хотя бы одну заглавную букву",
+    "passwordRegexNumber": "Пароль должен содержать хотя бы одну цифру",
+    "passwordSpecialCharacter": "Пароль должен содержать хотя бы один специальный символ: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "Подтверждение пароля должно быть строкой",
+    "passwordsDontMatch": "Пароли не совпадают",
+    "validAttributes": "Запрос принимает только следующие поля: token, password и confirmPassword."
+  },
   "forgotPasswordValidation": {
     "emailString": "Электронная почта должна быть строкой",
     "emailInvalid": "Введите корректный адрес электронной почты",
