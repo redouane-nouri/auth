@@ -1,4 +1,12 @@
 {
+ "forgotPasswordValidation": {
+    "emailString": "El correo electrónico debe ser una cadena de texto",
+    "emailInvalid": "Introduce una dirección de correo electrónico válida",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
+    "validAttributes": "La solicitud solo acepta el atributo de correo electrónico",
+    "success": "Si este correo electrónico está registrado, recibirás un enlace de restablecimiento en breve",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
   "signinCard": {
     "loginHeading": "Iniciar sesión",
     "emailTitle": "Correo electrónico",

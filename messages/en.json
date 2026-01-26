@@ -1,4 +1,12 @@
 {
+  "forgotPasswordValidation": {
+    "emailString": "Email must be a string",
+    "emailInvalid": "Enter a valid email address",
+    "emailMax": "Email must be a maximum of 60 characters",
+    "validAttributes": "The request accepts only: email attributes.",
+    "success": "If this email is registered, you will receive a reset link shortly",
+    "error": "Something went wrong. Please try again"
+  },
   "signinCard": {
     "loginHeading": "Login",
     "emailTitle": "Email",
