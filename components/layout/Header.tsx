@@ -95,7 +95,7 @@ const Header = ({
   const t = useTranslations("header");
 
   return (
-    <Flex px="3" py="2" justify="between" align="center" className="border-b border-gray-200">
+    <Flex px="3" py="2" justify="between" align="center">
       <Blockquote>
         <Strong>{t("authentication")}</Strong>
       </Blockquote>

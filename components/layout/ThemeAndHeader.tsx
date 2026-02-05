@@ -1,6 +1,6 @@
 "use client";
 
-import { Theme } from "@radix-ui/themes";
+import { Separator, Theme } from "@radix-ui/themes";
 import React, { useState } from "react";
 import { Appearance } from "../../utils/types";
 import Header from "./Header";
@@ -28,6 +28,7 @@ const ThemeAndHeader = ({
     <QueryClientProvider client={queryClient}>
       <Theme accentColor="gray" grayColor="slate" className="flex flex-col" appearance={appearance}>
         <Header appearance={appearance} setAppearance={setAppearance} />
+        <Separator className="w-full"/>
         {children}
       </Theme>
     </QueryClientProvider>
