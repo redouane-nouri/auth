@@ -26,7 +26,7 @@ const ThemeAndHeader = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme accentColor="gray" grayColor="slate" appearance={appearance}>
+      <Theme accentColor="gray" grayColor="slate" className="flex flex-col" appearance={appearance}>
         <Header appearance={appearance} setAppearance={setAppearance} />
         {children}
       </Theme>

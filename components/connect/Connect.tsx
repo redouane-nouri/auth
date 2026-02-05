@@ -17,8 +17,8 @@ export default function Connect() {
   const t = useTranslations("connect");
 
   return (
-    <Box>
-      <Container size="1" className="mt-10">
+    <Box my="auto">
+      <Container size="1">
         <Tabs.Root
           className="TabsRoot"
           defaultValue="login"
