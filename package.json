@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "authenticator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,7 +24,7 @@
     "bcrypt": "^5.1.1",
     "js-cookie": "^3.0.5",
     "next": "15.0.4",
-    "next-auth": "^5.0.0-beta.30",
+    "next-auth": "^5.0.0-beta.31",
     "next-intl": "^3.26.0",
     "nodemailer": "^7.0.11",
     "react": "^18.3.1",

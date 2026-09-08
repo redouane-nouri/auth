@@ -2,18 +2,10 @@
 
 import { LanguageCode } from "@/utils/enums";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import {
-  Blockquote,
-  Button,
-  Flex,
-  IconButton,
-  Select,
-  Strong,
-} from "@radix-ui/themes";
+import { Blockquote, Flex, IconButton, Select, Strong } from "@radix-ui/themes";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LanguageCodeToLabel } from "../../utils/constants";
 import { ThemeAppearance } from "../../utils/enums";
@@ -30,10 +22,6 @@ const Header = ({
     To refresh the page once the user changes the language because next-intl is SSR.
   */
   const router = useRouter();
-  /*
-    To know which label & href to setup (home or connect/logout)
-  */
-  const pathName = usePathname();
   /*
     This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
     Default to `en` if the user didn't choose yet or the cookie has invalid language value.
@@ -100,11 +88,6 @@ const Header = ({
         <Strong>{t("authentication")}</Strong>
       </Blockquote>
       <Flex gap="2">
-        <Link href={`${pathName === "/" ? "/connect" : "/"}`}>
-          <Button tabIndex={-1} variant="surface" highContrast>
-            {pathName === "/" ? t("connect") : t("home")}
-          </Button>
-        </Link>
         <Select.Root
           value={locale}
           onValueChange={(value) => {

@@ -127,7 +127,6 @@ export async function POST(request: NextRequest) {
         { error: t("alreadySignedIn") },
         { status: 409 }
       );
-
     /*
       The schema to be used for signup input validation with i18n messages
     */
@@ -165,7 +164,7 @@ export async function POST(request: NextRequest) {
         data: {
           name: body.name,
           email: body.email,
-          password: await bcrypt.hash(body.password, 10),
+          password: await bcrypt.hash(body.password, Number(process.env.BCRYPT_HASH_ROUNDS)),
         },
       }))
     ) {

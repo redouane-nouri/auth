@@ -1,4 +1,50 @@
 {
+ "resetPasswordValidation": {
+    "tokenString": "El token debe ser una cadena de texto",
+    "tokenRequired": "El token es obligatorio",
+    "passwordString": "La contraseña debe ser una cadena de texto",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMax": "La contraseña debe tener como máximo 60 caracteres",
+    "passwordRegexLowercase": "La contraseña debe contener al menos una letra minúscula",
+    "passwordRegexUppercase": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordRegexNumber": "La contraseña debe contener al menos un número",
+    "passwordSpecialCharacter": "La contraseña debe contener al menos un carácter especial: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "La confirmación de la contraseña debe ser una cadena de texto",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "validAttributes": "La solicitud solo acepta los campos: token, password y confirmPassword.",
+    "tokenInvalid": "Este enlace de restablecimiento no es válido o ha expirado",
+    "success": "Tu contraseña se ha restablecido correctamente",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
+ "forgotPasswordValidation": {
+    "emailString": "El correo electrónico debe ser una cadena de texto",
+    "emailInvalid": "Introduce una dirección de correo electrónico válida",
+    "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
+    "validAttributes": "La solicitud solo acepta el atributo de correo electrónico",
+    "success": "Si este correo electrónico está registrado, recibirás un enlace de restablecimiento en breve",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
+  "forgotPasswordCard": {
+    "heading": "Olvidé mi contraseña",
+    "emailTitle": "Correo electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "submit": "Enviar enlace de restablecimiento",
+    "backToLogin": "¿Recordaste tu contraseña?",
+    "logInNow": "¡Inicia sesión ahora!",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
+  "resetPasswordCard": {
+    "heading": "Restablecer contraseña",
+    "passwordTitle": "Nueva contraseña",
+    "passwordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPassword": "Confirma tu nueva contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
+    "submit": "Restablecer contraseña",
+    "backToLogin": "¿Recordaste tu contraseña?",
+    "logInNow": "¡Inicia sesión ahora!",
+    "invalidToken": "Este enlace de restablecimiento no es válido o ha expirado. Por favor, solicita uno nuevo.",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo"
+  },
   "signinCard": {
     "loginHeading": "Iniciar sesión",
     "emailTitle": "Correo electrónico",
@@ -70,7 +116,7 @@
     "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
-    "authentication": "Autenticación",
+    "authentication": "Autenticador",
     "connect": "Conectar",
     "home": "Inicio"
   },
@@ -80,6 +126,7 @@
   },
   "home": {
     "home": "Inicio",
+    "hello": "¡Hola, {name}!",
     "signOut": "Cerrar sesión",
     "successSignout": "Cierre de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
@@ -88,7 +135,7 @@
     "pageNotFound": "Página no encontrada"
   },
   "metadata": {
-    "title": "Autenticación",
-    "description": "Plataforma de autenticación"
+    "title": "Autenticador",
+    "description": "Plataforma Autenticador"
   }
 }

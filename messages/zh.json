@@ -1,4 +1,50 @@
 {
+  "resetPasswordValidation": {
+    "tokenString": "令牌必须是字符串",
+    "tokenRequired": "必须提供令牌",
+    "passwordString": "密码必须是字符串",
+    "passwordMin": "密码长度至少为8个字符",
+    "passwordMax": "密码长度最多为60个字符",
+    "passwordRegexLowercase": "密码必须包含至少一个小写字母",
+    "passwordRegexUppercase": "密码必须包含至少一个大写字母",
+    "passwordRegexNumber": "密码必须包含至少一个数字",
+    "passwordSpecialCharacter": "密码必须包含至少一个特殊字符: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
+    "confirmPasswordString": "确认密码必须是字符串",
+    "passwordsDontMatch": "密码不匹配",
+    "validAttributes": "请求只接受以下字段: token、password 和 confirmPassword。",
+    "tokenInvalid": "重置链接无效或已过期",
+    "success": "您的密码已成功重置",
+    "error": "出现了一些错误，请重试"
+  },
+  "forgotPasswordValidation": {
+    "emailString": "电子邮件必须是字符串",
+    "emailInvalid": "请输入有效的电子邮件地址",
+    "emailMax": "电子邮件长度不能超过 60 个字符",
+    "validAttributes": "请求仅接受电子邮件属性",
+    "success": "如果该电子邮件已注册，您将很快收到重置链接",
+    "error": "出现错误。请稍后再试"
+  },
+  "forgotPasswordCard": {
+    "heading": "忘记密码",
+    "emailTitle": "电子邮箱",
+    "emailPlaceholder": "请输入您的电子邮箱",
+    "submit": "发送重置链接",
+    "backToLogin": "想起密码了？",
+    "logInNow": "立即登录！",
+    "error": "出现了一些错误，请重试"
+  },
+  "resetPasswordCard": {
+    "heading": "重置密码",
+    "passwordTitle": "新密码",
+    "passwordPlaceholder": "请输入新密码",
+    "confirmPassword": "确认新密码",
+    "confirmPasswordPlaceholder": "请确认新密码",
+    "submit": "重置密码",
+    "backToLogin": "想起密码了？",
+    "logInNow": "立即登录！",
+    "invalidToken": "重置链接无效或已过期，请重新申请。",
+    "error": "出现了一些错误，请重试"
+  },
   "signinCard": {
     "loginHeading": "登录",
     "emailTitle": "邮箱",
@@ -70,7 +116,7 @@
     "alreadySignedIn": "您已经登录了"
   },
   "header": {
-    "authentication": "身份验证",
+    "authentication": "身份验证器",
     "connect": "连接",
     "home": "首页"
   },
@@ -80,6 +126,7 @@
   },
   "home": {
     "home": "首页",
+    "hello": "你好，{name}！",
     "signOut": "退出登录",
     "successSignout": "注销成功",
     "error": "出现了一些错误，请重试"
@@ -88,7 +135,7 @@
     "pageNotFound": "页面未找到"
   },
   "metadata": {
-    "title": "身份验证",
-    "description": "身份验证平台"
+    "title": "身份验证器",
+    "description": "身份验证器平台"
   }
 }

@@ -81,3 +81,47 @@ export const getSignInWithEmailSchema = (t: any) => {
     })
     .strict(t("validAttributes"));
 };
+/**
+ * Gets reset password zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getForgotPasswordSchema = (t: any) => {
+  return z
+    .object({
+      email: z
+        .string({ message: t("emailString") })
+        .trim()
+        .max(60, t("emailMax"))
+        .email(t("emailInvalid"))
+        .toLowerCase(),
+    })
+    .strict(t("validAttributes"));
+};
+/**
+ * Gets reset password zod validation schema
+ * @param t - next-int messages function, used for showing i18n errors.
+ * @returns zod schema
+ */
+export const getResetPasswordSchema = (t: any) => {
+  return z
+    .object({
+      token: z
+        .string({ message: t("tokenString") })
+        .min(1, t("tokenRequired")),
+      password: z
+        .string({ message: t("passwordString") })
+        .min(8, t("passwordMin"))
+        .max(60, t("passwordMax"))
+        .regex(/[a-z]/, t("passwordRegexLowercase"))
+        .regex(/[A-Z]/, t("passwordRegexUppercase"))
+        .regex(/[0-9]/, t("passwordRegexNumber"))
+        .regex(/[!-\/:-@[-`{-~]/, t("passwordSpecialCharacter")),
+      confirmPassword: z.string({ message: t("confirmPasswordString") }),
+    })
+    .strict(t("validAttributes"))
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("passwordsDontMatch"),
+      path: ["confirmPassword"],
+    });
+};
