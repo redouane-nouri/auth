@@ -142,7 +142,7 @@ export default function SiginnWithCredentialsForm() {
         </Button>
         <Text size="2">
           {t("forgotPassword")}
-          <Link href="/reset-password">
+          <Link href="/forgot-password">
             <Strong className="hover:border-b-2 cursor-pointer ml-2 mr-1">
               {t("resetNow")}
             </Strong>

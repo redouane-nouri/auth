@@ -1,1 +1,1 @@
-Authentication using Auth.js
+Authenticator using Auth.js

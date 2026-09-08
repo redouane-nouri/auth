@@ -11,7 +11,10 @@
     "passwordSpecialCharacter": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
     "confirmPasswordString": "يجب أن يكون تأكيد كلمة المرور نصيًا",
     "passwordsDontMatch": "كلمتا المرور غير متطابقتين",
-    "validAttributes": "الطلب يقبل فقط: token و password و confirmPassword."
+    "validAttributes": "الطلب يقبل فقط: token و password و confirmPassword.",
+    "tokenInvalid": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
+    "success": "تم إعادة تعيين كلمة المرور بنجاح",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى"
   },
   "forgotPasswordValidation": {
     "emailString": "يجب أن يكون البريد الإلكتروني نصًا",
@@ -19,6 +22,27 @@
     "emailMax": "يجب ألا يتجاوز البريد الإلكتروني 60 حرفًا",
     "validAttributes": "يقبل الطلب خاصية البريد الإلكتروني فقط",
     "success": "إذا كان هذا البريد الإلكتروني مسجلاً، فستتلقى رابط إعادة تعيين قريبًا",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى"
+  },
+  "forgotPasswordCard": {
+    "heading": "نسيت كلمة المرور",
+    "emailTitle": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "submit": "إرسال رابط إعادة التعيين",
+    "backToLogin": "تذكرت كلمة المرور؟",
+    "logInNow": "سجل الدخول الآن!",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى"
+  },
+  "resetPasswordCard": {
+    "heading": "إعادة تعيين كلمة المرور",
+    "passwordTitle": "كلمة المرور الجديدة",
+    "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "confirmPasswordPlaceholder": "أكد كلمة المرور الجديدة",
+    "submit": "إعادة تعيين كلمة المرور",
+    "backToLogin": "تذكرت كلمة المرور؟",
+    "logInNow": "سجل الدخول الآن!",
+    "invalidToken": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية. يرجى طلب رابط جديد.",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى"
   },
   "signinCard": {
@@ -92,7 +116,7 @@
     "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "header": {
-    "authentication": "المصادقة",
+    "authentication": "المصادق",
     "connect": "اتصل",
     "home": "الرئيسية"
   },
@@ -111,7 +135,7 @@
     "pageNotFound": "الصفحة غير موجودة"
   },
   "metadata": {
-    "title": "المصادقة",
-    "description": "منصة المصادقة"
+    "title": "المصادق",
+    "description": "منصة المصادق"
   }
 }

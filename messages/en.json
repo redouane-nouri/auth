@@ -11,7 +11,10 @@
     "passwordSpecialCharacter": "Password must contain at least one special character: !\"#$%&'()*+,-./:;<=>?@[]^_`'{|}~",
     "confirmPasswordString": "Confirm Password must be a string",
     "passwordsDontMatch": "Passwords don't match",
-    "validAttributes": "The request accepts only: token, password, and confirmPassword attributes."
+    "validAttributes": "The request accepts only: token, password, and confirmPassword attributes.",
+    "tokenInvalid": "This reset link is invalid or has expired",
+    "success": "Your password has been reset successfully",
+    "error": "Something went wrong. Please try again"
   },
   "forgotPasswordValidation": {
     "emailString": "Email must be a string",
@@ -19,6 +22,27 @@
     "emailMax": "Email must be a maximum of 60 characters",
     "validAttributes": "The request accepts only: email attributes.",
     "success": "If this email is registered, you will receive a reset link shortly",
+    "error": "Something went wrong. Please try again"
+  },
+  "forgotPasswordCard": {
+    "heading": "Forgot password",
+    "emailTitle": "Email",
+    "emailPlaceholder": "Enter your email",
+    "submit": "Send reset link",
+    "backToLogin": "Remembered your password?",
+    "logInNow": "Log in now!",
+    "error": "Something went wrong. Please try again"
+  },
+  "resetPasswordCard": {
+    "heading": "Reset password",
+    "passwordTitle": "New password",
+    "passwordPlaceholder": "Enter your new password",
+    "confirmPassword": "Confirm new password",
+    "confirmPasswordPlaceholder": "Confirm your new password",
+    "submit": "Reset password",
+    "backToLogin": "Remembered your password?",
+    "logInNow": "Log in now!",
+    "invalidToken": "This reset link is invalid or has expired. Please request a new one.",
     "error": "Something went wrong. Please try again"
   },
   "signinCard": {
@@ -92,7 +116,7 @@
     "alreadySignedIn": "You are already signed in"
   },
   "header": {
-    "authentication": "Authentication",
+    "authentication": "Authenticator",
     "connect": "Connect",
     "home": "Home"
   },
@@ -109,7 +133,7 @@
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {
-    "title": "Authentication",
-    "description": "Authentication Platform"
+    "title": "Authenticator",
+    "description": "Authenticator Platform"
   }
 }
