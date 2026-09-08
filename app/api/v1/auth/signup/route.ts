@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
         data: {
           name: body.name,
           email: body.email,
-          password: await bcrypt.hash(body.password, 10),
+          password: await bcrypt.hash(body.password, Number(process.env.BCRYPT_HASH_ROUNDS)),
         },
       }))
     ) {

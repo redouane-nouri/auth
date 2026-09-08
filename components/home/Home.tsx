@@ -1,15 +1,23 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
-import { Badge, Box, Button, Container, Flex } from "@radix-ui/themes";
+import { Badge, Box, Button, Container, Flex, Heading } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["600"] });
 
 export default function Home() {
   /*
     Home i18n messages
   */
   const t = useTranslations("home");
+
+  /*
+    Currently signed-in user
+  */
+  const { data: session } = useSession();
 
   /*
     Signout Mutation
@@ -24,28 +32,32 @@ export default function Home() {
   });
 
   return (
-    <Container size="1">
-      <Flex direction="column" gapY="4">
-        {t("home")}
-        <Button
-          onClick={() => mutation.mutate()}
-          loading={mutation.isPending}
-          disabled={mutation.isSuccess}
-          highContrast
-        >
-          {t("signOut")}
-        </Button>
-        {mutation.isError && (
-          <Badge color="crimson" className="!p-3 block whitespace-normal break-words">
-            {t("error")}
-          </Badge>
-        )}
-        {mutation.isSuccess && (
-          <Badge color="grass" className="!p-3 block whitespace-normal break-words">
-            {t("successSignout")}
-          </Badge>
-        )}
-      </Flex>
-    </Container>
+    <Box my="auto">
+      <Container size="1">
+        <Flex direction="column" align="center" gapY="4">
+          <Heading as="h1" size="6" className={poppins.className}>
+            {t("hello", { name: session?.user?.name ?? session?.user?.email ?? "" })}
+          </Heading>
+          <Button
+            onClick={() => mutation.mutate()}
+            loading={mutation.isPending}
+            disabled={mutation.isSuccess}
+            highContrast
+          >
+            {t("signOut")}
+          </Button>
+          {mutation.isError && (
+            <Badge color="crimson" className="!p-3 block whitespace-normal break-words">
+              {t("error")}
+            </Badge>
+          )}
+          {mutation.isSuccess && (
+            <Badge color="grass" className="!p-3 block whitespace-normal break-words">
+              {t("successSignout")}
+            </Badge>
+          )}
+        </Flex>
+      </Container>
+    </Box>
   );
 }

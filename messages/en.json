@@ -102,6 +102,7 @@
   },
   "home": {
     "home": "Home",
+    "hello": "Hello, {name}!",
     "signOut": "Sign Out",
     "successSignout": "Signed out successfully",
     "error": "Something went wrong. Please try again"

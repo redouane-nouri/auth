@@ -102,6 +102,7 @@
   },
   "home": {
     "home": "Inicio",
+    "hello": "¡Hola, {name}!",
     "signOut": "Cerrar sesión",
     "successSignout": "Cierre de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
