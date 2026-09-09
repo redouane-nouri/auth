@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
 import { getForgotPasswordSchema } from "@/utils/functions";
@@ -9,7 +9,7 @@ import ResetPasswordEmail from "@/components/auth/ResetPasswordEmailHtml";
 import { getMailerTransporter } from "@/lib/mailer/mailer";
 
 export async function POST(request: NextRequest) {
-  /* 
+  /*
     Load i18n translations for forgot password validation messages
   */
   const t = await getTranslations("forgotPasswordValidation");
@@ -36,20 +36,39 @@ export async function POST(request: NextRequest) {
       );
     }
     /*
+      We run this in using 'after' to prevent timing side-channel.
+    */
+    after(() => issueResetTokenAndSendEmail(result.data.email));
+    /*
+      Return success message anyway to avoid leaking info
+    */
+    return NextResponse.json({ message: t("success") });
+  } catch {
+    /*
+      Return generic 500 error message
+    */
+    return NextResponse.json({ error: t("error") }, { status: 500 });
+  }
+}
+
+/*
+  Looks up the user and, if he exists, issues him a reset token and emails it to him. 
+*/
+async function issueResetTokenAndSendEmail(email: string) {
+  try {
+    /*
       Check if the user exists in the database
     */
-    const user = await prisma.user.findUnique({
-      where: { email: result.data.email },
-    });
+    const user = await prisma.user.findUnique({ where: { email } });
     /*
-      If user does not exist, return success anyway to avoid leaking info
+      If user does not exist, there is nothing to do
     */
-    if (!user) return NextResponse.json({ message: t("success") });
+    if (!user) return;
     /*
       Delete any existing verification tokens for this email
     */
     await prisma.verificationToken.deleteMany({
-      where: { identifier: result.data.email },
+      where: { identifier: email },
     });
     /*
       Generate a secure random token
@@ -67,7 +86,7 @@ export async function POST(request: NextRequest) {
     */
     await prisma.verificationToken.create({
       data: {
-        identifier: result.data.email,
+        identifier: email,
         token: hashedToken,
         expires: new Date(Date.now() + 1000 * 60 * 10),
       },
@@ -77,7 +96,7 @@ export async function POST(request: NextRequest) {
     */
     const transporter = getMailerTransporter();
     /*
-      prepare the reset url 
+      prepare the reset url
     */
     const baseUrl = process.env.NEXT_PUBLIC_URL!;
     const resetUrl = `${baseUrl}/reset-password?token=${rawToken}`;
@@ -86,21 +105,16 @@ export async function POST(request: NextRequest) {
     */
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: result.data.email,
+      to: email,
       subject: "Reset your password",
       html: await render(
         React.createElement(ResetPasswordEmail, { token: rawToken }),
       ),
       text: `Reset your password: ${resetUrl}`,
     });
-    /*
-      Return success message
-    */
-    return NextResponse.json({ message: t("success") });
   } catch {
     /*
-      Return generic 500 error message
+      The response was already sent by the time this runs, there is no one left to report the error to
     */
-    return NextResponse.json({ error: t("error") }, { status: 500 });
   }
 }
