@@ -32,25 +32,24 @@ export async function POST(request: NextRequest) {
     if (!result.success) {
       return NextResponse.json(
         { error: result.error.format() },
-        { status: 400 }
+        { status: 400 },
       );
     }
     /*
       Check if the user exists in the database
     */
     const user = await prisma.user.findUnique({
-      where: { email: body.email },
+      where: { email: result.data.email },
     });
     /*
       If user does not exist, return success anyway to avoid leaking info
     */
-    if (!user)
-      return NextResponse.json({ message: t("success") });
+    if (!user) return NextResponse.json({ message: t("success") });
     /*
       Delete any existing verification tokens for this email
     */
     await prisma.verificationToken.deleteMany({
-      where: { identifier: body.email },
+      where: { identifier: result.data.email },
     });
     /*
       Generate a secure random token
@@ -68,7 +67,7 @@ export async function POST(request: NextRequest) {
     */
     await prisma.verificationToken.create({
       data: {
-        identifier: body.email,
+        identifier: result.data.email,
         token: hashedToken,
         expires: new Date(Date.now() + 1000 * 60 * 10),
       },
@@ -87,10 +86,10 @@ export async function POST(request: NextRequest) {
     */
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: body.email,
+      to: result.data.email,
       subject: "Reset your password",
       html: await render(
-        React.createElement(ResetPasswordEmail, { token: rawToken })
+        React.createElement(ResetPasswordEmail, { token: rawToken }),
       ),
       text: `Reset your password: ${resetUrl}`,
     });
@@ -102,9 +101,6 @@ export async function POST(request: NextRequest) {
     /*
       Return generic 500 error message
     */
-    return NextResponse.json(
-      { error: t("error") },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: t("error") }, { status: 500 });
   }
 }

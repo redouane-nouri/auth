@@ -88,7 +88,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   jwt: {
-    encode: async function(params) {
+    encode: async function (params) {
       /*
         If not a credentials auth, then just perform the default jwt encoding.
       */
@@ -127,8 +127,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Providers configuration
   */
   providers: [
-    Google({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
-    GitHub({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
+    Google({
+      allowDangerousEmailAccountLinking:
+        process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
+        "true",
+    }),
+    GitHub({
+      allowDangerousEmailAccountLinking:
+        process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
+        "true",
+    }),
     /*
       Configure the Nodemailer provider for signin with magic links suing the .env file
     */
@@ -149,7 +157,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       /*
         Configurable function to send email
       */
-      async sendVerificationRequest({ identifier, url, token, provider }) {
+      async sendVerificationRequest({ identifier, url, provider }) {
         /*
           Check if the user exists with email provided
         */
@@ -189,7 +197,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             React.createElement(EmailHtml, {
               url,
               host,
-            })
+            }),
           ),
         });
         /*
@@ -240,7 +248,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             Search for a user with the email provided and select only needed attributes
           */
           const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: result.data.email },
             select: {
               id: true,
               email: true,
@@ -263,7 +271,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           const correctPassword = await bcrypt.compare(
             password,
-            hashedPassword
+            hashedPassword,
           );
           /*
             If the comparaison is false then throw an error
