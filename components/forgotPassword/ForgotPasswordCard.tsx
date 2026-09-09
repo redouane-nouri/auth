@@ -99,7 +99,9 @@ const ForgotPasswordCard = () => {
                   className="!p-3 block whitespace-normal break-words"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (mutation.error.response?.data?.error ?? t("error"))
+                    ? (typeof mutation.error.response?.data?.error === "string"
+                        ? mutation.error.response.data.error
+                        : t("error"))
                     : mutation.error.message}
                 </Badge>
               )}

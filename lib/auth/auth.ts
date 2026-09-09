@@ -62,6 +62,14 @@ const prismaAdapter = PrismaAdapter(prisma);
 */
 const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 /*
+  A precomputed hash with no matching password, used to run bcrypt.compare even when no user/password
+  is found, so the response time doesn't reveal whether the email is registered (timing side-channel).
+*/
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(
+  uuidv4(),
+  Number(process.env.BCRYPT_HASH_ROUNDS),
+);
+/*
   Authjs configuration
 */
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -258,25 +266,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           });
           /*
-            If the user not found or the password is not set (which means credentials auth is not configured) then throw an error
-          */
-          if (!user || !user.password)
-            throw new CredentialsSigninError(t("invalidCredentials"));
-          /*
             Extract the hashed password and the user data needed to be in the session
           */
-          const { password: hashedPassword, ...userData } = user;
+          const { password: hashedPassword, ...userData } = user ?? {};
           /*
-            Get the password row and hashed comparaison result
+            Always run bcrypt.compare, against the real hash if we have one or a dummy hash otherwise,
+            so a missing user/password takes the same time as a wrong password (avoids a timing side-channel).
           */
           const correctPassword = await bcrypt.compare(
             password,
-            hashedPassword,
+            hashedPassword ?? DUMMY_PASSWORD_HASH,
           );
           /*
-            If the comparaison is false then throw an error
+            If the user not found, the password is not set (which means credentials auth is not configured), or the comparaison is false then throw an error
           */
-          if (!correctPassword)
+          if (!user || !user.password || !correctPassword)
             throw new CredentialsSigninError(t("invalidCredentials"));
           /*
             All good, return the user data (id, email, name, image)
