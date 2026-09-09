@@ -3,6 +3,7 @@
 import { Separator, Theme } from "@radix-ui/themes";
 import React, { useState } from "react";
 import { Appearance } from "../../utils/types";
+import { LanguageCode } from "../../utils/enums";
 import Header from "./Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 /*
@@ -10,9 +11,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 */
 const ThemeAndHeader = ({
   themeAppearance,
+  initialLocale,
   children,
 }: {
   themeAppearance: Appearance;
+  initialLocale: LanguageCode;
   children: React.ReactNode;
 }) => {
   /*
@@ -27,8 +30,8 @@ const ThemeAndHeader = ({
   return (
     <QueryClientProvider client={queryClient}>
       <Theme accentColor="gray" grayColor="slate" className="flex flex-col min-h-screen" appearance={appearance}>
-        <Header appearance={appearance} setAppearance={setAppearance} />
-        <Separator className="w-full"/>
+        <Header appearance={appearance} setAppearance={setAppearance} initialLocale={initialLocale} />
+        <Separator className="w-full" />
         {children}
       </Theme>
     </QueryClientProvider>

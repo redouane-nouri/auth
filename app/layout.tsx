@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/ThemeAndHeader";
-import { ThemeAppearance } from "../utils/enums";
+import { LanguageCode, ThemeAppearance } from "../utils/enums";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
@@ -47,14 +47,14 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ThemeAndHeader themeAppearance={appearance}>
+          <ThemeAndHeader themeAppearance={appearance} initialLocale={locale as LanguageCode}>
             {
-             /*
-               Change authjs basepath from /api/auth to /api/v1/auth
-             */
+              /*
+                Change authjs basepath from /api/auth to /api/{version}/auth
+              */
             }
             <SessionProvider basePath={process.env.AUTH_BASEPATH}>
-            {children}
+              {children}
             </SessionProvider>
           </ThemeAndHeader>
         </NextIntlClientProvider>

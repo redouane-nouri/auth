@@ -218,11 +218,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       */
       credentials: { email: {}, password: {} },
       authorize: async (credentials) => {
+        /*
+          Get transaltions function, needs to be outside the try block below so it is still in scope for the catch block's error message
+        */
+        const t = await getTranslations("signinValidation");
         try {
-          /*
-            Get transaltions function
-          */
-          const t = await getTranslations("signinValidation");
           /*
             If user already signed in throw an error with already signed in message
           */
@@ -288,9 +288,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           if (e instanceof CredentialsSigninError) throw e;
           /*
-            Else, throw a CredentialsSigninError with "error" message 
+            Else, throw a CredentialsSigninError with "error" message
           */
-          throw new CredentialsSigninError("error");
+          throw new CredentialsSigninError(t("error"));
         }
       },
     }),

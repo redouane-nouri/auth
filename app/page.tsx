@@ -7,7 +7,8 @@ export default async function SignOutButton() {
     If the user is not authenticated then redirect him to connect page.
     We can't use this check in the middleware because of the authjs db adapter edge compatibility issue
   */
-  if (!(await auth())) redirect("/connect");
+  const session = await auth();
+  if (!session) redirect("/connect");
 
-  return <Home />;
+  return <Home name={session.user?.name ?? session.user?.email ?? ""} />;
 }

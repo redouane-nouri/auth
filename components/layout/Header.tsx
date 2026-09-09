@@ -6,7 +6,7 @@ import { Blockquote, Flex, IconButton, Select, Strong } from "@radix-ui/themes";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LanguageCodeToLabel } from "../../utils/constants";
 import { ThemeAppearance } from "../../utils/enums";
 import { Appearance } from "../../utils/types";
@@ -14,19 +14,20 @@ import { Appearance } from "../../utils/types";
 const Header = ({
   appearance,
   setAppearance,
+  initialLocale,
 }: {
   appearance: Appearance;
   setAppearance: React.Dispatch<React.SetStateAction<Appearance>>;
+  initialLocale: LanguageCode;
 }) => {
   /*
     To refresh the page once the user changes the language because next-intl is SSR.
   */
   const router = useRouter();
   /*
-    This state holds the locale, it will changes once the page loaded and getting the prefered language by the user from the `NEXT_LOCALE` cookie.
-    Default to `en` if the user didn't choose yet or the cookie has invalid language value.
+    This state holds the locale, initialized from the `NEXT_LOCALE` cookie value the server already resolved (see `lib/i18n/request.ts`), so the select shows the right language from the first render instead of flashing English until a mount-time effect corrects it.
   */
-  const [locale, setLocale] = useState<LanguageCode>(LanguageCode.EN);
+  const [locale, setLocale] = useState<LanguageCode>(initialLocale);
   /*
     The handler of the select changing event.
     Once the user chooses a languge from the select menu, this handler will be triggered and:
@@ -65,18 +66,6 @@ const Header = ({
       sameSite: "Lax",
     });
   };
-  /*
-    This will be executed the first time the page is loaded to check if there is any valid value of a user perefered language in the `NEXT_LOCALE` cookie, if does not exist or invalid value then default to `en`.
-  */
-  useEffect(() => {
-    let nextLocale = Cookies.get("NEXT_LOCALE") as LanguageCode;
-
-    const languageValue = Object.values(LanguageCode).includes(nextLocale)
-      ? nextLocale
-      : LanguageCode.EN;
-
-    setLocale(languageValue);
-  }, []);
   /*
     Use `header` translations.
   */
