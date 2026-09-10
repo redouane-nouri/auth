@@ -75,3 +75,23 @@ export const emailSignInEmailRateLimiter = new RateLimiterRedis({
   points: 3,
   duration: 60 * 60,
 });
+/*
+  Limits signup requests per IP address.
+*/
+export const signupIpRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "signupIp",
+  points: 10,
+  duration: 15 * 60,
+});
+/*
+  Limits signup requests per email address, on top of the IP limiter.
+*/
+export const signupEmailRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "signupEmail",
+  points: 3,
+  duration: 60 * 60,
+});

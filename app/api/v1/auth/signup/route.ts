@@ -2,8 +2,13 @@ import bcrypt from "bcrypt";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma-client";
-import { getSignupSchema } from "../../../../../utils/functions";
+import { getClientIp, getSignupSchema } from "../../../../../utils/functions";
 import { auth } from "@/lib/auth/auth";
+import {
+  isRateLimited,
+  signupEmailRateLimiter,
+  signupIpRateLimiter,
+} from "@/lib/rateLimiter/rateLimiter";
 
 export async function POST(request: NextRequest) {
   /*
@@ -20,6 +25,15 @@ export async function POST(request: NextRequest) {
         { error: t("alreadySignedIn") },
         { status: 409 },
       );
+    /*
+      Limit signup requests per IP address
+    */
+    if (await isRateLimited(signupIpRateLimiter, getClientIp(request))) {
+      return NextResponse.json(
+        { error: t("tooManyRequests") },
+        { status: 429 },
+      );
+    }
     /*
       The schema to be used for signup input validation with i18n messages
     */
@@ -41,6 +55,15 @@ export async function POST(request: NextRequest) {
           error: result.error.format(),
         },
         { status: 400 },
+      );
+    }
+    /*
+      Also limit per email address, on top of the IP limit
+    */
+    if (await isRateLimited(signupEmailRateLimiter, result.data.email)) {
+      return NextResponse.json(
+        { error: t("tooManyRequests") },
+        { status: 429 },
       );
     }
     /*

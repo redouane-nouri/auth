@@ -97,6 +97,7 @@
     "emailString": "El correo electrónico debe ser una cadena",
     "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
     "success": "Usuario creado con éxito",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "nameString": "El nombre debe ser una cadena de texto",
     "nameRequired": "El nombre es obligatorio",
     "nameMax": "El nombre debe tener un máximo de 60 caracteres",
