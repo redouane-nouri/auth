@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 import arMessages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes";
 import { LanguageCode } from "@/utils/enums";
@@ -43,7 +44,7 @@ jest.mock("axios", () => ({
 /*
   To control the mock implementation of the mutation as needed.
 */
-const { useMutation } = require("@tanstack/react-query");
+const mockedUseMutation = useMutation as unknown as jest.Mock;
 
 describe("Signup Card", () => {
   /*
@@ -177,9 +178,9 @@ describe("Signup Card", () => {
       await userEvent.type(nameInput, "valid");
       await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercaseUPPERCASE123!@#");
-      expect(screen.queryByTestId("nameHint")).toBeNull();
-      expect(screen.queryByTestId("emailHint")).toBeNull();
-      expect(screen.queryByTestId("passwordHint")).toBeNull();
+      expect(screen.queryByTestId("nameHint")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("emailHint")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("passwordHint")).not.toBeInTheDocument();
     }
   );
 
@@ -230,7 +231,7 @@ describe("Signup Card", () => {
       /*
         Mock to return unexpected error
       */
-      useMutation.mockImplementation(() => ({
+      mockedUseMutation.mockImplementation(() => ({
         isError: true,
         isSuccess: false,
         isPending: false,
@@ -254,7 +255,7 @@ describe("Signup Card", () => {
   */
   it.each(Object.values(LanguageCode))(
     "Should display axios error creation message in %s language",
-    async (languageValueEnum) => {
+    async () => {
       /*
         Mock axios.isAxiosError to true to trigger axios error handling.
       */
@@ -262,7 +263,7 @@ describe("Signup Card", () => {
       /*
         Mock to return an axios error
       */
-      useMutation.mockImplementation(() => ({
+      mockedUseMutation.mockImplementation(() => ({
         isError: true,
         isSuccess: false,
         isPending: false,
@@ -307,7 +308,7 @@ describe("Signup Card", () => {
       /*
         Mock to return a success creation message.
       */
-      useMutation.mockImplementation(() => ({
+      mockedUseMutation.mockImplementation(() => ({
         isError: false,
         isSuccess: true,
         isPending: false,

@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       If the user created successfully. The retun a success message with 201 status for successful creation.
     */
     return NextResponse.json({ message: t("success") }, { status: 201 });
-  } catch (error) {
+  } catch {
     /*
       Catch any other erros and return an error message with 500 status for internal server error.
     */
