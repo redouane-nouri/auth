@@ -55,3 +55,23 @@ export const credentialsSignInEmailRateLimiter = new RateLimiterRedis({
   points: 5,
   duration: 15 * 60,
 });
+/*
+  Limits magic link sign-in emails per IP address.
+*/
+export const emailSignInIpRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "emailSignInIp",
+  points: 5,
+  duration: 15 * 60,
+});
+/*
+  Limits magic link sign-in emails per email address, on top of the IP limiter.
+*/
+export const emailSignInEmailRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "emailSignInEmail",
+  points: 3,
+  duration: 60 * 60,
+});

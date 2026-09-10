@@ -2,6 +2,8 @@ import { getClientIp, getSignInWithCredentialsSchema } from "@/utils/functions";
 import {
   credentialsSignInEmailRateLimiter,
   credentialsSignInIpRateLimiter,
+  emailSignInEmailRateLimiter,
+  emailSignInIpRateLimiter,
   isRateLimited,
 } from "@/lib/rateLimiter/rateLimiter";
 import NextAuth, { CredentialsSignin } from "next-auth";
@@ -170,7 +172,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       /*
         Configurable function to send email
       */
-      async sendVerificationRequest({ identifier, url, provider }) {
+      async sendVerificationRequest({ identifier, url, provider, request }) {
+        /*
+          Limit sign-in emails per IP and per email address.
+        */
+        if (
+          (await isRateLimited(
+            emailSignInIpRateLimiter,
+            getClientIp(request),
+          )) ||
+          (await isRateLimited(emailSignInEmailRateLimiter, identifier))
+        )
+          throw new Error("Too many requests");
         /*
           Check if the user exists with email provided
         */
@@ -258,7 +271,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           if (!result.success) throw new CredentialsSigninError(t("error"));
           /*
-            Limit sign-in attempts per IP and per email, same as the forgot password endpoint
+            Limit sign-in attempts per IP and per email.
           */
           if (
             (await isRateLimited(
