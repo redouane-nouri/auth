@@ -5,6 +5,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import ThemeAndHeader from "../components/layout/ThemeAndHeader";
 import { LanguageCode, ThemeAppearance } from "../utils/enums";
+import { LanguageCodeToDirection } from "../utils/constants";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
@@ -44,7 +45,7 @@ export default async function RootLayout({
       : ThemeAppearance.LIGHT;
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={LanguageCodeToDirection[locale as LanguageCode]}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeAndHeader themeAppearance={appearance} initialLocale={locale as LanguageCode}>
