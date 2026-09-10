@@ -112,6 +112,7 @@
     "emailMax": "Email must be a maximum of 60 characters",
     "passwordString": "Password must be a string",
     "invalidCredentials": "Invalid email or password",
+    "tooManyRequests": "Too many requests. Please try again later.",
     "success": "Signed in successfully",
     "error": "Something went wrong. Please try again",
     "alreadySignedIn": "You are already signed in"

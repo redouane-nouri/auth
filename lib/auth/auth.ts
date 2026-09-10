@@ -1,4 +1,9 @@
-import { getSignInWithCredentialsSchema } from "@/utils/functions";
+import { getClientIp, getSignInWithCredentialsSchema } from "@/utils/functions";
+import {
+  credentialsSignInEmailRateLimiter,
+  credentialsSignInIpRateLimiter,
+  isRateLimited,
+} from "@/lib/rateLimiter/rateLimiter";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Nodemailer from "next-auth/providers/nodemailer";
@@ -225,7 +230,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Used for the default login page, since we use our own page, just provide the params we need with empty conf.
       */
       credentials: { email: {}, password: {} },
-      authorize: async (credentials) => {
+      authorize: async (credentials, request) => {
         /*
           Get transaltions function, needs to be outside the try block below so it is still in scope for the catch block's error message
         */
@@ -252,6 +257,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             If the validation failed throw an error
           */
           if (!result.success) throw new CredentialsSigninError(t("error"));
+          /*
+            Limit sign-in attempts per IP and per email, same as the forgot password endpoint
+          */
+          if (
+            (await isRateLimited(
+              credentialsSignInIpRateLimiter,
+              getClientIp(request),
+            )) ||
+            (await isRateLimited(
+              credentialsSignInEmailRateLimiter,
+              result.data.email,
+            ))
+          )
+            throw new CredentialsSigninError(t("tooManyRequests"));
           /*
             Search for a user with the email provided and select only needed attributes
           */

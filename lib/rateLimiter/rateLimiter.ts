@@ -35,3 +35,23 @@ export const forgotPasswordEmailRateLimiter = new RateLimiterRedis({
   points: 3,
   duration: 60 * 60,
 });
+/*
+  Limits credentials sign-in attempts per IP address.
+*/
+export const credentialsSignInIpRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "credentialsSignInIp",
+  points: 10,
+  duration: 15 * 60,
+});
+/*
+  Limits credentials sign-in attempts per email address, on top of the IP limiter.
+*/
+export const credentialsSignInEmailRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "credentialsSignInEmail",
+  points: 5,
+  duration: 15 * 60,
+});

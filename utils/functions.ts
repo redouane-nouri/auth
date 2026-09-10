@@ -1,4 +1,3 @@
-import { NextRequest } from "next/server";
 import { z } from "zod";
 
 /**
@@ -130,7 +129,7 @@ export const getResetPasswordSchema = (t: any) => {
  * @param request - the incoming request.
  * @returns the client's IP address, or "unknown" if it can't be determined.
  */
-export const getClientIp = (request: NextRequest): string => {
+export const getClientIp = (request: Request): string => {
   const forwardedFor = request.headers.get("x-forwarded-for");
   /*
     `x-forwarded-for` can hold a comma separated list of IPs (client, then each proxy it passed through), the client's IP is the first one.

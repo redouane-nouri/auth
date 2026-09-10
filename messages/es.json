@@ -112,6 +112,7 @@
     "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordString": "La contraseña debe ser una cadena",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "success": "Inicio de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo",
     "alreadySignedIn": "Ya has iniciado sesión"

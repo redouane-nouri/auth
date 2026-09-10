@@ -2,7 +2,7 @@ import { createClient } from "redis";
 /*
  Redis client Singleton factory function.
 */
-const redisClientSingleton = async () => {
+const redisClientSingleton = () => {
   const client = createClient({ url: process.env.REDIS_URL });
   /*
    Connect right away without awaiting it, the client queues up commands issued before the connection.
