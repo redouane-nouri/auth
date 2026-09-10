@@ -22,6 +22,7 @@
     "emailMax": "电子邮件长度不能超过 60 个字符",
     "validAttributes": "请求仅接受电子邮件属性",
     "success": "如果该电子邮件已注册，您将很快收到重置链接",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "error": "出现错误。请稍后再试"
   },
   "forgotPasswordCard": {

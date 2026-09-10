@@ -2,11 +2,16 @@ import crypto from "crypto";
 import { after, NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
-import { getForgotPasswordSchema } from "@/utils/functions";
+import { getClientIp, getForgotPasswordSchema } from "@/utils/functions";
 import { render } from "@react-email/render";
 import React from "react";
 import ResetPasswordEmail from "@/components/auth/ResetPasswordEmailHtml";
 import { getMailerTransporter } from "@/lib/mailer/mailer";
+import {
+  forgotPasswordEmailRateLimiter,
+  forgotPasswordIpRateLimiter,
+  isRateLimited,
+} from "@/lib/rateLimiter/rateLimiter";
 
 export async function POST(request: NextRequest) {
   /*
@@ -14,6 +19,17 @@ export async function POST(request: NextRequest) {
   */
   const t = await getTranslations("forgotPasswordValidation");
   try {
+    /*
+      Limit how many times this endpoint can be hit per IP.
+    */
+    if (
+      await isRateLimited(forgotPasswordIpRateLimiter, getClientIp(request))
+    ) {
+      return NextResponse.json(
+        { error: t("tooManyRequests") },
+        { status: 429 },
+      );
+    }
     /*
       Get the Zod validation schema for the forgot password request
     */
@@ -36,6 +52,17 @@ export async function POST(request: NextRequest) {
       );
     }
     /*
+      Also limit per email address, on top of the IP limit.
+    */
+    if (
+      await isRateLimited(forgotPasswordEmailRateLimiter, result.data.email)
+    ) {
+      return NextResponse.json(
+        { error: t("tooManyRequests") },
+        { status: 429 },
+      );
+    }
+    /*
       We run this in using 'after' to prevent timing side-channel.
     */
     after(() => issueResetTokenAndSendEmail(result.data.email));
@@ -52,7 +79,7 @@ export async function POST(request: NextRequest) {
 }
 
 /*
-  Looks up the user and, if he exists, issues him a reset token and emails it to him. 
+  Looks up the user and, if he exists, issues him a reset token and emails it to him.
 */
 async function issueResetTokenAndSendEmail(email: string) {
   try {

@@ -22,6 +22,7 @@
     "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
     "validAttributes": "La solicitud solo acepta el atributo de correo electrónico",
     "success": "Si este correo electrónico está registrado, recibirás un enlace de restablecimiento en breve",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "forgotPasswordCard": {
