@@ -14,6 +14,7 @@
     "validAttributes": "La solicitud solo acepta los campos: token, password y confirmPassword.",
     "tokenInvalid": "Este enlace de restablecimiento no es válido o ha expirado",
     "success": "Tu contraseña se ha restablecido correctamente",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
  "forgotPasswordValidation": {

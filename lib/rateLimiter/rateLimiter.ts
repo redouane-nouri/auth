@@ -95,3 +95,13 @@ export const signupEmailRateLimiter = new RateLimiterRedis({
   points: 3,
   duration: 60 * 60,
 });
+/*
+  Limits reset password requests per IP address.
+*/
+export const resetPasswordIpRateLimiter = new RateLimiterRedis({
+  storeClient: redisClient,
+  useRedisPackage: true,
+  keyPrefix: "resetPasswordIp",
+  points: 10,
+  duration: 15 * 60,
+});

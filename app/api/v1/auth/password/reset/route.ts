@@ -3,18 +3,31 @@ import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
-import { getResetPasswordSchema } from "@/utils/functions";
+import { getClientIp, getResetPasswordSchema } from "@/utils/functions";
+import {
+  isRateLimited,
+  resetPasswordIpRateLimiter,
+} from "@/lib/rateLimiter/rateLimiter";
 /**
  * POST /api/v1/auth/password/reset
  * Handles resetting user password given a valid token
  */
 export async function POST(request: NextRequest) {
-  /* 
+  /*
     Load i18n translations for reset password validation messages
   */
   const t = await getTranslations("resetPasswordValidation");
 
   try {
+    /*
+      Limit reset password requests per IP address
+    */
+    if (await isRateLimited(resetPasswordIpRateLimiter, getClientIp(request))) {
+      return NextResponse.json(
+        { error: t("tooManyRequests") },
+        { status: 429 },
+      );
+    }
     /*
       Get the Zod validation schema for the reset password request
     */

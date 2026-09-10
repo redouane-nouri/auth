@@ -14,6 +14,7 @@
     "validAttributes": "请求只接受以下字段: token、password 和 confirmPassword。",
     "tokenInvalid": "重置链接无效或已过期",
     "success": "您的密码已成功重置",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "error": "出现了一些错误，请重试"
   },
   "forgotPasswordValidation": {

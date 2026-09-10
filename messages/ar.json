@@ -14,6 +14,7 @@
     "validAttributes": "الطلب يقبل فقط: token و password و confirmPassword.",
     "tokenInvalid": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
     "success": "تم إعادة تعيين كلمة المرور بنجاح",
+    "tooManyRequests": "طلبات كثيرة جدًا. يرجى المحاولة مرة أخرى لاحقًا.",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى"
   },
   "forgotPasswordValidation": {
