@@ -7,10 +7,16 @@ import {
   isRateLimited,
 } from "@/lib/rateLimiter/rateLimiter";
 import NextAuth, { CredentialsSignin } from "next-auth";
+import type { Adapter, AdapterSession } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 import Nodemailer from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { encode } from "next-auth/jwt";
+import {
+  getCachedSessionAndUser,
+  invalidateCachedSession,
+  setCachedSessionAndUser,
+} from "@/lib/redis/sessionCache";
 import { getTranslations } from "next-intl/server";
 import { v4 as uuidv4 } from "uuid";
 import prisma from "../prisma/prisma-client";
@@ -63,7 +69,31 @@ let transporter: Transporter | null = null;
 /*
   Prisma Adapter to store and control our own auth information
 */
-const prismaAdapter = PrismaAdapter(prisma);
+const baseAdapter = PrismaAdapter(prisma);
+
+const prismaAdapter: Adapter = {
+  ...baseAdapter,
+  async getSessionAndUser(sessionToken) {
+    const cached = await getCachedSessionAndUser(sessionToken);
+    if (cached) return cached;
+
+    const result = await baseAdapter.getSessionAndUser?.(sessionToken);
+    if (result) await setCachedSessionAndUser(sessionToken, result);
+    return result ?? null;
+  },
+  async updateSession(session) {
+    const updated = await baseAdapter.updateSession?.(session);
+    await invalidateCachedSession(session.sessionToken);
+    return updated;
+  },
+  async deleteSession(
+    sessionToken,
+  ): Promise<AdapterSession | null | undefined> {
+    const deleted = await baseAdapter.deleteSession?.(sessionToken);
+    await invalidateCachedSession(sessionToken);
+    return deleted as AdapterSession | null | undefined;
+  },
+};
 /*
   Session duration
 */
@@ -250,6 +280,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const t = await getTranslations("signinValidation");
         try {
           /*
+            Limit sign-in attempts per IP
+          */
+          if (
+            await isRateLimited(
+              credentialsSignInIpRateLimiter,
+              getClientIp(request),
+            )
+          )
+            throw new CredentialsSigninError(t("tooManyRequests"));
+          /*
             If user already signed in throw an error with already signed in message
           */
           if (await auth())
@@ -271,17 +311,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           if (!result.success) throw new CredentialsSigninError(t("error"));
           /*
-            Limit sign-in attempts per IP and per email.
+            Limit sign-in attempts per email, on top of the IP limit above
           */
           if (
-            (await isRateLimited(
-              credentialsSignInIpRateLimiter,
-              getClientIp(request),
-            )) ||
-            (await isRateLimited(
+            await isRateLimited(
               credentialsSignInEmailRateLimiter,
               result.data.email,
-            ))
+            )
           )
             throw new CredentialsSigninError(t("tooManyRequests"));
           /*

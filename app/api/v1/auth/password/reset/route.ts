@@ -8,6 +8,7 @@ import {
   isRateLimited,
   resetPasswordIpRateLimiter,
 } from "@/lib/rateLimiter/rateLimiter";
+import { invalidateCachedSession } from "@/lib/redis/sessionCache";
 /**
  * POST /api/v1/auth/password/reset
  * Handles resetting user password given a valid token
@@ -90,11 +91,20 @@ export async function POST(request: NextRequest) {
       where: { identifier: tokenRecord.identifier },
     });
     /*
-      Revoke all existing sessions so a stolen/active session can't survive a password reset
+      Revoke all existing sessions.
     */
+    const sessionsToRevoke = await prisma.session.findMany({
+      where: { userId: updatedUser.id },
+      select: { sessionToken: true },
+    });
     await prisma.session.deleteMany({
       where: { userId: updatedUser.id },
     });
+    await Promise.all(
+      sessionsToRevoke.map((session) =>
+        invalidateCachedSession(session.sessionToken),
+      ),
+    );
     /*
       Return success message
     */
