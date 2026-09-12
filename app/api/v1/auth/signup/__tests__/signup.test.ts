@@ -1,3 +1,4 @@
+import type { NextRequest } from "next/server";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
 import { auth } from "../../../../../../lib/auth/auth";
@@ -43,7 +44,7 @@ jest.mock("../../../../../../lib/auth/auth", () => ({
 jest.mock("next/server", () => ({
   NextRequest: jest.fn(),
   NextResponse: {
-    json: jest.fn((body: any, options: any) => {
+    json: jest.fn((body: unknown, options: { status: number }) => {
       return {
         status: options.status,
         json: async () => body,
@@ -54,8 +55,8 @@ jest.mock("next/server", () => ({
 /*
   A helper function to create a mock body for the request.
 */
-const createMockRequest = (body: any): any => {
-  return body ? { json: async () => body } : undefined;
+const createMockRequest = (body: unknown): NextRequest => {
+  return (body ? { json: async () => body } : undefined) as NextRequest;
 };
 /*
   Testing
@@ -207,7 +208,7 @@ describe("POST - Singup API", () => {
           confirmPassword: "Valid@123",
         })
       );
-      let { message } = await response.json();
+      const { message } = await response.json();
       expect(response.status).toBe(201);
       expect(message).toBe(t.success);
       /*

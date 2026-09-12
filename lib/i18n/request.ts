@@ -6,7 +6,7 @@ export default getRequestConfig(async () => {
   /*
     Getting the value of the NEXT_LOCAL cookie which we are using to store the user's prefered language.
   */
-  let nextLocale = (await cookies()).get("NEXT_LOCALE")
+  const nextLocale = (await cookies()).get("NEXT_LOCALE")
     ?.value as LanguageCode;
   /*
     Whitelisting:

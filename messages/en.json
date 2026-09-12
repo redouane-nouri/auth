@@ -14,6 +14,7 @@
     "validAttributes": "The request accepts only: token, password, and confirmPassword attributes.",
     "tokenInvalid": "This reset link is invalid or has expired",
     "success": "Your password has been reset successfully",
+    "tooManyRequests": "Too many requests. Please try again later.",
     "error": "Something went wrong. Please try again"
   },
   "forgotPasswordValidation": {
@@ -22,6 +23,7 @@
     "emailMax": "Email must be a maximum of 60 characters",
     "validAttributes": "The request accepts only: email attributes.",
     "success": "If this email is registered, you will receive a reset link shortly",
+    "tooManyRequests": "Too many requests. Please try again later.",
     "error": "Something went wrong. Please try again"
   },
   "forgotPasswordCard": {
@@ -99,6 +101,7 @@
     "nameMax": "Name must be at most 60 characters",
     "nameRequired": "Name is required",
     "success": "User created successfully",
+    "tooManyRequests": "Too many requests. Please try again later.",
     "error": "Something went wrong. Please try again",
     "alreadySignedIn": "You are already signed in"
   },
@@ -111,6 +114,7 @@
     "emailMax": "Email must be a maximum of 60 characters",
     "passwordString": "Password must be a string",
     "invalidCredentials": "Invalid email or password",
+    "tooManyRequests": "Too many requests. Please try again later.",
     "success": "Signed in successfully",
     "error": "Something went wrong. Please try again",
     "alreadySignedIn": "You are already signed in"

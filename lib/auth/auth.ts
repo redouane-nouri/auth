@@ -1,4 +1,11 @@
-import { getSignInWithCredentialsSchema } from "@/utils/functions";
+import { getClientIp, getSignInWithCredentialsSchema } from "@/utils/functions";
+import {
+  credentialsSignInEmailRateLimiter,
+  credentialsSignInIpRateLimiter,
+  emailSignInEmailRateLimiter,
+  emailSignInIpRateLimiter,
+  isRateLimited,
+} from "@/lib/rateLimiter/rateLimiter";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Nodemailer from "next-auth/providers/nodemailer";
@@ -62,6 +69,14 @@ const prismaAdapter = PrismaAdapter(prisma);
 */
 const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 /*
+  A precomputed hash with no matching password, used to run bcrypt.compare even when no user/password
+  is found, so the response time doesn't reveal whether the email is registered (timing side-channel).
+*/
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(
+  uuidv4(),
+  Number(process.env.BCRYPT_HASH_ROUNDS),
+);
+/*
   Authjs configuration
 */
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -88,7 +103,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   jwt: {
-    encode: async function(params) {
+    encode: async function (params) {
       /*
         If not a credentials auth, then just perform the default jwt encoding.
       */
@@ -127,8 +142,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Providers configuration
   */
   providers: [
-    Google({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
-    GitHub({ allowDangerousEmailAccountLinking: process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING === "true" }),
+    Google({
+      allowDangerousEmailAccountLinking:
+        process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
+        "true",
+    }),
+    GitHub({
+      allowDangerousEmailAccountLinking:
+        process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
+        "true",
+    }),
     /*
       Configure the Nodemailer provider for signin with magic links suing the .env file
     */
@@ -149,7 +172,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       /*
         Configurable function to send email
       */
-      async sendVerificationRequest({ identifier, url, token, provider }) {
+      async sendVerificationRequest({ identifier, url, provider, request }) {
+        /*
+          Limit sign-in emails per IP and per email address.
+        */
+        if (
+          (await isRateLimited(
+            emailSignInIpRateLimiter,
+            getClientIp(request),
+          )) ||
+          (await isRateLimited(emailSignInEmailRateLimiter, identifier))
+        )
+          throw new Error("Too many requests");
         /*
           Check if the user exists with email provided
         */
@@ -189,7 +223,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             React.createElement(EmailHtml, {
               url,
               host,
-            })
+            }),
           ),
         });
         /*
@@ -209,12 +243,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Used for the default login page, since we use our own page, just provide the params we need with empty conf.
       */
       credentials: { email: {}, password: {} },
-      authorize: async (credentials) => {
+      authorize: async (credentials, request) => {
+        /*
+          Get transaltions function, needs to be outside the try block below so it is still in scope for the catch block's error message
+        */
+        const t = await getTranslations("signinValidation");
         try {
-          /*
-            Get transaltions function
-          */
-          const t = await getTranslations("signinValidation");
           /*
             If user already signed in throw an error with already signed in message
           */
@@ -237,10 +271,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           if (!result.success) throw new CredentialsSigninError(t("error"));
           /*
+            Limit sign-in attempts per IP and per email.
+          */
+          if (
+            (await isRateLimited(
+              credentialsSignInIpRateLimiter,
+              getClientIp(request),
+            )) ||
+            (await isRateLimited(
+              credentialsSignInEmailRateLimiter,
+              result.data.email,
+            ))
+          )
+            throw new CredentialsSigninError(t("tooManyRequests"));
+          /*
             Search for a user with the email provided and select only needed attributes
           */
           const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: result.data.email },
             select: {
               id: true,
               email: true,
@@ -250,25 +298,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           });
           /*
-            If the user not found or the password is not set (which means credentials auth is not configured) then throw an error
-          */
-          if (!user || !user.password)
-            throw new CredentialsSigninError(t("invalidCredentials"));
-          /*
             Extract the hashed password and the user data needed to be in the session
           */
-          const { password: hashedPassword, ...userData } = user;
+          const { password: hashedPassword, ...userData } = user ?? {};
           /*
-            Get the password row and hashed comparaison result
+            Always run bcrypt.compare, against the real hash if we have one or a dummy hash otherwise,
+            so a missing user/password takes the same time as a wrong password (avoids a timing side-channel).
           */
           const correctPassword = await bcrypt.compare(
             password,
-            hashedPassword
+            hashedPassword ?? DUMMY_PASSWORD_HASH,
           );
           /*
-            If the comparaison is false then throw an error
+            If the user not found, the password is not set (which means credentials auth is not configured), or the comparaison is false then throw an error
           */
-          if (!correctPassword)
+          if (!user || !user.password || !correctPassword)
             throw new CredentialsSigninError(t("invalidCredentials"));
           /*
             All good, return the user data (id, email, name, image)
@@ -280,9 +324,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           */
           if (e instanceof CredentialsSigninError) throw e;
           /*
-            Else, throw a CredentialsSigninError with "error" message 
+            Else, throw a CredentialsSigninError with "error" message
           */
-          throw new CredentialsSigninError("error");
+          throw new CredentialsSigninError(t("error"));
         }
       },
     }),

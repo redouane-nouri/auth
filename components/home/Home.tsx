@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { Badge, Box, Button, Container, Flex, Heading } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
@@ -8,16 +8,11 @@ import { Poppins } from "next/font/google";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["600"] });
 
-export default function Home() {
+export default function Home({ name }: { name: string }) {
   /*
     Home i18n messages
   */
   const t = useTranslations("home");
-
-  /*
-    Currently signed-in user
-  */
-  const { data: session } = useSession();
 
   /*
     Signout Mutation
@@ -36,7 +31,7 @@ export default function Home() {
       <Container size="1">
         <Flex direction="column" align="center" gapY="4">
           <Heading as="h1" size="6" className={poppins.className}>
-            {t("hello", { name: session?.user?.name ?? session?.user?.email ?? "" })}
+            {t("hello", { name })}
           </Heading>
           <Button
             onClick={() => mutation.mutate()}

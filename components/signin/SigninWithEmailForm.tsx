@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRightIcon,
   EnvelopeClosedIcon,
   PaperPlaneIcon,
 } from "@radix-ui/react-icons";
@@ -13,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { AUTH_NODEMAILER_PROVIDER_NAME } from "@/utils/constants";
 
 export default function SiginnWithEmailForm() {

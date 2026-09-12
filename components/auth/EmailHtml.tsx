@@ -140,10 +140,10 @@ export default function EmailHtml({
             }}
           >
             <Text style={{ fontSize: 13, color: "#6b7280", marginBottom: 8 }}>
-              Didn't request this?
+              Didn&apos;t request this?
             </Text>
             <Text style={{ fontSize: 12, color: "#6b7280" }}>
-              If you didn't request this email, you can safely ignore it.
+              If you didn&apos;t request this email, you can safely ignore it.
             </Text>
           </Section>
 

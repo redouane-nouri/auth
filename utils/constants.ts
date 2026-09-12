@@ -26,6 +26,18 @@ export const LanguageCodeToLabel: Record<LanguageCode, LanguageLabel> = {
   [LanguageCode.ZH]: LanguageLabel.ZH,
 } as const;
 
+/*
+  Text direction per language, used to set the `dir` attribute on `<html>` so RTL languages (Arabic)
+  render mirrored instead of being forced into a left-to-right layout.
+*/
+export const LanguageCodeToDirection: Record<LanguageCode, "ltr" | "rtl"> = {
+  [LanguageCode.AR]: "rtl",
+  [LanguageCode.EN]: "ltr",
+  [LanguageCode.ES]: "ltr",
+  [LanguageCode.RU]: "ltr",
+  [LanguageCode.ZH]: "ltr",
+} as const;
+
 export const oAuth2Providers: readonly OAuth2ProviderT[] = [
   {
     id: OAuth2ProviderAuthId.GITHUB,

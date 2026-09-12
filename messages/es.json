@@ -14,6 +14,7 @@
     "validAttributes": "La solicitud solo acepta los campos: token, password y confirmPassword.",
     "tokenInvalid": "Este enlace de restablecimiento no es válido o ha expirado",
     "success": "Tu contraseña se ha restablecido correctamente",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
  "forgotPasswordValidation": {
@@ -22,6 +23,7 @@
     "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",
     "validAttributes": "La solicitud solo acepta el atributo de correo electrónico",
     "success": "Si este correo electrónico está registrado, recibirás un enlace de restablecimiento en breve",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
   "forgotPasswordCard": {
@@ -96,6 +98,7 @@
     "emailString": "El correo electrónico debe ser una cadena",
     "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
     "success": "Usuario creado con éxito",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "nameString": "El nombre debe ser una cadena de texto",
     "nameRequired": "El nombre es obligatorio",
     "nameMax": "El nombre debe tener un máximo de 60 caracteres",
@@ -111,6 +114,7 @@
     "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordString": "La contraseña debe ser una cadena",
     "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
+    "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "success": "Inicio de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo",
     "alreadySignedIn": "Ya has iniciado sesión"

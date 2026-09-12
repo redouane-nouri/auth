@@ -14,6 +14,7 @@
     "validAttributes": "请求只接受以下字段: token、password 和 confirmPassword。",
     "tokenInvalid": "重置链接无效或已过期",
     "success": "您的密码已成功重置",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "error": "出现了一些错误，请重试"
   },
   "forgotPasswordValidation": {
@@ -22,6 +23,7 @@
     "emailMax": "电子邮件长度不能超过 60 个字符",
     "validAttributes": "请求仅接受电子邮件属性",
     "success": "如果该电子邮件已注册，您将很快收到重置链接",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "error": "出现错误。请稍后再试"
   },
   "forgotPasswordCard": {
@@ -96,6 +98,7 @@
     "passwordsDontMatch": "两次输入的密码不一致",
     "confirmPasswordString": "确认密码必须是字符串",
     "success": "用户创建成功",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "error": "出现问题，请重试",
     "nameString": "姓名必须是字符串",
     "nameMax": "姓名最多只能有 60 个字符",
@@ -111,6 +114,7 @@
     "validAttributes": "请求仅接受以下属性: 邮箱、密码和确认密码。",
     "emailMax": "电子邮件最多可包含 60 个字符",
     "invalidCredentials": "用户名或密码不正确",
+    "tooManyRequests": "请求过多，请稍后再试。",
     "success": "登录成功",
     "error": "发生错误，请稍后再试",
     "alreadySignedIn": "您已经登录了"

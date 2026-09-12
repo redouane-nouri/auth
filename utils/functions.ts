@@ -106,9 +106,7 @@ export const getForgotPasswordSchema = (t: any) => {
 export const getResetPasswordSchema = (t: any) => {
   return z
     .object({
-      token: z
-        .string({ message: t("tokenString") })
-        .min(1, t("tokenRequired")),
+      token: z.string({ message: t("tokenString") }).min(1, t("tokenRequired")),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
@@ -124,4 +122,19 @@ export const getResetPasswordSchema = (t: any) => {
       message: t("passwordsDontMatch"),
       path: ["confirmPassword"],
     });
+};
+/**
+ * Gets the client IP address from the request.
+ *
+ * @param request - the incoming request.
+ * @returns the client's IP address, or "unknown" if it can't be determined.
+ */
+export const getClientIp = (request: Request): string => {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  /*
+    `x-forwarded-for` can hold a comma separated list of IPs (client, then each proxy it passed through), the client's IP is the first one.
+  */
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+
+  return request.headers.get("x-real-ip") ?? "unknown";
 };
