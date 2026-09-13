@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+coverage
+*.log
+.DS_Store
+.vscode
+
+# envs and db
+.env
+.env.*
+prisma/db
+
+*.tsbuildinfo
+next-env.d.ts
