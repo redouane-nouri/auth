@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      REDIS_URL: redis://redis:6379
+      DB_URL: file:/app/prisma/db/dev.db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:8.2.1
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data-dev:/data
+
+volumes:
+  redis-data-dev:

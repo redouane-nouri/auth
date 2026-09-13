@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+      args:
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        NEXT_PUBLIC_AXIOS_BASEPATH: ${NEXT_PUBLIC_AXIOS_BASEPATH}
+    ports:
+      - "80:3000"
+    env_file:
+      - .env
+    environment:
+      REDIS_URL: redis://redis:6379
+      DB_URL: file:/app/prisma/db/data.db
+    volumes:
+      - sqlite-data:/app/prisma/db
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:8.2.1
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:
+  redis-data:
