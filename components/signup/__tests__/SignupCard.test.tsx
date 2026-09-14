@@ -60,7 +60,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      const { container } = render(<SignupCard switchToSignin={() => {}} />);
+      const { container } = render(<SignupCard switchToSignin={() => { }} />);
       /*
         Assert
       */
@@ -82,7 +82,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Act by clicking on the submit button
       */
@@ -111,7 +111,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Act by inserting long string in email & password inputs.
       */
@@ -141,7 +141,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Act by inserting invalid regex for password
       */
@@ -195,7 +195,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Act by inserting non-equal passwords
       */
@@ -242,7 +242,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Assert unexpected error is displayed.
       */
@@ -272,11 +272,43 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Assert axios error is displayed.
       */
       expect(screen.getByTestId("errorBadge")).toHaveTextContent("Axios error");
+    }
+  );
+
+  /*
+    To check that a non-string axios error data (like the zod validation object the API returns on a 400) falls back to the generic error message.
+  */
+  it.each(Object.values(LanguageCode))(
+    "Should display generic error message when axios error data is not a string in %s language",
+    async (languageValueEnum) => {
+      translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
+      const t = translationsObject.getMessages().signupValidation;
+      /*
+        Mock axios.isAxiosError to true to trigger axios error handling.
+      */
+      (axios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+      /*
+        Mock to return an axios error whose data.error is an object, not a string.
+      */
+      mockedUseMutation.mockImplementation(() => ({
+        isError: true,
+        isSuccess: false,
+        isPending: false,
+        error: { response: { data: { error: { _errors: ["some error"] } } } },
+      }));
+      /*
+        Arrange.
+      */
+      render(<SignupCard switchToSignin={() => { }} />);
+      /*
+        Assert the generic error message is displayed instead of the object.
+      */
+      expect(screen.getByTestId("errorBadge")).toHaveTextContent(t.error);
     }
   );
   /*
@@ -317,7 +349,7 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard switchToSignin={() => {}} />);
+      render(<SignupCard switchToSignin={() => { }} />);
       /*
         Assert success message is displayed.
       */
