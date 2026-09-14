@@ -126,6 +126,15 @@ export const getResetPasswordSchema = (t: any) => {
 /**
  * Gets the client IP address from the request.
  *
+ * WARNING: this trusts `x-forwarded-for`/`x-real-ip` as-is, and takes the first entry of
+ * `x-forwarded-for`, which is the end of the chain a client can freely set. That's only safe
+ * if whatever reverse proxy sits in front of this app overwrites that header with the real
+ * connecting IP (not append to whatever the client sent), and the app isn't reachable except
+ * through that proxy. Otherwise this is spoofable and used to bypass the IP based rate limiters.
+ *
+ * Adjust which entry is read here (e.g. the last entry, or skip known trusted proxy hops) to match
+ * whatever proxy is actually deployed in front.
+ *
  * @param request - the incoming request.
  * @returns the client's IP address, or "unknown" if it can't be determined.
  */

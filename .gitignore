@@ -13,9 +13,6 @@
 #prisma sqlite db
 prisma/db
 
-#prisma migrations
-prisma/migrations
-
 # testing
 /coverage
 

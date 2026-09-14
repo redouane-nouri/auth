@@ -22,7 +22,7 @@ export const forgotPasswordIpRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "forgotPasswordIp",
-  points: 5,
+  points: 10,
   duration: 15 * 60,
 });
 /*
@@ -32,7 +32,7 @@ export const forgotPasswordEmailRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "forgotPasswordEmail",
-  points: 3,
+  points: 5,
   duration: 60 * 60,
 });
 /*
@@ -42,7 +42,7 @@ export const credentialsSignInIpRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "credentialsSignInIp",
-  points: 10,
+  points: 20,
   duration: 15 * 60,
 });
 /*
@@ -52,7 +52,7 @@ export const credentialsSignInEmailRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "credentialsSignInEmail",
-  points: 5,
+  points: 10,
   duration: 15 * 60,
 });
 /*
@@ -62,7 +62,7 @@ export const emailSignInIpRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "emailSignInIp",
-  points: 5,
+  points: 10,
   duration: 15 * 60,
 });
 /*
@@ -72,7 +72,7 @@ export const emailSignInEmailRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "emailSignInEmail",
-  points: 3,
+  points: 5,
   duration: 60 * 60,
 });
 /*
@@ -82,7 +82,7 @@ export const signupIpRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "signupIp",
-  points: 10,
+  points: 20,
   duration: 15 * 60,
 });
 /*
@@ -92,7 +92,7 @@ export const signupEmailRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "signupEmail",
-  points: 3,
+  points: 5,
   duration: 60 * 60,
 });
 /*
@@ -102,6 +102,6 @@ export const resetPasswordIpRateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
   useRedisPackage: true,
   keyPrefix: "resetPasswordIp",
-  points: 10,
+  points: 20,
   duration: 15 * 60,
 });

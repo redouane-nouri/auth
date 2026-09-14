@@ -18,15 +18,7 @@ export async function POST(request: NextRequest) {
 
   try {
     /*
-      If user already signed in and tries to authenticate send a 409 status for conflict and an already signed in error message.
-    */
-    if (await auth())
-      return NextResponse.json(
-        { error: t("alreadySignedIn") },
-        { status: 409 },
-      );
-    /*
-      Limit signup requests per IP address
+      Limit signup requests per IP address, checked first since it's a cheap Redis lookup, before we pay for the auth() session lookup below
     */
     if (await isRateLimited(signupIpRateLimiter, getClientIp(request))) {
       return NextResponse.json(
@@ -34,6 +26,14 @@ export async function POST(request: NextRequest) {
         { status: 429 },
       );
     }
+    /*
+      If user already signed in and tries to singup send a 409 status for conflict and an already signed in error message.
+    */
+    if (await auth())
+      return NextResponse.json(
+        { error: t("alreadySignedIn") },
+        { status: 409 },
+      );
     /*
       The schema to be used for signup input validation with i18n messages
     */
