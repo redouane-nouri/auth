@@ -1,4 +1,5 @@
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { Translation } from "./classes";
 import {
   LanguageLabel,
   OAuth2ProviderAuthId,
@@ -6,6 +7,11 @@ import {
 } from "./enums";
 import { LanguageCode } from "./enums";
 import { OAuth2ProviderT } from "./types";
+
+/*
+  Shared translation object used across API route jest tests to provide i18n messages.
+*/
+export const translationsObject = new Translation();
 
 export const AUTH_LOGIN_EMAIL_SUBJECT = "Signin Link";
 export const AUTH_NODEMAILER_OAUTH2_TYPE = "OAuth2";

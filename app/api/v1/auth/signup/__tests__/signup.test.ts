@@ -1,16 +1,12 @@
 import { StatusCodes } from "http-status-codes";
-import type { NextRequest } from "next/server";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
 import { auth } from "../../../../../../lib/auth/auth";
 import { isRateLimited } from "../../../../../../lib/rateLimiter/rateLimiter";
 import arMessages from "../../../../../../messages/ar.json";
-import { Translation } from "../../../../../../utils/classes";
+import { translationsObject } from "../../../../../../utils/constants";
+import { createMockRequest } from "../../../../../../utils/functions";
 import { POST as postSignupHandler } from "../route";
-/*
-  translation object will be used to provide translation for the i18n messages.
-*/
-const translationsObject = new Translation();
 jest.mock("bcrypt", () => ({
   hash: jest.fn(async () => "hashedPassword"),
 }));
@@ -60,14 +56,6 @@ jest.mock("next/server", () => ({
     }),
   },
 }));
-/*
-  A helper function to create a mock body for the request.
-*/
-const createMockRequest = (body: unknown): NextRequest => {
-  return (
-    body ? { json: async () => body, headers: new Headers() } : undefined
-  ) as NextRequest;
-};
 /*
   Testing
 */
