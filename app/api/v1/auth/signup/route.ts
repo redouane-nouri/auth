@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { StatusCodes } from "http-status-codes";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma-client";
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
     if (await isRateLimited(signupIpRateLimiter, getClientIp(request))) {
       return NextResponse.json(
         { error: t("tooManyRequests") },
-        { status: 429 },
+        { status: StatusCodes.TOO_MANY_REQUESTS },
       );
     }
     /*
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
     if (await auth())
       return NextResponse.json(
         { error: t("alreadySignedIn") },
-        { status: 409 },
+        { status: StatusCodes.CONFLICT },
       );
     /*
       The schema to be used for signup input validation with i18n messages
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
         {
           error: result.error.format(),
         },
-        { status: 400 },
+        { status: StatusCodes.BAD_REQUEST },
       );
     }
     /*
@@ -63,14 +64,17 @@ export async function POST(request: NextRequest) {
     if (await isRateLimited(signupEmailRateLimiter, result.data.email)) {
       return NextResponse.json(
         { error: t("tooManyRequests") },
-        { status: 429 },
+        { status: StatusCodes.TOO_MANY_REQUESTS },
       );
     }
     /*
       If the email already exist then send a 409 status for conflict and an error message.
     */
     if (await prisma.user.findUnique({ where: { email: result.data.email } })) {
-      return NextResponse.json({ error: t("emailExists") }, { status: 409 });
+      return NextResponse.json(
+        { error: t("emailExists") },
+        { status: StatusCodes.CONFLICT },
+      );
     }
     /*
       Create the user and check the return value. If not created, then return an error with 500 status for internal server error.
@@ -87,16 +91,25 @@ export async function POST(request: NextRequest) {
         },
       }))
     ) {
-      return NextResponse.json({ error: t("error") }, { status: 500 });
+      return NextResponse.json(
+        { error: t("error") },
+        { status: StatusCodes.INTERNAL_SERVER_ERROR },
+      );
     }
     /*
       If the user created successfully. The retun a success message with 201 status for successful creation.
     */
-    return NextResponse.json({ message: t("success") }, { status: 201 });
+    return NextResponse.json(
+      { message: t("success") },
+      { status: StatusCodes.CREATED },
+    );
   } catch {
     /*
       Catch any other erros and return an error message with 500 status for internal server error.
     */
-    return NextResponse.json({ error: t("error") }, { status: 500 });
+    return NextResponse.json(
+      { error: t("error") },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    );
   }
 }

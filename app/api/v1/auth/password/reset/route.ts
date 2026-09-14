@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
     if (await isRateLimited(resetPasswordIpRateLimiter, getClientIp(request))) {
       return NextResponse.json(
         { error: t("tooManyRequests") },
-        { status: 429 },
+        { status: StatusCodes.TOO_MANY_REQUESTS },
       );
     }
     /*
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
     if (!result.success) {
       return NextResponse.json(
         { error: result.error.format() },
-        { status: 400 },
+        { status: StatusCodes.BAD_REQUEST },
       );
     }
     /*
@@ -70,7 +71,10 @@ export async function POST(request: NextRequest) {
       If token not found or expired, return generic error
     */
     if (!tokenRecord) {
-      return NextResponse.json({ error: t("tokenInvalid") }, { status: 400 });
+      return NextResponse.json(
+        { error: t("tokenInvalid") },
+        { status: StatusCodes.BAD_REQUEST },
+      );
     }
     /*
       Update the user's password with bcrypt hash
@@ -113,6 +117,9 @@ export async function POST(request: NextRequest) {
     /*
       Return generic 500 error message
     */
-    return NextResponse.json({ error: t("error") }, { status: 500 });
+    return NextResponse.json(
+      { error: t("error") },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    );
   }
 }

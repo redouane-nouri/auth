@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 import type { NextRequest } from "next/server";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
@@ -93,7 +94,7 @@ describe("POST - Singup API", () => {
       let response = await postSignupHandler(createMockRequest({}));
       let { error } = await response.json();
 
-      expect(response.status).toBe(429);
+      expect(response.status).toBe(StatusCodes.TOO_MANY_REQUESTS);
       expect(error).toBe(t.tooManyRequests);
       /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signupValidation namespace in the i18n messages JSON file chosen.
@@ -102,7 +103,7 @@ describe("POST - Singup API", () => {
       response = await postSignupHandler(createMockRequest(undefined));
       ({ error } = await response.json());
 
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(error).toBe(t.error);
       /*
         A request with an empty body should return a 400 status and erros for each attribute.
@@ -113,7 +114,7 @@ describe("POST - Singup API", () => {
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error._errors).toContain(t.validAttributes);
       expect(error.name._errors).toContain(t.nameString);
       expect(error.email._errors).toContain(t.emailString);
@@ -132,7 +133,7 @@ describe("POST - Singup API", () => {
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.name._errors).toContain(t.nameRequired);
       expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toEqual([
@@ -157,7 +158,7 @@ describe("POST - Singup API", () => {
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.name._errors).toContain(t.nameMax);
       expect(error.email._errors).toContain(t.emailMax);
       expect(error.password._errors).toContain(t.passwordMax);
@@ -174,7 +175,7 @@ describe("POST - Singup API", () => {
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.confirmPassword._errors).toContain(t.passwordsDontMatch);
       /*
         A request with a rate limited email should return a 429 status and a too many requests error message.
@@ -194,7 +195,7 @@ describe("POST - Singup API", () => {
 
       ({ error } = await response.json());
 
-      expect(response.status).toBe(429);
+      expect(response.status).toBe(StatusCodes.TOO_MANY_REQUESTS);
       expect(error).toBe(t.tooManyRequests);
       /*
         We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
@@ -213,7 +214,7 @@ describe("POST - Singup API", () => {
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(StatusCodes.CONFLICT);
       expect(error).toBe(t.emailExists);
       /*
         Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
@@ -229,7 +230,7 @@ describe("POST - Singup API", () => {
         }),
       );
       ({ error } = await response.json());
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(error).toBe(t.error);
       /*
         A success creation should return a 201 status and a success message.
@@ -247,7 +248,7 @@ describe("POST - Singup API", () => {
         }),
       );
       const { message } = await response.json();
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(StatusCodes.CREATED);
       expect(message).toBe(t.success);
       /*
         A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
@@ -262,7 +263,7 @@ describe("POST - Singup API", () => {
         }),
       );
       ({ error } = await response.json());
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(StatusCodes.CONFLICT);
       expect(error).toBe(t.alreadySignedIn);
     },
   );
