@@ -7,6 +7,9 @@ import arMessages from "../../../../../../messages/ar.json";
 import { translationsObject } from "../../../../../../utils/constants";
 import { createMockRequest } from "../../../../../../utils/functions";
 import { POST as postSignupHandler } from "../route";
+/*
+  Mocking bcrypt so tests don't need real hashing.
+*/
 jest.mock("bcrypt", () => ({
   hash: jest.fn(async () => "hashedPassword"),
 }));
@@ -21,7 +24,7 @@ jest.mock("next-intl/server", () => ({
     translationsObject.translationsMock(nameSpace),
 }));
 /*
-  Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values. 
+  Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values.
 */
 jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
   user: {
