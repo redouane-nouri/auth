@@ -199,7 +199,7 @@ describe("POST - Singup API", () => {
       /*
         We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
       */
-      mockedFindUnique.mockResolvedValue({
+      mockedFindUnique.mockResolvedValueOnce({
         email: "exists@mail.test",
       });
 
@@ -219,7 +219,7 @@ describe("POST - Singup API", () => {
         Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
       */
       mockedFindUnique.mockResolvedValue(undefined);
-      mockedCreate.mockResolvedValue(undefined);
+      mockedCreate.mockResolvedValueOnce(undefined);
       response = await postSignupHandler(
         createMockRequest({
           name: "valid",
@@ -235,7 +235,7 @@ describe("POST - Singup API", () => {
         A success creation should return a 201 status and a success message.
         We didn't mock the findUnique because it is already mocked above to return undefined which mean the email is available to use.
       */
-      mockedCreate.mockResolvedValue({
+      mockedCreate.mockResolvedValueOnce({
         email: "valid@mail.test",
       });
       response = await postSignupHandler(
@@ -252,7 +252,7 @@ describe("POST - Singup API", () => {
       /*
         A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
       */
-      mockedAuth.mockResolvedValue({ user: {} });
+      mockedAuth.mockResolvedValueOnce({ user: {} });
       response = await postSignupHandler(
         createMockRequest({
           name: "valid",
