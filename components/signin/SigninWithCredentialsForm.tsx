@@ -92,13 +92,14 @@ export default function SiginnWithCredentialsForm() {
             placeholder={t("emailPlaceholder")}
             size="2"
             {...register("email")}
+            data-testid="emailInput"
           >
             <TextField.Slot>
               <EnvelopeClosedIcon />
             </TextField.Slot>
           </TextField.Root>
           {errors.email && (
-            <Text color="crimson" size="1">
+            <Text data-testid="emailHint" color="crimson" size="1">
               {errors.email.message}
             </Text>
           )}
@@ -110,29 +111,39 @@ export default function SiginnWithCredentialsForm() {
             placeholder={t("passwordPlaceholder")}
             type="password"
             {...register("password")}
+            data-testid="passwordInput"
           >
             <TextField.Slot>
               <LockClosedIcon />
             </TextField.Slot>
           </TextField.Root>
           {errors.password && (
-            <Text color="crimson" size="1">
+            <Text data-testid="passwordHint" color="crimson" size="1">
               {errors.password.message}
             </Text>
           )}
         </Box>
         {mutation.isError && (
-          <Badge color="crimson" className="!p-3 block whitespace-normal break-words">
+          <Badge
+            data-testid="errorBadge"
+            color="crimson"
+            className="!p-3 block whitespace-normal break-words"
+          >
             {mutation.error.message}
           </Badge>
         )}
         {mutation.isSuccess && (
-          <Badge color="grass" className="!p-3 block whitespace-normal break-words">
+          <Badge
+            data-testid="successBadge"
+            color="grass"
+            className="!p-3 block whitespace-normal break-words"
+          >
             {t("success")}
           </Badge>
         )}
         <Button
           type="submit"
+          data-testid="submitButton"
           loading={mutation.isPending}
           disabled={mutation.isSuccess}
           highContrast

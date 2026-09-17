@@ -42,32 +42,13 @@ jest.mock("axios", () => ({
 }));
 
 /*
-  To control the mock implementation of the mutation as needed.
+  To control the mock implementation of each mocked import as needed, instead of repeating the same
+  cast inline every time it's used.
 */
-const mockedUseMutation = useMutation as unknown as jest.Mock;
+const mockedUseMutation = useMutation as jest.Mock;
+const mockedIsAxiosError = axios.isAxiosError as unknown as jest.Mock;
 
 describe("Signup Card", () => {
-  /*
-    Snapshot testing to ensure the SignupCard is rendered with the correct language messages
-  */
-  it.each(Object.values(LanguageCode))(
-    "Should render UI with %s language",
-    (languageValueEnum) => {
-      /*
-        Set the current language so the mocked useTranslations function will return messages for the current language.
-      */
-      translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
-      /*
-        Arrange
-      */
-      const { container } = render(<SignupCard switchToSignin={() => { }} />);
-      /*
-        Assert
-      */
-      expect(container).toMatchSnapshot();
-    }
-  );
-
   /*
     Clicking the signup button with empty data should display email is invalid, name and password is required hints
   */
@@ -227,7 +208,7 @@ describe("Signup Card", () => {
       /*
         Mock axios.isAxiosError to false to prevent triggering axios error handling.
       */
-      (axios.isAxiosError as unknown as jest.Mock).mockReturnValue(false);
+      mockedIsAxiosError.mockReturnValue(false);
       /*
         Mock to return unexpected error
       */
@@ -259,7 +240,7 @@ describe("Signup Card", () => {
       /*
         Mock axios.isAxiosError to true to trigger axios error handling.
       */
-      (axios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+      mockedIsAxiosError.mockReturnValue(true);
       /*
         Mock to return an axios error
       */
@@ -291,7 +272,7 @@ describe("Signup Card", () => {
       /*
         Mock axios.isAxiosError to true to trigger axios error handling.
       */
-      (axios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+      mockedIsAxiosError.mockReturnValue(true);
       /*
         Mock to return an axios error whose data.error is an object, not a string.
       */

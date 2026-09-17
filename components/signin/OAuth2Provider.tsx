@@ -18,6 +18,7 @@ export default function OAuth2Provider({
           callbackUrl: "/",
         })
       }
+      data-testid={`oAuth2ProviderButton-${oAuth2Provider.id}`}
       variant="outline"
       highContrast
     >
