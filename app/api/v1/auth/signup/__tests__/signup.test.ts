@@ -1,14 +1,15 @@
-import type { NextRequest } from "next/server";
+import { StatusCodes } from "http-status-codes";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../../../../../lib/prisma/prisma-client";
 import { auth } from "../../../../../../lib/auth/auth";
+import { isRateLimited } from "../../../../../../lib/rateLimiter/rateLimiter";
 import arMessages from "../../../../../../messages/ar.json";
-import { Translation } from "../../../../../../utils/classes";
+import { translationsObject } from "../../../../../../utils/constants";
+import { createMockRequest } from "../../../../../../utils/functions";
 import { POST as postSignupHandler } from "../route";
 /*
-  translation object will be used to provide translation for the i18n messages.
+  Mocking bcrypt so tests don't need real hashing.
 */
-const translationsObject = new Translation();
 jest.mock("bcrypt", () => ({
   hash: jest.fn(async () => "hashedPassword"),
 }));
@@ -23,7 +24,7 @@ jest.mock("next-intl/server", () => ({
     translationsObject.translationsMock(nameSpace),
 }));
 /*
-  Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values. 
+  Mocking the prisma client to control the 'fundUnique' and 'create' frunction return values.
 */
 jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
   user: {
@@ -36,6 +37,12 @@ jest.mock("../../../../../../lib/prisma/prisma-client", () => ({
 */
 jest.mock("../../../../../../lib/auth/auth", () => ({
   auth: jest.fn(),
+}));
+/*
+  Mocking the rate limiter so these tests don't need a real Redis connection, isRateLimited resolving to false means "not rate limited".
+*/
+jest.mock("../../../../../../lib/rateLimiter/rateLimiter", () => ({
+  isRateLimited: jest.fn(async () => false),
 }));
 /*
   Mocking the NextRequest and NextResponse imports in our POST API endpoint to prevent this error: ReferenceError: Request is not defined for NextRequest and Cannot read properties of undefined for NextResponse.
@@ -52,12 +59,6 @@ jest.mock("next/server", () => ({
     }),
   },
 }));
-/*
-  A helper function to create a mock body for the request.
-*/
-const createMockRequest = (body: unknown): NextRequest => {
-  return (body ? { json: async () => body } : undefined) as NextRequest;
-};
 /*
   Testing
 */
@@ -78,24 +79,33 @@ describe("POST - Singup API", () => {
       */
       (auth as jest.Mock).mockResolvedValue(null);
       /*
+        A request from a rate limited IP should return a 429 status and a too many requests error message.
+      */
+      (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+      let response = await postSignupHandler(createMockRequest({}));
+      let { error } = await response.json();
+
+      expect(response.status).toBe(StatusCodes.TOO_MANY_REQUESTS);
+      expect(error).toBe(t.tooManyRequests);
+      /*
         A request with no body should return a 500 status and a JSON body containing a property named error, with the value being the error message from the signupValidation namespace in the i18n messages JSON file chosen.
         The try catch block is returning this error.
       */
-      let response = await postSignupHandler(createMockRequest(undefined));
-      let { error } = await response.json();
+      response = await postSignupHandler(createMockRequest(undefined));
+      ({ error } = await response.json());
 
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(error).toBe(t.error);
       /*
         A request with an empty body should return a 400 status and erros for each attribute.
         An extra attribute should trigger also an error message in the global "_errors" parameter.
       */
       response = await postSignupHandler(
-        createMockRequest({ invalidAttribute: "any" })
+        createMockRequest({ invalidAttribute: "any" }),
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error._errors).toContain(t.validAttributes);
       expect(error.name._errors).toContain(t.nameString);
       expect(error.email._errors).toContain(t.emailString);
@@ -110,11 +120,11 @@ describe("POST - Singup API", () => {
           email: "",
           password: "",
           confirmPassword: "",
-        })
+        }),
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.name._errors).toContain(t.nameRequired);
       expect(error.email._errors).toContain(t.emailInvalid);
       expect(error.password._errors).toEqual([
@@ -135,11 +145,11 @@ describe("POST - Singup API", () => {
           email: longString,
           password: longString,
           confirmPassword: "any",
-        })
+        }),
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.name._errors).toContain(t.nameMax);
       expect(error.email._errors).toContain(t.emailMax);
       expect(error.password._errors).toContain(t.passwordMax);
@@ -152,12 +162,32 @@ describe("POST - Singup API", () => {
           email: "valid@mail.test",
           password: "Valid@123",
           confirmPassword: "notMatching",
-        })
+        }),
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(error.confirmPassword._errors).toContain(t.passwordsDontMatch);
+      /*
+        A request with a rate limited email should return a 429 status and a too many requests error message.
+      */
+      (isRateLimited as jest.Mock)
+        .mockResolvedValueOnce(false)
+        .mockResolvedValueOnce(true);
+
+      response = await postSignupHandler(
+        createMockRequest({
+          name: "valid",
+          email: "valid@mail.test",
+          password: "Valid@123",
+          confirmPassword: "Valid@123",
+        }),
+      );
+
+      ({ error } = await response.json());
+
+      expect(response.status).toBe(StatusCodes.TOO_MANY_REQUESTS);
+      expect(error).toBe(t.tooManyRequests);
       /*
         We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
       */
@@ -171,11 +201,11 @@ describe("POST - Singup API", () => {
           email: "exists@mail.test",
           password: "Valid@123",
           confirmPassword: "Valid@123",
-        })
+        }),
       );
       ({ error } = await response.json());
 
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(StatusCodes.CONFLICT);
       expect(error).toBe(t.emailExists);
       /*
         Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
@@ -188,10 +218,10 @@ describe("POST - Singup API", () => {
           email: "valid@mail.test",
           password: "Valid@123",
           confirmPassword: "Valid@123",
-        })
+        }),
       );
       ({ error } = await response.json());
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(error).toBe(t.error);
       /*
         A success creation should return a 201 status and a success message.
@@ -206,10 +236,10 @@ describe("POST - Singup API", () => {
           email: "valid@mail.test",
           password: "Valid@123",
           confirmPassword: "Valid@123",
-        })
+        }),
       );
       const { message } = await response.json();
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(StatusCodes.CREATED);
       expect(message).toBe(t.success);
       /*
         A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
@@ -221,11 +251,11 @@ describe("POST - Singup API", () => {
           email: "valid@mail.test",
           password: "Valid@123",
           confirmPassword: "Valid@123",
-        })
+        }),
       );
       ({ error } = await response.json());
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(StatusCodes.CONFLICT);
       expect(error).toBe(t.alreadySignedIn);
-    }
+    },
   );
 });

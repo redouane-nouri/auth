@@ -1,3 +1,4 @@
+import type { NextRequest } from "next/server";
 import { z } from "zod";
 
 /**
@@ -146,4 +147,16 @@ export const getClientIp = (request: Request): string => {
   if (forwardedFor) return forwardedFor.split(",")[0].trim();
 
   return request.headers.get("x-real-ip") ?? "unknown";
+};
+/**
+ * Creates a mock body for the request, used in jest API route tests. Includes empty headers since
+ * some routes read them to key the rate limiter.
+ *
+ * @param body - the request body `.json()` should resolve to, or undefined to simulate a request with no body.
+ * @returns an object shaped enough to stand in for a NextRequest in tests.
+ */
+export const createMockRequest = (body: unknown): NextRequest => {
+  return (
+    body ? { json: async () => body, headers: new Headers() } : undefined
+  ) as NextRequest;
 };
