@@ -51,8 +51,20 @@ export class Translation {
       K extends keyof (typeof arMessages)[typeof nameSpace],
     >(
       key: K,
+      values?: Record<string, string | number>,
     ): (typeof arMessages)[typeof nameSpace][K] | undefined => {
-      return this.getMessages()[nameSpace][key];
+      const message = this.getMessages()[nameSpace][key];
+      /*
+        Substitutes next-intl's `{varName}` placeholders (e.g. t("hello", { name })) with the given
+        values, otherwise just returns the raw message as-is.
+      */
+      if (typeof message !== "string" || !values) return message;
+
+      return Object.entries(values).reduce(
+        (result: string, [varName, varValue]) =>
+          result.replaceAll(`{${varName}}`, String(varValue)),
+        message,
+      ) as (typeof arMessages)[typeof nameSpace][K];
     };
 
     return translations;
