@@ -2,9 +2,20 @@
 import "@testing-library/jest-dom";
 import { TextDecoder, TextEncoder } from "node:util";
 /*
-  jsdom (the test environment) doesn't provide TextEncoder/TextDecoder globally, but @react-email/render
-  (imported by any route that sends an email) needs them just to be imported, not even called. Node has
-  them built in, so just expose Node's own implementation on the global object.
+  jsdom doesn't provide TextEncoder/TextDecoder globally, but @react-email/render needs them just to be imported.
 */
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
+/*
+  jsdom doesn't implement ResizeObserver, or the pointer capture / scrollIntoView APIs, but Radix UI's
+  Select needs all of them just to open its dropdown.
+*/
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+global.ResizeObserver = ResizeObserverMock;
+Element.prototype.hasPointerCapture = jest.fn();
+Element.prototype.releasePointerCapture = jest.fn();
+Element.prototype.scrollIntoView = jest.fn();
