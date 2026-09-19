@@ -60,6 +60,14 @@ jest.mock("next/server", () => ({
   },
 }));
 /*
+  To control the mock implementation of each mocked import as needed, instead of repeating the same
+  cast inline every time it's used.
+*/
+const mockedAuth = auth as jest.Mock;
+const mockedIsRateLimited = isRateLimited as jest.Mock;
+const mockedFindUnique = prisma.user.findUnique as jest.Mock;
+const mockedCreate = prisma.user.create as jest.Mock;
+/*
   Testing
 */
 describe("POST - Singup API", () => {
@@ -77,11 +85,11 @@ describe("POST - Singup API", () => {
       /*
         Set auth session to null to prevent the trigger of already signed up error
       */
-      (auth as jest.Mock).mockResolvedValue(null);
+      mockedAuth.mockResolvedValue(null);
       /*
         A request from a rate limited IP should return a 429 status and a too many requests error message.
       */
-      (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+      mockedIsRateLimited.mockResolvedValueOnce(true);
       let response = await postSignupHandler(createMockRequest({}));
       let { error } = await response.json();
 
@@ -171,7 +179,7 @@ describe("POST - Singup API", () => {
       /*
         A request with a rate limited email should return a 429 status and a too many requests error message.
       */
-      (isRateLimited as jest.Mock)
+      mockedIsRateLimited
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
 
@@ -191,7 +199,7 @@ describe("POST - Singup API", () => {
       /*
         We have mock the finUnique to return an existing user, the API should retrun 409 status and an error message that the email exists.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      mockedFindUnique.mockResolvedValueOnce({
         email: "exists@mail.test",
       });
 
@@ -210,8 +218,8 @@ describe("POST - Singup API", () => {
       /*
         Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValue(undefined);
-      (prisma.user.create as jest.Mock).mockResolvedValue(undefined);
+      mockedFindUnique.mockResolvedValue(undefined);
+      mockedCreate.mockResolvedValueOnce(undefined);
       response = await postSignupHandler(
         createMockRequest({
           name: "valid",
@@ -227,7 +235,7 @@ describe("POST - Singup API", () => {
         A success creation should return a 201 status and a success message.
         We didn't mock the findUnique because it is already mocked above to return undefined which mean the email is available to use.
       */
-      (prisma.user.create as jest.Mock).mockResolvedValue({
+      mockedCreate.mockResolvedValueOnce({
         email: "valid@mail.test",
       });
       response = await postSignupHandler(
@@ -244,7 +252,7 @@ describe("POST - Singup API", () => {
       /*
         A signed in user should expect a 409 status conflict code and error mentions that he is already signed in
       */
-      (auth as jest.Mock).mockResolvedValue({ user: {} });
+      mockedAuth.mockResolvedValueOnce({ user: {} });
       response = await postSignupHandler(
         createMockRequest({
           name: "valid",

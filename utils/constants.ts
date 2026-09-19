@@ -12,7 +12,9 @@ import { OAuth2ProviderT } from "./types";
   Shared translation object used across API route jest tests to provide i18n messages.
 */
 export const translationsObject = new Translation();
-
+/*
+  Auth constants
+*/
 export const AUTH_LOGIN_EMAIL_SUBJECT = "Signin Link";
 export const AUTH_NODEMAILER_OAUTH2_TYPE = "OAuth2";
 export const AUTH_SIGNIN_ENDPOINT = "/connect";
@@ -23,6 +25,30 @@ export const AUTH_NEW_USER_ENDPOINT = "/";
 export const AUTH_CREDENTIALS_PROVIDER_NAME = "credentials";
 export const AUTH_NODEMAILER_PROVIDER_NAME = "nodemailer";
 export const AUTH_GITHUB_PROVIDER_NAME = "github";
+/*
+  Rate limiter Redis key prefixes
+*/
+export const FORGOT_PASSWORD_IP_RATE_LIMITER_KEY_PREFIX = "forgotPasswordIp";
+export const FORGOT_PASSWORD_EMAIL_RATE_LIMITER_KEY_PREFIX =
+  "forgotPasswordEmail";
+export const CREDENTIALS_SIGN_IN_IP_RATE_LIMITER_KEY_PREFIX =
+  "credentialsSignInIp";
+export const CREDENTIALS_SIGN_IN_EMAIL_RATE_LIMITER_KEY_PREFIX =
+  "credentialsSignInEmail";
+export const EMAIL_SIGN_IN_IP_RATE_LIMITER_KEY_PREFIX = "emailSignInIp";
+export const EMAIL_SIGN_IN_EMAIL_RATE_LIMITER_KEY_PREFIX = "emailSignInEmail";
+export const SIGNUP_IP_RATE_LIMITER_KEY_PREFIX = "signupIp";
+export const SIGNUP_EMAIL_RATE_LIMITER_KEY_PREFIX = "signupEmail";
+export const RESET_PASSWORD_IP_RATE_LIMITER_KEY_PREFIX = "resetPasswordIp";
+/*
+  Shared durations and points tiers reused across the rate limiters.
+*/
+export const FIFTEEN_MINUTES_IN_SECONDS = 15 * 60;
+export const ONE_HOUR_IN_SECONDS = 60 * 60;
+
+export const GENEROUS_POINTS = 20;
+export const MODERATE_POINTS = 10;
+export const STRICT_POINTS = 5;
 
 export const LanguageCodeToLabel: Record<LanguageCode, LanguageLabel> = {
   [LanguageCode.AR]: LanguageLabel.AR,

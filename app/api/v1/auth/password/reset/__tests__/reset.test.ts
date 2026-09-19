@@ -61,6 +61,14 @@ jest.mock("next/server", () => ({
   },
 }));
 /*
+  To control the mock implementation of each mocked import as needed, instead of repeating the same
+  cast inline every time it's used.
+*/
+const mockedIsRateLimited = isRateLimited as jest.Mock;
+const mockedFindFirst = prisma.verificationToken.findFirst as jest.Mock;
+const mockedUserUpdate = prisma.user.update as jest.Mock;
+const mockedFindMany = prisma.session.findMany as jest.Mock;
+/*
   Testing
 */
 describe("POST - Reset Password API", () => {
@@ -78,7 +86,7 @@ describe("POST - Reset Password API", () => {
       /*
         A request from a rate limited IP should return a 429 status and a too many requests error message, checked before anything else so the body doesn't matter here.
       */
-      (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+      mockedIsRateLimited.mockResolvedValueOnce(true);
       let response = await postResetPasswordHandler(createMockRequest({}));
       let { error } = await response.json();
 
@@ -157,9 +165,7 @@ describe("POST - Reset Password API", () => {
       /*
         An invalid or expired token should return a 400 status and a token invalid error message.
       */
-      (
-        prisma.verificationToken.findFirst as jest.Mock
-      ).mockResolvedValueOnce(undefined);
+      mockedFindFirst.mockResolvedValueOnce(undefined);
       response = await postResetPasswordHandler(
         createMockRequest({
           token: "invalid-token",
@@ -174,14 +180,12 @@ describe("POST - Reset Password API", () => {
       /*
         Should return a 500 status and an error message when the token is valid but updating the user's password failed.
       */
-      (
-        prisma.verificationToken.findFirst as jest.Mock
-      ).mockResolvedValueOnce({
+      mockedFindFirst.mockResolvedValueOnce({
         identifier: "valid@mail.test",
         token: "hashed-token",
         expires: new Date(Date.now() + 1000 * 60 * 60),
       });
-      (prisma.user.update as jest.Mock).mockResolvedValueOnce(undefined);
+      mockedUserUpdate.mockResolvedValueOnce(undefined);
       response = await postResetPasswordHandler(
         createMockRequest({
           token: "valid-token",
@@ -197,18 +201,16 @@ describe("POST - Reset Password API", () => {
         A successful reset should return a 200 status and a success message, and every existing session
         for that user should be revoked, both in the database and in the session cache.
       */
-      (
-        prisma.verificationToken.findFirst as jest.Mock
-      ).mockResolvedValueOnce({
+      mockedFindFirst.mockResolvedValueOnce({
         identifier: "valid@mail.test",
         token: "hashed-token",
         expires: new Date(Date.now() + 1000 * 60 * 60),
       });
-      (prisma.user.update as jest.Mock).mockResolvedValueOnce({
+      mockedUserUpdate.mockResolvedValueOnce({
         id: "user-1",
         email: "valid@mail.test",
       });
-      (prisma.session.findMany as jest.Mock).mockResolvedValueOnce([
+      mockedFindMany.mockResolvedValueOnce([
         { sessionToken: "session-1" },
         { sessionToken: "session-2" },
       ]);

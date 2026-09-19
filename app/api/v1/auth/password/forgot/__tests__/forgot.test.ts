@@ -39,6 +39,11 @@ jest.mock("next/server", () => ({
   after: jest.fn(),
 }));
 /*
+  To control the mock implementation of the rate limiter as needed, instead of repeating the same
+  cast inline every time it's used.
+*/
+const mockedIsRateLimited = isRateLimited as jest.Mock;
+/*
   Testing
 */
 describe("POST - Forgot Password API", () => {
@@ -56,7 +61,7 @@ describe("POST - Forgot Password API", () => {
       /*
         A request from a rate limited IP should return a 429 status and a too many requests error message, checked before anything else so the body doesn't matter here.
       */
-      (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+      mockedIsRateLimited.mockResolvedValueOnce(true);
       let response = await postForgotPasswordHandler(createMockRequest({}));
       let { error } = await response.json();
 
@@ -108,7 +113,7 @@ describe("POST - Forgot Password API", () => {
       /*
         A request with a rate limited email should return a 429 status and a too many requests error message.
       */
-      (isRateLimited as jest.Mock)
+      mockedIsRateLimited
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
       response = await postForgotPasswordHandler(

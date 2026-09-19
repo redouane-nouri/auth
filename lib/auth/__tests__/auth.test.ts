@@ -145,10 +145,21 @@ jest.mock("nodemailer", () => ({
   })),
 }));
 /*
+  To control the mock implementation of each mocked import as needed, instead of repeating the same
+  cast inline every time it's used.
+*/
+const mockedPrismaAdapter = PrismaAdapter as jest.Mock;
+const mockedAuth = auth as jest.Mock;
+const mockedIsRateLimited = isRateLimited as jest.Mock;
+const mockedGetCachedSessionAndUser = getCachedSessionAndUser as jest.Mock;
+const mockedFindUnique = prisma.user.findUnique as jest.Mock;
+const mockedCreateTransport = createTransport as jest.Mock;
+const mockedBcryptCompare = bcrypt.compare as jest.Mock;
+/*
   The fake object next-auth's real PrismaAdapter() would have returned, controlled directly since
   @auth/prisma-adapter is mocked above.
 */
-const baseAdapter = (PrismaAdapter as jest.Mock).mock.results[0]
+const baseAdapter = mockedPrismaAdapter.mock.results[0]
   .value as Record<string, jest.Mock>;
 /*
   A minimal stand-in for the raw Request next-auth passes to authorize()/sendVerificationRequest(),
@@ -159,7 +170,7 @@ const createAuthRequest = (): Request =>
 
 beforeEach(() => {
   jest.clearAllMocks();
-  (auth as jest.Mock).mockResolvedValue(null);
+  mockedAuth.mockResolvedValue(null);
 });
 /*
   Testing
@@ -239,7 +250,7 @@ describe("prismaAdapter (cache wrapper)", () => {
       session: { sessionToken: "tok", userId: "u1", expires: new Date() },
       user: { id: "u1", email: "u1@mail.test" },
     };
-    (getCachedSessionAndUser as jest.Mock).mockResolvedValueOnce(cached);
+    mockedGetCachedSessionAndUser.mockResolvedValueOnce(cached);
 
     const result = await prismaAdapter.getSessionAndUser?.("tok");
 
@@ -252,7 +263,7 @@ describe("prismaAdapter (cache wrapper)", () => {
       session: { sessionToken: "tok", userId: "u1", expires: new Date() },
       user: { id: "u1", email: "u1@mail.test" },
     };
-    (getCachedSessionAndUser as jest.Mock).mockResolvedValueOnce(undefined);
+    mockedGetCachedSessionAndUser.mockResolvedValueOnce(undefined);
     baseAdapter.getSessionAndUser.mockResolvedValueOnce(fromDb);
 
     const result = await prismaAdapter.getSessionAndUser?.("tok");
@@ -298,7 +309,7 @@ describe("sendVerificationRequest", () => {
     /*
       A rate limited IP or email should throw before ever looking up the user.
     */
-    (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+    mockedIsRateLimited.mockResolvedValueOnce(true);
     await expect(sendVerificationRequest(baseParams)).rejects.toThrow(
       "Too many requests",
     );
@@ -306,7 +317,7 @@ describe("sendVerificationRequest", () => {
     /*
       An unregistered email should silently delete the token and return, without sending anything.
     */
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(undefined);
+    mockedFindUnique.mockResolvedValueOnce(undefined);
     await expect(sendVerificationRequest(baseParams)).resolves.toBeUndefined();
     expect(prisma.verificationToken.deleteMany).toHaveBeenCalledWith({
       where: { identifier: baseParams.identifier },
@@ -314,16 +325,16 @@ describe("sendVerificationRequest", () => {
     /*
       A registered user should get the sign-in email sent.
     */
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+    mockedFindUnique.mockResolvedValueOnce({
       email: baseParams.identifier,
     });
     await expect(sendVerificationRequest(baseParams)).resolves.toBeUndefined();
-    const transporter = (createTransport as jest.Mock).mock.results[0].value;
+    const transporter = mockedCreateTransport.mock.results[0].value;
     expect(transporter.sendMail).toHaveBeenCalled();
     /*
       If the email provider rejects the message, that should throw.
     */
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+    mockedFindUnique.mockResolvedValueOnce({
       email: baseParams.identifier,
     });
     transporter.sendMail.mockResolvedValueOnce({
@@ -346,7 +357,7 @@ describe("authorizeCredentials", () => {
       /*
         A request from a rate limited IP should throw with a too many requests error code.
       */
-      (isRateLimited as jest.Mock).mockResolvedValueOnce(true);
+      mockedIsRateLimited.mockResolvedValueOnce(true);
       await expect(
         authorizeCredentials(
           { email: "valid@mail.test", password: "Valid@123" },
@@ -356,7 +367,7 @@ describe("authorizeCredentials", () => {
       /*
         An already signed in user should throw with an already signed in error code.
       */
-      (auth as jest.Mock).mockResolvedValueOnce({ user: {} });
+      mockedAuth.mockResolvedValueOnce({ user: {} });
       await expect(
         authorizeCredentials(
           { email: "valid@mail.test", password: "Valid@123" },
@@ -372,7 +383,7 @@ describe("authorizeCredentials", () => {
       /*
         A rate limited email, on top of a passing IP check, should throw with a too many requests error code.
       */
-      (isRateLimited as jest.Mock)
+      mockedIsRateLimited
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
       await expect(
@@ -385,7 +396,7 @@ describe("authorizeCredentials", () => {
         No matching user should throw with an invalid credentials error code, bcrypt.compare still
         runs against the dummy hash so the response time doesn't leak whether the email is registered.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(undefined);
+      mockedFindUnique.mockResolvedValueOnce(undefined);
       await expect(
         authorizeCredentials(
           { email: "missing@mail.test", password: "Valid@123" },
@@ -395,7 +406,7 @@ describe("authorizeCredentials", () => {
       /*
         A user with no password set (an OAuth-only account) should throw with an invalid credentials error code.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+      mockedFindUnique.mockResolvedValueOnce({
         id: "user-1",
         email: "valid@mail.test",
         password: null,
@@ -409,7 +420,7 @@ describe("authorizeCredentials", () => {
       /*
         A wrong password should throw with an invalid credentials error code.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+      mockedFindUnique.mockResolvedValueOnce({
         id: "user-1",
         email: "valid@mail.test",
         password: "hashedPassword",
@@ -423,14 +434,14 @@ describe("authorizeCredentials", () => {
       /*
         The correct password should resolve with the user data, without the password field.
       */
-      (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+      mockedFindUnique.mockResolvedValueOnce({
         id: "user-1",
         email: "valid@mail.test",
         name: "Valid",
         image: null,
         password: "hashedPassword",
       });
-      (bcrypt.compare as jest.Mock).mockResolvedValueOnce(true);
+      mockedBcryptCompare.mockResolvedValueOnce(true);
       await expect(
         authorizeCredentials(
           { email: "valid@mail.test", password: "Valid@123" },
@@ -445,7 +456,7 @@ describe("authorizeCredentials", () => {
       /*
         Any unexpected error (a failed DB lookup here) should still throw a generic error code.
       */
-      (prisma.user.findUnique as jest.Mock).mockRejectedValueOnce(
+      mockedFindUnique.mockRejectedValueOnce(
         new Error("DB is down"),
       );
       await expect(
