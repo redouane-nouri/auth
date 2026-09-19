@@ -4,9 +4,11 @@ import { LanguageCode, ThemeAppearance } from "@/utils/enums";
 import ThemeAndHeader from "../ThemeAndHeader";
 
 /*
-  Mocking Header so this stays a unit test
+  Mocking Header so this stays a unit test. A named function declaration, not a const: it's hoisted
+  (name and body both), so it's safe to reference from jest.mock() below, which itself gets hoisted
+  above everything else in this file, including a const's initializer.
 */
-jest.mock("../Header", () => ({
+function MockHeader({
   appearance,
   setAppearance,
   initialLocale,
@@ -14,18 +16,21 @@ jest.mock("../Header", () => ({
   appearance: string;
   setAppearance: (appearance: string) => void;
   initialLocale: string;
-}) => (
-  <div
-    data-testid="header"
-    data-appearance={appearance}
-    data-initial-locale={initialLocale}
-  >
-    <button
-      data-testid="flipAppearance"
-      onClick={() => setAppearance(ThemeAppearance.DARK)}
-    />
-  </div>
-));
+}) {
+  return (
+    <div
+      data-testid="header"
+      data-appearance={appearance}
+      data-initial-locale={initialLocale}
+    >
+      <button
+        data-testid="flipAppearance"
+        onClick={() => setAppearance(ThemeAppearance.DARK)}
+      />
+    </div>
+  );
+}
+jest.mock("../Header", () => MockHeader);
 
 describe("Theme And Header", () => {
   /*

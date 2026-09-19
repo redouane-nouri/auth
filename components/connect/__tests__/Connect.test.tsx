@@ -20,22 +20,27 @@ jest.mock("next-intl", () => ({
     translationsObject.translationsMock(nameSpace),
 }));
 /*
-  Mocking SigninCard and SignupCard so this stays a unit test of Connect's own logic.
+  Mocking SigninCard and SignupCard so this stays a unit test of Connect's own logic. Named function
+  declarations, not consts: they're hoisted (name and body both), so they're safe to reference from
+  jest.mock() below, which itself gets hoisted above everything else in this file.
 */
-jest.mock("../../signin/SigninCard", () =>
-  ({ switchToSignup }: { switchToSignup: () => void }) => (
+function MockSigninCard({ switchToSignup }: { switchToSignup: () => void }) {
+  return (
     <div data-testid="signinCard">
       <button data-testid="goToSignup" onClick={switchToSignup} />
     </div>
-  ),
-);
-jest.mock("../../signup/SignupCard", () =>
-  ({ switchToSignin }: { switchToSignin: () => void }) => (
+  );
+}
+jest.mock("../../signin/SigninCard", () => MockSigninCard);
+
+function MockSignupCard({ switchToSignin }: { switchToSignin: () => void }) {
+  return (
     <div data-testid="signupCard">
       <button data-testid="goToSignin" onClick={switchToSignin} />
     </div>
-  ),
-);
+  );
+}
+jest.mock("../../signup/SignupCard", () => MockSignupCard);
 describe("Connect", () => {
   /*
     Should default to the login tab, showing the signin card and the translated tab labels.

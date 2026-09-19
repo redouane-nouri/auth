@@ -3,11 +3,18 @@ import { OAuth2ProviderAuthId } from "@/utils/enums";
 import { OAuth2ProviderT } from "@/utils/types";
 import SigninWithOAuthSection from "../SigninWithOAuthSection";
 /*
-  Mocking OAuth2Provider so this stays a unit test
+  Mocking OAuth2Provider so this stays a unit test. A named function declaration, not a const: it's
+  hoisted (name and body both), so it's safe to reference from jest.mock() below, which itself gets
+  hoisted above everything else in this file, including a const's initializer.
 */
-jest.mock("../OAuth2Provider", () => ({ oAuth2Provider }: { oAuth2Provider: OAuth2ProviderT }) => (
-  <div data-testid={`oAuth2Provider-${oAuth2Provider.id}`} />),
-);
+function MockOAuth2Provider({
+  oAuth2Provider,
+}: {
+  oAuth2Provider: OAuth2ProviderT;
+}) {
+  return <div data-testid={`oAuth2Provider-${oAuth2Provider.id}`} />;
+}
+jest.mock("../OAuth2Provider", () => MockOAuth2Provider);
 
 describe("Signin With OAuth Section", () => {
   /*

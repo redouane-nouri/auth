@@ -20,19 +20,24 @@ jest.mock("next-intl", () => ({
     translationsObject.translationsMock(nameSpace),
 }));
 /*
-  Mocking the three sections SigninCard composes, so this stays a unit test
+  Mocking the three sections SigninCard composes, so this stays a unit test. Named function
+  declarations, not consts: they're hoisted (name and body both), so they're safe to reference from
+  jest.mock() below, which itself gets hoisted above everything else in this file.
 */
-jest.mock("../SigninWithCredentialsForm", () => () => (
-  <div data-testid="credentialsForm" />
-));
+function MockSigninWithCredentialsForm() {
+  return <div data-testid="credentialsForm" />;
+}
+jest.mock("../SigninWithCredentialsForm", () => MockSigninWithCredentialsForm);
 
-jest.mock("../SigninWithEmailForm", () => () => (
-  <div data-testid="emailForm" />
-));
+function MockSigninWithEmailForm() {
+  return <div data-testid="emailForm" />;
+}
+jest.mock("../SigninWithEmailForm", () => MockSigninWithEmailForm);
 
-jest.mock("../SigninWithOAuthSection", () => () => (
-  <div data-testid="oauthSection" />
-));
+function MockSigninWithOAuthSection() {
+  return <div data-testid="oauthSection" />;
+}
+jest.mock("../SigninWithOAuthSection", () => MockSigninWithOAuthSection);
 
 describe("Signin Card", () => {
   /*
