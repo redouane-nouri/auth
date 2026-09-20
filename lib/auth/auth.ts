@@ -1,4 +1,5 @@
 import { getClientIp, getSignInWithCredentialsSchema } from "@/utils/functions";
+import { after } from "next/server";
 import {
   credentialsSignInEmailRateLimiter,
   credentialsSignInIpRateLimiter,
@@ -175,6 +176,25 @@ export const sendVerificationRequest: NodemailerConfig["sendVerificationRequest"
     )
       throw new Error("Too many requests");
     /*
+     use with 'after' so the response doesn't wait on the user lookup/email send, otherwise the response
+     latency alone would reveal whether this email is registered (timing side-channel).
+    */
+    after(() => sendSignInEmail({ identifier, url, provider }));
+  };
+/*
+  Looks up the user and, if he exists, emails him the magic sign-in link. If not, deletes the
+  verification token next-auth's adapter already created for this email, so it can't be used.
+*/
+async function sendSignInEmail({
+  identifier,
+  url,
+  provider,
+}: Pick<
+  Parameters<NodemailerConfig["sendVerificationRequest"]>[0],
+  "identifier" | "url" | "provider"
+>) {
+  try {
+    /*
       Check if the user exists with email provided
     */
     const user = await prisma.user.findUnique({
@@ -204,7 +224,7 @@ export const sendVerificationRequest: NodemailerConfig["sendVerificationRequest"
     /*
       Send the email
     */
-    const result = await transporter.sendMail({
+    await transporter.sendMail({
       to: identifier,
       from: provider.from,
       subject: AUTH_LOGIN_EMAIL_SUBJECT,
@@ -216,17 +236,12 @@ export const sendVerificationRequest: NodemailerConfig["sendVerificationRequest"
         }),
       ),
     });
+  } catch {
     /*
-      reject and pending are arrays where nodemailer puts the email addresses that are not accepted (accepted var contains an array with accepted email addresses)
+      The response was already sent by the time this runs, there is no one left to report the error to
     */
-    const failed = result.rejected.concat(result.pending).filter(Boolean);
-    /*
-      If there are email addresses failed, throw an error.
-    */
-    if (failed.length) {
-      throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
-    }
-  };
+  }
+}
 /*
   Handles the Credentials provider sign-in: rate limiting, input validation, and a timing-safe
   password check against the DB.
@@ -355,7 +370,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         "true",
     }),
     /*
-      Configure the Nodemailer provider for signin with magic links suing the .env file
+      Configure the Nodemailer provider for signin with magic links using the .env file
     */
     Nodemailer({
       server: {
