@@ -17,9 +17,10 @@ export default function EmailHtml({
   host: string;
 }) {
   /*
-    Make the host not clickabale  by adding zero width space before the dot, that will break the string.
+    Make the host not clickabale by adding a zero width space before the dot.
   */
-  const escapedHost = host.replace(/\./g, "&#8203;.");
+  const ZWSP = "\u200B";
+  const escapedHost = host.replace(/\./g, `${ZWSP}.`);
 
   return (
     <Html>

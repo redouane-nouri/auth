@@ -23,9 +23,9 @@ const ThemeAndHeader = ({
   */
   const [appearance, setAppearance] = useState<Appearance>(themeAppearance);
   /*
-    The query client instance to handle react query's data fetching, cashing, etc.
+    Built once via useState's lazy initializer.
   */
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
