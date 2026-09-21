@@ -122,7 +122,9 @@
   "header": {
     "authentication": "Authenticator",
     "connect": "Connect",
-    "home": "Home"
+    "home": "Home",
+    "switchToLightMode": "Switch to light mode",
+    "switchToDarkMode": "Switch to dark mode"
   },
   "connect": {
     "logIn": "Log in",

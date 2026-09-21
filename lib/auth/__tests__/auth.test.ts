@@ -3,7 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import { encode } from "next-auth/jwt";
 import { after } from "next/server";
-import { createTransport } from "nodemailer";
+import { getMailerTransporter } from "../../mailer/mailer";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../prisma/prisma-client";
 import { isRateLimited } from "../../rateLimiter/rateLimiter";
@@ -134,10 +134,10 @@ jest.mock("@react-email/render", () => ({
   render: jest.fn(async () => "<html></html>"),
 }));
 /*
-  Mocking nodemailer so sendVerificationRequest tests don't try to open a real SMTP connection.
+  Mocking the shared mailer transporter
 */
-jest.mock("nodemailer", () => ({
-  createTransport: jest.fn(() => ({
+jest.mock("../../mailer/mailer", () => ({
+  getMailerTransporter: jest.fn(() => ({
     sendMail: jest.fn(async () => ({
       rejected: [],
       pending: [],
@@ -161,7 +161,7 @@ const mockedAuth = auth as jest.Mock;
 const mockedIsRateLimited = isRateLimited as jest.Mock;
 const mockedGetCachedSessionAndUser = getCachedSessionAndUser as jest.Mock;
 const mockedFindUnique = prisma.user.findUnique as jest.Mock;
-const mockedCreateTransport = createTransport as jest.Mock;
+const mockedGetMailerTransporter = getMailerTransporter as jest.Mock;
 const mockedBcryptCompare = bcrypt.compare as jest.Mock;
 /*
   The fake object next-auth's real PrismaAdapter() would have returned, controlled directly since
@@ -341,13 +341,13 @@ describe("sendVerificationRequest", () => {
       where: { identifier: baseParams.identifier },
     });
     /*
-      A registered user should get the sign-in email sent.
+      A registered user should get the sign-in email sent, through the shared mailer transporter.
     */
     mockedFindUnique.mockResolvedValueOnce({
       email: baseParams.identifier,
     });
     await deferred();
-    const transporter = mockedCreateTransport.mock.results[0].value;
+    const transporter = mockedGetMailerTransporter.mock.results[0].value;
     expect(transporter.sendMail).toHaveBeenCalled();
     /*
       If sending fails, that's silently swallowed

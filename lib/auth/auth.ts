@@ -27,7 +27,7 @@ import { getTranslations } from "next-intl/server";
 import { v4 as uuidv4 } from "uuid";
 import prisma from "../prisma/prisma-client";
 import bcrypt from "bcrypt";
-import { createTransport, Transporter } from "nodemailer";
+import { getMailerTransporter } from "@/lib/mailer/mailer";
 import { render } from "@react-email/render";
 import EmailHtml from "@/components/auth/EmailHtml";
 import GitHub from "next-auth/providers/github";
@@ -68,10 +68,6 @@ type CredentialsT = {
 function emailText(url: string, host: string): string {
   return `Sign in to ${host}\n${url}\n\n`;
 }
-/*
-  Use one transporter instance
-*/
-let transporter: Transporter | null = null;
 /*
   Prisma Adapter to store and control our own auth information
 */
@@ -218,9 +214,9 @@ async function sendSignInEmail({
     */
     const { host } = new URL(url);
     /*
-      If no  nodemailer transporter found, create one
+      Get the shared nodemailer transporter
     */
-    if (!transporter) transporter = createTransport(provider.server);
+    const transporter = getMailerTransporter();
     /*
       Send the email
     */

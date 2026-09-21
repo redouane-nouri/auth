@@ -108,13 +108,20 @@ describe("Header", () => {
     Clicking the theme button should flip the appearance and save it to the appearance cookie.
   */
   it("Should switch from light to dark appearance when the theme button is clicked", async () => {
+    const t = translationsObject.getMessages().header;
     const { setAppearance } = renderHeader({
       appearance: ThemeAppearance.LIGHT,
     });
     /*
+      Assert the button is labeled with the action it performs
+    */
+    const themeButton = screen.getByRole("button", {
+      name: t.switchToDarkMode,
+    });
+    /*
       Act by clicking on the theme toggle button
     */
-    await userEvent.click(screen.getByRole("button"));
+    await userEvent.click(themeButton);
     /*
       Assert appearance was flipped to dark and saved to the cookie.
     */
@@ -129,13 +136,20 @@ describe("Header", () => {
     Clicking the theme button should flip the appearance back to light from dark.
   */
   it("Should switch from dark to light appearance when the theme button is clicked", async () => {
+    const t = translationsObject.getMessages().header;
     const { setAppearance } = renderHeader({
       appearance: ThemeAppearance.DARK,
     });
     /*
+      Assert the button is labeled with the action it performs
+    */
+    const themeButton = screen.getByRole("button", {
+      name: t.switchToLightMode,
+    });
+    /*
       Act by clicking on the theme toggle button
     */
-    await userEvent.click(screen.getByRole("button"));
+    await userEvent.click(themeButton);
     /*
       Assert appearance was flipped to light and saved to the cookie.
     */

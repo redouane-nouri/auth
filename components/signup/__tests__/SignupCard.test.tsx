@@ -311,6 +311,25 @@ describe("Signup Card", () => {
     expect(switchToSignin).toHaveBeenCalledTimes(1);
   });
   /*
+    Focusable and keyboard-activatable by default
+  */
+  it("Should switch to signin page from the keyboard", async () => {
+    const switchToSignin = jest.fn();
+    /*
+      Arrange.
+    */
+    render(<SignupCard switchToSignin={switchToSignin} />);
+    /*
+      Act by focusing the switch to signin control and activating it with the keyboard
+    */
+    screen.getByTestId("switchToSigninButton").focus();
+    await userEvent.keyboard("{Enter}");
+    /*
+      Assert function has been called
+    */
+    expect(switchToSignin).toHaveBeenCalledTimes(1);
+  });
+  /*
     To check success creation message is displayed correctly.
   */
   it.each(Object.values(LanguageCode))(

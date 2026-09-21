@@ -122,7 +122,9 @@
   "header": {
     "authentication": "Аутентификатор",
     "connect": "Подключиться",
-    "home": "Главная"
+    "home": "Главная",
+    "switchToLightMode": "Переключить на светлый режим",
+    "switchToDarkMode": "Переключить на тёмный режим"
   },
   "connect": {
     "logIn": "Войти",

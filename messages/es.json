@@ -122,7 +122,9 @@
   "header": {
     "authentication": "Autenticador",
     "connect": "Conectar",
-    "home": "Inicio"
+    "home": "Inicio",
+    "switchToLightMode": "Cambiar a modo claro",
+    "switchToDarkMode": "Cambiar a modo oscuro"
   },
   "connect": {
     "logIn": "Iniciar sesión",
