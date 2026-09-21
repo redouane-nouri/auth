@@ -107,7 +107,10 @@ export const getForgotPasswordSchema = (t: any) => {
 export const getResetPasswordSchema = (t: any) => {
   return z
     .object({
-      token: z.string({ message: t("tokenString") }).min(1, t("tokenRequired")),
+      token: z
+        .string({ message: t("tokenString") })
+        .trim()
+        .min(1, t("tokenRequired")),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))

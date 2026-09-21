@@ -96,12 +96,6 @@ async function issueResetTokenAndSendEmail(email: string) {
     */
     if (!user) return;
     /*
-      Delete any existing verification tokens for this email
-    */
-    await prisma.verificationToken.deleteMany({
-      where: { identifier: email },
-    });
-    /*
       Generate a secure random token
     */
     const rawToken = crypto.randomBytes(32).toString("hex");
@@ -113,15 +107,19 @@ async function issueResetTokenAndSendEmail(email: string) {
       .update(rawToken)
       .digest("hex");
     /*
-      Create a new verification token record in the database (Expires in 10 minutes)
+      Delete any existing verification tokens for this email and create the new one as a single
+      transaction.
     */
-    await prisma.verificationToken.create({
-      data: {
-        identifier: email,
-        token: hashedToken,
-        expires: new Date(Date.now() + 1000 * 60 * 10),
-      },
-    });
+    await prisma.$transaction([
+      prisma.verificationToken.deleteMany({ where: { identifier: email } }),
+      prisma.verificationToken.create({
+        data: {
+          identifier: email,
+          token: hashedToken,
+          expires: new Date(Date.now() + 1000 * 60 * 10),
+        },
+      }),
+    ]);
     /*
       Get the nodemailer transporter
     */

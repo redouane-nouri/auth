@@ -77,25 +77,19 @@ export async function POST(request: NextRequest) {
       );
     }
     /*
-      Create the user and check the return value. If not created, then return an error with 500 status for internal server error.
+      Create the user. Prisma either returns the created row or throws, so a failure here is caught
+      by the outer catch block below.
     */
-    if (
-      !(await prisma.user.create({
-        data: {
-          name: result.data.name,
-          email: result.data.email,
-          password: await bcrypt.hash(
-            result.data.password,
-            Number(process.env.BCRYPT_HASH_ROUNDS),
-          ),
-        },
-      }))
-    ) {
-      return NextResponse.json(
-        { error: t("error") },
-        { status: StatusCodes.INTERNAL_SERVER_ERROR },
-      );
-    }
+    await prisma.user.create({
+      data: {
+        name: result.data.name,
+        email: result.data.email,
+        password: await bcrypt.hash(
+          result.data.password,
+          Number(process.env.BCRYPT_HASH_ROUNDS),
+        ),
+      },
+    });
     /*
       If the user created successfully. The retun a success message with 201 status for successful creation.
     */
