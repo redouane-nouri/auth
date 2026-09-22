@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useMutation } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
 import arMessages from "../../../messages/ar.json";
 import { Translation } from "../../../utils/classes";
 import { LanguageCode } from "@/utils/enums";
@@ -41,6 +42,7 @@ jest.mock("next-auth/react", () => ({
   To control the mock implementation of the mutation as needed.
 */
 const mockedUseMutation = useMutation as jest.Mock;
+const mockedSignIn = signIn as jest.Mock;
 
 describe("Signin With Email Form", () => {
   /*
@@ -147,4 +149,56 @@ describe("Signin With Email Form", () => {
       );
     },
   );
+  /*
+    When signIn() fails with a specific code (e.g. rate limited), that code should be surfaced as-is
+    instead of always showing a generic error.
+  */
+  it("throws the specific code from signIn when there is one", async () => {
+    let capturedMutationFn: (data: {
+      email: string;
+    }) => Promise<void> = () => Promise.resolve();
+    mockedUseMutation.mockImplementationOnce((config) => {
+      capturedMutationFn = config.mutationFn;
+      return { isError: false, isSuccess: false, isPending: false };
+    });
+    mockedSignIn.mockResolvedValueOnce({
+      ok: false,
+      code: "Too many requests",
+    });
+    /*
+      Arrange
+    */
+    render(<SigninWithEmailForm />);
+    /*
+      Act/Assert
+    */
+    await expect(
+      capturedMutationFn({ email: "valid@mail.test" }),
+    ).rejects.toThrow("Too many requests");
+  });
+  /*
+    When signIn() fails without a specific code, the generic error message should be thrown.
+  */
+  it("throws the generic error message when signIn fails without a specific code", async () => {
+    translationsObject.setCurrentLanguage(LanguageCode.EN);
+    const t = translationsObject.getMessages().signinCard;
+    let capturedMutationFn: (data: {
+      email: string;
+    }) => Promise<void> = () => Promise.resolve();
+    mockedUseMutation.mockImplementationOnce((config) => {
+      capturedMutationFn = config.mutationFn;
+      return { isError: false, isSuccess: false, isPending: false };
+    });
+    mockedSignIn.mockResolvedValueOnce({ ok: false, error: "Configuration" });
+    /*
+      Arrange
+    */
+    render(<SigninWithEmailForm />);
+    /*
+      Act/Assert
+    */
+    await expect(
+      capturedMutationFn({ email: "valid@mail.test" }),
+    ).rejects.toThrow(t.error);
+  });
 });

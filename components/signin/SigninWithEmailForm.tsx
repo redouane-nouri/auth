@@ -45,9 +45,10 @@ export default function SiginnWithEmailForm() {
         redirect: false,
       });
       /*
-        Authjs login api fails if res is not ok or the params code and error are set
+        Authjs login api fails if res is not ok or the params code and error are set.
       */
-      if (!res?.ok || res?.code || res?.error) throw new Error(t("error"));
+      if (!res?.ok || res?.code || res?.error)
+        throw new Error(res?.code || t("error"));
     },
   });
   /*

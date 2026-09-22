@@ -315,10 +315,11 @@ describe("sendVerificationRequest", () => {
     A rate limited IP or email should throw immediately, before ever deferring any work.
   */
   it("throws when rate limited, before deferring any work", async () => {
+    const t = translationsObject.getMessages().signinValidation;
     mockedIsRateLimited.mockResolvedValueOnce(true);
-    await expect(sendVerificationRequest(baseParams)).rejects.toThrow(
-      "Too many requests",
-    );
+    await expect(sendVerificationRequest(baseParams)).rejects.toMatchObject({
+      code: t.tooManyRequests,
+    });
     expect(mockedAfter).not.toHaveBeenCalled();
   });
 

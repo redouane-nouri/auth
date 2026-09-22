@@ -169,8 +169,10 @@ export const sendVerificationRequest: NodemailerConfig["sendVerificationRequest"
     if (
       (await isRateLimited(emailSignInIpRateLimiter, getClientIp(request))) ||
       (await isRateLimited(emailSignInEmailRateLimiter, identifier))
-    )
-      throw new Error("Too many requests");
+    ) {
+      const t = await getTranslations("signinValidation");
+      throw new CredentialsSigninError(t("tooManyRequests"));
+    }
     /*
      use with 'after' so the response doesn't wait on the user lookup/email send, otherwise the response
      latency alone would reveal whether this email is registered (timing side-channel).

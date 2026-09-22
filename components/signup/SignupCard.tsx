@@ -133,12 +133,13 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 )}
               </Box>
               <Box>
-                {t("confirmPassword")}
-                <Text></Text>
+                <Text>{t("confirmPassword")}</Text>
                 <TextField.Root
                   {...register("confirmPassword")}
+                  aria-label={t("confirmPasswordPlaceholder")}
                   placeholder={t("confirmPasswordPlaceholder")}
                   type="password"
+                  size="2"
                   data-testid="confirmPasswordInput"
                 >
                   <TextField.Slot>
