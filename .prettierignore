@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+build
+coverage
+prisma/db
+prisma/migrations
+package-lock.json
+next-env.d.ts

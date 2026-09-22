@@ -133,12 +133,13 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 )}
               </Box>
               <Box>
-                {t("confirmPassword")}
-                <Text></Text>
+                <Text>{t("confirmPassword")}</Text>
                 <TextField.Root
                   {...register("confirmPassword")}
+                  aria-label={t("confirmPasswordPlaceholder")}
                   placeholder={t("confirmPasswordPlaceholder")}
                   type="password"
+                  size="2"
                   data-testid="confirmPasswordInput"
                 >
                   <TextField.Slot>
@@ -162,9 +163,9 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   className="!p-3 block whitespace-normal break-words"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (typeof mutation.error.response?.data?.error === "string"
-                        ? mutation.error.response.data.error
-                        : t("error"))
+                    ? typeof mutation.error.response?.data?.error === "string"
+                      ? mutation.error.response.data.error
+                      : t("error")
                     : mutation.error.message}
                 </Badge>
               )}
@@ -190,13 +191,14 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
               <Flex align="center">
                 <Text size="2">
                   {t("haveAccount")}
-                  <Strong
+                  <button
+                    type="button"
                     onClick={switchToSignin}
                     data-testid="switchToSigninButton"
-                    className="hover:border-b-2 cursor-pointer ml-2 mr-1"
+                    className="bg-transparent border-none p-0 font-[inherit] hover:border-b-2 cursor-pointer ml-2 mr-1"
                   >
-                    {t("signInNow")}
-                  </Strong>
+                    <Strong>{t("signInNow")}</Strong>
+                  </button>
                 </Text>
               </Flex>
             </Flex>

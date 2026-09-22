@@ -2,7 +2,8 @@ import type { NodemailerConfig } from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import { encode } from "next-auth/jwt";
-import { createTransport } from "nodemailer";
+import { after } from "next/server";
+import { getMailerTransporter } from "../../mailer/mailer";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../prisma/prisma-client";
 import { isRateLimited } from "../../rateLimiter/rateLimiter";
@@ -133,10 +134,10 @@ jest.mock("@react-email/render", () => ({
   render: jest.fn(async () => "<html></html>"),
 }));
 /*
-  Mocking nodemailer so sendVerificationRequest tests don't try to open a real SMTP connection.
+  Mocking the shared mailer transporter
 */
-jest.mock("nodemailer", () => ({
-  createTransport: jest.fn(() => ({
+jest.mock("../../mailer/mailer", () => ({
+  getMailerTransporter: jest.fn(() => ({
     sendMail: jest.fn(async () => ({
       rejected: [],
       pending: [],
@@ -145,22 +146,31 @@ jest.mock("nodemailer", () => ({
   })),
 }));
 /*
+  Mocking next/server's after().
+*/
+jest.mock("next/server", () => ({
+  after: jest.fn(),
+}));
+/*
   To control the mock implementation of each mocked import as needed, instead of repeating the same
   cast inline every time it's used.
 */
 const mockedPrismaAdapter = PrismaAdapter as jest.Mock;
+const mockedAfter = after as jest.Mock;
 const mockedAuth = auth as jest.Mock;
 const mockedIsRateLimited = isRateLimited as jest.Mock;
 const mockedGetCachedSessionAndUser = getCachedSessionAndUser as jest.Mock;
 const mockedFindUnique = prisma.user.findUnique as jest.Mock;
-const mockedCreateTransport = createTransport as jest.Mock;
+const mockedGetMailerTransporter = getMailerTransporter as jest.Mock;
 const mockedBcryptCompare = bcrypt.compare as jest.Mock;
 /*
   The fake object next-auth's real PrismaAdapter() would have returned, controlled directly since
   @auth/prisma-adapter is mocked above.
 */
-const baseAdapter = mockedPrismaAdapter.mock.results[0]
-  .value as Record<string, jest.Mock>;
+const baseAdapter = mockedPrismaAdapter.mock.results[0].value as Record<
+  string,
+  jest.Mock
+>;
 /*
   A minimal stand-in for the raw Request next-auth passes to authorize()/sendVerificationRequest(),
   just enough for getClientIp() to read headers from it.
@@ -302,49 +312,52 @@ describe("sendVerificationRequest", () => {
   } as Parameters<NodemailerConfig["sendVerificationRequest"]>[0];
 
   /*
-    One sequential test, since the module-level nodemailer transporter is a lazily created singleton
-    shared across calls.
+    A rate limited IP or email should throw immediately, before ever deferring any work.
   */
-  it("handles rate limiting, unregistered emails, sending, and provider failures", async () => {
-    /*
-      A rate limited IP or email should throw before ever looking up the user.
-    */
+  it("throws when rate limited, before deferring any work", async () => {
+    const t = translationsObject.getMessages().signinValidation;
     mockedIsRateLimited.mockResolvedValueOnce(true);
-    await expect(sendVerificationRequest(baseParams)).rejects.toThrow(
-      "Too many requests",
-    );
+    await expect(sendVerificationRequest(baseParams)).rejects.toMatchObject({
+      code: t.tooManyRequests,
+    });
+    expect(mockedAfter).not.toHaveBeenCalled();
+  });
+
+  /*
+    Otherwise it should resolve immediately without having looked up the user yet. The lookup and
+    email send are deferred via after(), so the response time can't reveal whether the email is
+    registered (timing side-channel).
+  */
+  it("defers the user lookup/email send, and handles unregistered emails, sending, and provider failures", async () => {
+    await expect(sendVerificationRequest(baseParams)).resolves.toBeUndefined();
     expect(prisma.user.findUnique).not.toHaveBeenCalled();
+    expect(mockedAfter).toHaveBeenCalledWith(expect.any(Function));
+    const deferred = mockedAfter.mock.calls[0][0] as () => Promise<void>;
     /*
       An unregistered email should silently delete the token and return, without sending anything.
     */
     mockedFindUnique.mockResolvedValueOnce(undefined);
-    await expect(sendVerificationRequest(baseParams)).resolves.toBeUndefined();
+    await deferred();
     expect(prisma.verificationToken.deleteMany).toHaveBeenCalledWith({
       where: { identifier: baseParams.identifier },
     });
     /*
-      A registered user should get the sign-in email sent.
+      A registered user should get the sign-in email sent, through the shared mailer transporter.
     */
     mockedFindUnique.mockResolvedValueOnce({
       email: baseParams.identifier,
     });
-    await expect(sendVerificationRequest(baseParams)).resolves.toBeUndefined();
-    const transporter = mockedCreateTransport.mock.results[0].value;
+    await deferred();
+    const transporter = mockedGetMailerTransporter.mock.results[0].value;
     expect(transporter.sendMail).toHaveBeenCalled();
     /*
-      If the email provider rejects the message, that should throw.
+      If sending fails, that's silently swallowed
     */
     mockedFindUnique.mockResolvedValueOnce({
       email: baseParams.identifier,
     });
-    transporter.sendMail.mockResolvedValueOnce({
-      rejected: [baseParams.identifier],
-      pending: [],
-      accepted: [],
-    });
-    await expect(sendVerificationRequest(baseParams)).rejects.toThrow(
-      /could not be sent/,
-    );
+    transporter.sendMail.mockRejectedValueOnce(new Error("smtp error"));
+    await expect(deferred()).resolves.toBeUndefined();
   });
 });
 
@@ -456,9 +469,7 @@ describe("authorizeCredentials", () => {
       /*
         Any unexpected error (a failed DB lookup here) should still throw a generic error code.
       */
-      mockedFindUnique.mockRejectedValueOnce(
-        new Error("DB is down"),
-      );
+      mockedFindUnique.mockRejectedValueOnce(new Error("DB is down"));
       await expect(
         authorizeCredentials(
           { email: "valid@mail.test", password: "Valid@123" },

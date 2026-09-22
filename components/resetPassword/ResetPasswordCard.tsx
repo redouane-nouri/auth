@@ -37,7 +37,7 @@ const ResetPasswordCard = () => {
     Get Zod validation schema with the i18n messages.
   */
   const resetPasswordSchema = getResetPasswordSchema(
-    useTranslations("resetPasswordValidation")
+    useTranslations("resetPasswordValidation"),
   );
   /*
     The mutation instance that will be used to send the reset password request.
@@ -163,9 +163,9 @@ const ResetPasswordCard = () => {
                   className="!p-3 block whitespace-normal break-words"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (typeof mutation.error.response?.data?.error === "string"
-                        ? mutation.error.response.data.error
-                        : t("error"))
+                    ? typeof mutation.error.response?.data?.error === "string"
+                      ? mutation.error.response.data.error
+                      : t("error")
                     : mutation.error.message}
                 </Badge>
               )}

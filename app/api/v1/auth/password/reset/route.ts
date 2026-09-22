@@ -77,35 +77,49 @@ export async function POST(request: NextRequest) {
       );
     }
     /*
-      Update the user's password with bcrypt hash
+      Hash the new password before starting the transaction below, since it doesn't need DB
+      isolation and hashing is comparatively slow - no reason to hold the transaction open for it.
     */
-    const updatedUser = await prisma.user.update({
-      where: { email: tokenRecord.identifier },
-      data: {
-        password: await bcrypt.hash(
-          result.data.password,
-          Number(process.env.BCRYPT_HASH_ROUNDS),
-        ),
-      },
+    const hashedPassword = await bcrypt.hash(
+      result.data.password,
+      Number(process.env.BCRYPT_HASH_ROUNDS),
+    );
+    /*
+      Update the password, delete the token, and revoke every existing session as one transaction.
+    */
+    const sessionsToInvalidateCache = await prisma.$transaction(async (tx) => {
+      /*
+        Update the user's password with bcrypt hash
+      */
+      const updatedUser = await tx.user.update({
+        where: { email: tokenRecord.identifier },
+        data: { password: hashedPassword },
+      });
+      /*
+        Delete the token after successful reset
+      */
+      await tx.verificationToken.deleteMany({
+        where: { identifier: tokenRecord.identifier },
+      });
+      /*
+        Revoke all existing sessions.
+      */
+      const sessions = await tx.session.findMany({
+        where: { userId: updatedUser.id },
+        select: { sessionToken: true },
+      });
+
+      await tx.session.deleteMany({
+        where: { userId: updatedUser.id },
+      });
+
+      return sessions;
     });
     /*
-      Delete the token after successful reset
+      Invalidate Cached Sessions
     */
-    await prisma.verificationToken.deleteMany({
-      where: { identifier: tokenRecord.identifier },
-    });
-    /*
-      Revoke all existing sessions.
-    */
-    const sessionsToRevoke = await prisma.session.findMany({
-      where: { userId: updatedUser.id },
-      select: { sessionToken: true },
-    });
-    await prisma.session.deleteMany({
-      where: { userId: updatedUser.id },
-    });
     await Promise.all(
-      sessionsToRevoke.map((session) =>
+      sessionsToInvalidateCache.map((session) =>
         invalidateCachedSession(session.sessionToken),
       ),
     );

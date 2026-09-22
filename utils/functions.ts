@@ -107,7 +107,10 @@ export const getForgotPasswordSchema = (t: any) => {
 export const getResetPasswordSchema = (t: any) => {
   return z
     .object({
-      token: z.string({ message: t("tokenString") }).min(1, t("tokenRequired")),
+      token: z
+        .string({ message: t("tokenString") })
+        .trim()
+        .min(1, t("tokenRequired")),
       password: z
         .string({ message: t("passwordString") })
         .min(8, t("passwordMin"))
@@ -137,7 +140,7 @@ export const getResetPasswordSchema = (t: any) => {
  * whatever proxy is actually deployed in front.
  *
  * @param request - the incoming request.
- * @returns the client's IP address, or "unknown" if it can't be determined.
+ * @returns the client's IP address, or an "unknown:<user-agent>" fallback if it can't be determined.
  */
 export const getClientIp = (request: Request): string => {
   const forwardedFor = request.headers.get("x-forwarded-for");
@@ -146,7 +149,15 @@ export const getClientIp = (request: Request): string => {
   */
   if (forwardedFor) return forwardedFor.split(",")[0].trim();
 
-  return request.headers.get("x-real-ip") ?? "unknown";
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) return realIp;
+  /*
+    Neither header is set, which only happens when this app is reachable without a reverse proxy/load
+    balancer in front setting one of them. Deploying behind one is the actual fix for that, this is
+    just a fallback. 
+  */
+  const userAgent = request.headers.get("user-agent");
+  return userAgent ? `unknown:${userAgent}` : "unknown";
 };
 /**
  * Creates a mock body for the request, used in jest API route tests. Includes empty headers since

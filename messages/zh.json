@@ -122,7 +122,9 @@
   "header": {
     "authentication": "身份验证器",
     "connect": "连接",
-    "home": "首页"
+    "home": "首页",
+    "switchToLightMode": "切换到浅色模式",
+    "switchToDarkMode": "切换到深色模式"
   },
   "connect": {
     "logIn": "登录",

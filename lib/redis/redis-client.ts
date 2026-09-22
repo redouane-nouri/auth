@@ -1,5 +1,10 @@
 import { createClient } from "redis";
 /*
+  Logs a Redis client failure
+*/
+const logRedisError = (err: unknown) =>
+  console.error("Redis Client Error", err);
+/*
  Redis client Singleton factory function.
 */
 const redisClientSingleton = () => {
@@ -7,7 +12,7 @@ const redisClientSingleton = () => {
   /*
    Connect right away without awaiting it, the client queues up commands issued before the connection.
   */
-  client.on("error", (err) => console.log("Redis Client Error", err)).connect();
+  client.on("error", logRedisError).connect().catch(logRedisError);
   return client;
 };
 /*

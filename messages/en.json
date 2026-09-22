@@ -1,5 +1,5 @@
 {
- "resetPasswordValidation": {
+  "resetPasswordValidation": {
     "tokenString": "Token must be a string",
     "tokenRequired": "Token is required",
     "passwordString": "Password must be a string",
@@ -122,7 +122,9 @@
   "header": {
     "authentication": "Authenticator",
     "connect": "Connect",
-    "home": "Home"
+    "home": "Home",
+    "switchToLightMode": "Switch to light mode",
+    "switchToDarkMode": "Switch to dark mode"
   },
   "connect": {
     "logIn": "Log in",

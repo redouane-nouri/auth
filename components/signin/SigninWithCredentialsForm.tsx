@@ -39,7 +39,7 @@ export default function SiginnWithCredentialsForm() {
     Zod validation schema for signin with credentials
   */
   const SignInSchema = getSignInWithCredentialsSchema(
-    useTranslations("signinValidation")
+    useTranslations("signinValidation"),
   );
   /*
     React hook for to register the inputs and validate before submitting zod validation schema resolver

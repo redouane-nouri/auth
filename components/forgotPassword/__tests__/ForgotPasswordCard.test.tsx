@@ -63,9 +63,7 @@ describe("Forgot Password Card", () => {
       /*
         Assert that the email invalid hint is displayed with the correct language and place
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(
-        t.emailInvalid,
-      );
+      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
     },
   );
   /*

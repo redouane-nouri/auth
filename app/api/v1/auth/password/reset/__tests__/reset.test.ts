@@ -18,21 +18,31 @@ jest.mock("next-intl/server", () => ({
     translationsObject.translationsMock(nameSpace),
 }));
 /*
-  Mocking the prisma client to control the 'verificationToken', 'user' and 'session' functions return values.
+  Mocking the prisma client to control the 'verificationToken', 'user' and 'session' functions return
+  values. $transaction just forwards the callback the same mocked client.
 */
-jest.mock("../../../../../../../lib/prisma/prisma-client", () => ({
-  verificationToken: {
-    findFirst: jest.fn(),
-    deleteMany: jest.fn(),
-  },
-  user: {
-    update: jest.fn(),
-  },
-  session: {
-    findMany: jest.fn(),
-    deleteMany: jest.fn(),
-  },
-}));
+jest.mock("../../../../../../../lib/prisma/prisma-client", () => {
+  const prismaMock = {
+    verificationToken: {
+      findFirst: jest.fn(),
+      deleteMany: jest.fn(),
+    },
+    user: {
+      update: jest.fn(),
+    },
+    session: {
+      findMany: jest.fn(),
+      deleteMany: jest.fn(),
+    },
+  };
+
+  return {
+    ...prismaMock,
+    $transaction: jest.fn((callback: (tx: typeof prismaMock) => unknown) =>
+      callback(prismaMock),
+    ),
+  };
+});
 /*
   Mocking the session cache invalidation so these tests don't need a real Redis connection.
 */
@@ -68,6 +78,7 @@ const mockedIsRateLimited = isRateLimited as jest.Mock;
 const mockedFindFirst = prisma.verificationToken.findFirst as jest.Mock;
 const mockedUserUpdate = prisma.user.update as jest.Mock;
 const mockedFindMany = prisma.session.findMany as jest.Mock;
+const mockedTransaction = prisma.$transaction as jest.Mock;
 /*
   Testing
 */
@@ -227,6 +238,11 @@ describe("POST - Reset Password API", () => {
       expect(message).toBe(t.success);
       expect(invalidateCachedSession).toHaveBeenCalledWith("session-1");
       expect(invalidateCachedSession).toHaveBeenCalledWith("session-2");
+      /*
+        The password update, token deletion, and session revocation should all run inside one
+        transaction.
+      */
+      expect(mockedTransaction).toHaveBeenCalledWith(expect.any(Function));
     },
   );
 });

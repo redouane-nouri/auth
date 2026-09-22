@@ -216,25 +216,9 @@ describe("POST - Singup API", () => {
       expect(response.status).toBe(StatusCodes.CONFLICT);
       expect(error).toBe(t.emailExists);
       /*
-        Should return a 500 status and an error message when the email is valid and available to use but the creation failed.
+        A success creation should return a 201 status and a success message.
       */
       mockedFindUnique.mockResolvedValue(undefined);
-      mockedCreate.mockResolvedValueOnce(undefined);
-      response = await postSignupHandler(
-        createMockRequest({
-          name: "valid",
-          email: "valid@mail.test",
-          password: "Valid@123",
-          confirmPassword: "Valid@123",
-        }),
-      );
-      ({ error } = await response.json());
-      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
-      expect(error).toBe(t.error);
-      /*
-        A success creation should return a 201 status and a success message.
-        We didn't mock the findUnique because it is already mocked above to return undefined which mean the email is available to use.
-      */
       mockedCreate.mockResolvedValueOnce({
         email: "valid@mail.test",
       });

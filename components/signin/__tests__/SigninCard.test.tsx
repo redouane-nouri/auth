@@ -51,9 +51,7 @@ describe("Signin Card", () => {
       /*
         Arrange
       */
-      const { container } = render(
-        <SigninCard switchToSignup={() => { }} />,
-      );
+      const { container } = render(<SigninCard switchToSignup={() => {}} />);
       /*
         Assert that the three sections and the correct translated text are displayed.
       */
@@ -80,6 +78,25 @@ describe("Signin Card", () => {
       Act by clicking on the switch to signup message
     */
     await userEvent.click(screen.getByTestId("switchToSignupButton"));
+    /*
+      Assert function has been called
+    */
+    expect(switchToSignup).toHaveBeenCalledTimes(1);
+  });
+  /*
+    focusable and keyboard-activatable by default
+  */
+  it("Should switch to signup page from the keyboard", async () => {
+    const switchToSignup = jest.fn();
+    /*
+      Arrange
+    */
+    render(<SigninCard switchToSignup={switchToSignup} />);
+    /*
+      Act by focusing the switch to signup control and activating it with the keyboard
+    */
+    screen.getByTestId("switchToSignupButton").focus();
+    await userEvent.keyboard("{Enter}");
     /*
       Assert function has been called
     */

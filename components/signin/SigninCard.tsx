@@ -27,13 +27,14 @@ const SigninCard = ({ switchToSignup }: { switchToSignup: () => void }) => {
           <SigninWithOAuthSection />
           <Text size="2" className="mt-4 block">
             {t("noAccount")}
-            <Strong
+            <button
+              type="button"
               onClick={switchToSignup}
               data-testid="switchToSignupButton"
-              className="hover:border-b-2 cursor-pointer ml-2 mr-1"
+              className="bg-transparent border-none p-0 font-[inherit] hover:border-b-2 cursor-pointer ml-2 mr-1"
             >
-              {t("signUpNow")}
-            </Strong>
+              <Strong>{t("signUpNow")}</Strong>
+            </button>
           </Text>
         </Card>
       </Container>

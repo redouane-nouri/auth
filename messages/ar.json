@@ -122,7 +122,9 @@
   "header": {
     "authentication": "المصادق",
     "connect": "اتصل",
-    "home": "الرئيسية"
+    "home": "الرئيسية",
+    "switchToLightMode": "التبديل إلى الوضع الفاتح",
+    "switchToDarkMode": "التبديل إلى الوضع الداكن"
   },
   "connect": {
     "logIn": "تسجيل الدخول",

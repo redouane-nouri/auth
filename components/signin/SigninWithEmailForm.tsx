@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  EnvelopeClosedIcon,
-  PaperPlaneIcon,
-} from "@radix-ui/react-icons";
+import { EnvelopeClosedIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Badge, Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
@@ -23,7 +20,7 @@ export default function SiginnWithEmailForm() {
     Signin with email zod validation shcema
   */
   const SignInWithEmailSchema = getSignInWithEmailSchema(
-    useTranslations("signinValidation")
+    useTranslations("signinValidation"),
   );
   /*
     Register input with react hook form and validation with imported zod schema
@@ -45,9 +42,10 @@ export default function SiginnWithEmailForm() {
         redirect: false,
       });
       /*
-        Authjs login api fails if res is not ok or the params code and error are set
+        Authjs login api fails if res is not ok or the params code and error are set.
       */
-      if (!res?.ok || res?.code || res?.error) throw new Error(t("error"));
+      if (!res?.ok || res?.code || res?.error)
+        throw new Error(res?.code || t("error"));
     },
   });
   /*

@@ -97,6 +97,11 @@ const Header = ({
 
         <IconButton
           variant="surface"
+          aria-label={
+            appearance === ThemeAppearance.DARK
+              ? t("switchToLightMode")
+              : t("switchToDarkMode")
+          }
           onClick={() => {
             handleThemeAppearanceUpdate();
           }}
