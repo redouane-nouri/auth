@@ -6,7 +6,7 @@ import { z } from "zod";
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getSignupSchema = (t: any) => {
+export const getSignupSchema = (t: (key: string) => string) => {
   return z
     .object({
       name: z
@@ -48,7 +48,7 @@ export const getSignupSchema = (t: any) => {
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getSignInWithCredentialsSchema = (t: any) => {
+export const getSignInWithCredentialsSchema = (t: (key: string) => string) => {
   return z
     .object({
       email: z
@@ -70,7 +70,7 @@ export const getSignInWithCredentialsSchema = (t: any) => {
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getSignInWithEmailSchema = (t: any) => {
+export const getSignInWithEmailSchema = (t: (key: string) => string) => {
   return z
     .object({
       email: z
@@ -87,7 +87,7 @@ export const getSignInWithEmailSchema = (t: any) => {
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getForgotPasswordSchema = (t: any) => {
+export const getForgotPasswordSchema = (t: (key: string) => string) => {
   return z
     .object({
       email: z
@@ -104,7 +104,7 @@ export const getForgotPasswordSchema = (t: any) => {
  * @param t - next-int messages function, used for showing i18n errors.
  * @returns zod schema
  */
-export const getResetPasswordSchema = (t: any) => {
+export const getResetPasswordSchema = (t: (key: string) => string) => {
   return z
     .object({
       token: z
