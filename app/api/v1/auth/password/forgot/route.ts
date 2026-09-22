@@ -71,10 +71,8 @@ export async function POST(request: NextRequest) {
       Return success message anyway to avoid leaking info
     */
     return NextResponse.json({ message: t("success") });
-  } catch {
-    /*
-      Return generic 500 error message
-    */
+  } catch (error) {
+    console.error("POST /api/v1/auth/password/forgot failed", error);
     return NextResponse.json(
       { error: t("error") },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },
@@ -141,9 +139,11 @@ async function issueResetTokenAndSendEmail(email: string) {
       ),
       text: `Reset your password: ${resetUrl}`,
     });
-  } catch {
+  } catch (error) {
     /*
-      The response was already sent by the time this runs, there is no one left to report the error to
+      The response was already sent by the time this runs, there is no one left to report the error
+      to over HTTP, so log it server-side instead of losing it silently.
     */
+    console.error("issueResetTokenAndSendEmail failed", error);
   }
 }

@@ -3,7 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma-client";
-import { getClientIp, getSignupSchema } from "../../../../../utils/functions";
+import {
+  getBcryptHashRounds,
+  getClientIp,
+  getSignupSchema,
+} from "../../../../../utils/functions";
 import { auth } from "@/lib/auth/auth";
 import {
   isRateLimited,
@@ -86,7 +90,7 @@ export async function POST(request: NextRequest) {
         email: result.data.email,
         password: await bcrypt.hash(
           result.data.password,
-          Number(process.env.BCRYPT_HASH_ROUNDS),
+          getBcryptHashRounds(),
         ),
       },
     });
@@ -97,10 +101,8 @@ export async function POST(request: NextRequest) {
       { message: t("success") },
       { status: StatusCodes.CREATED },
     );
-  } catch {
-    /*
-      Catch any other erros and return an error message with 500 status for internal server error.
-    */
+  } catch (error) {
+    console.error("POST /api/v1/auth/signup failed", error);
     return NextResponse.json(
       { error: t("error") },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },

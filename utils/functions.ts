@@ -171,3 +171,16 @@ export const createMockRequest = (body: unknown): NextRequest => {
     body ? { json: async () => body, headers: new Headers() } : undefined
   ) as NextRequest;
 };
+/**
+ * Reads and validates BCRYPT_HASH_ROUNDS from the environment.
+ *
+ * @returns the validated bcrypt cost factor.
+ */
+export const getBcryptHashRounds = (): number => {
+  const rounds = Number(process.env.BCRYPT_HASH_ROUNDS);
+
+  if (!Number.isInteger(rounds) || rounds < 4 || rounds > 31)
+    throw new Error("BCRYPT_HASH_ROUNDS must be an integer between 4 and 31");
+
+  return rounds;
+};

@@ -1,4 +1,8 @@
-import { getClientIp, getSignInWithCredentialsSchema } from "@/utils/functions";
+import {
+  getBcryptHashRounds,
+  getClientIp,
+  getSignInWithCredentialsSchema,
+} from "@/utils/functions";
 import { after } from "next/server";
 import {
   credentialsSignInEmailRateLimiter,
@@ -104,10 +108,7 @@ const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
   A precomputed hash with no matching password, used to run bcrypt.compare even when no user/password
   is found, so the response time doesn't reveal whether the email is registered (timing side-channel).
 */
-const DUMMY_PASSWORD_HASH = bcrypt.hashSync(
-  uuidv4(),
-  Number(process.env.BCRYPT_HASH_ROUNDS),
-);
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(uuidv4(), getBcryptHashRounds());
 /*
   Even we specefied an adapter which authjs automatically uses the "database" strategy, for credentials it uses a "jwt" strategy.
   So if we want to use "database" strategy for a credentials provider, we need to tag the token as coming from credentials provider and modify it in the next step inside the encode method to use a session token.
@@ -234,10 +235,11 @@ async function sendSignInEmail({
         }),
       ),
     });
-  } catch {
+  } catch (error) {
     /*
-      The response was already sent by the time this runs, there is no one left to report the error to
+      The response was already sent by the time this runs, just log.
     */
+    console.error("sendSignInEmail failed", error);
   }
 }
 /*
@@ -327,8 +329,10 @@ export const authorizeCredentials: CredentialsConfig["authorize"] = async (
     */
     if (e instanceof CredentialsSigninError) throw e;
     /*
-      Else, throw a CredentialsSigninError with "error" message
+      Else, log the unexpected error server-side and throw a CredentialsSigninError with "error"
+      message
     */
+    console.error("authorizeCredentials failed", e);
     throw new CredentialsSigninError(t("error"));
   }
 };
