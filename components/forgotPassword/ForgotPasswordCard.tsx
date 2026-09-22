@@ -32,7 +32,7 @@ const ForgotPasswordCard = () => {
     Get Zod validation schema with the i18n messages.
   */
   const forgotPasswordSchema = getForgotPasswordSchema(
-    useTranslations("forgotPasswordValidation")
+    useTranslations("forgotPasswordValidation"),
   );
   /*
     The mutation instance that will be used to send the forgot password request.
@@ -99,9 +99,9 @@ const ForgotPasswordCard = () => {
                   className="!p-3 block whitespace-normal break-words"
                 >
                   {axios.isAxiosError(mutation.error)
-                    ? (typeof mutation.error.response?.data?.error === "string"
-                        ? mutation.error.response.data.error
-                        : t("error"))
+                    ? typeof mutation.error.response?.data?.error === "string"
+                      ? mutation.error.response.data.error
+                      : t("error")
                     : mutation.error.message}
                 </Badge>
               )}

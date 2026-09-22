@@ -51,9 +51,7 @@ describe("Signin Card", () => {
       /*
         Arrange
       */
-      const { container } = render(
-        <SigninCard switchToSignup={() => { }} />,
-      );
+      const { container } = render(<SigninCard switchToSignup={() => {}} />);
       /*
         Assert that the three sections and the correct translated text are displayed.
       */

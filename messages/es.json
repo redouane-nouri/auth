@@ -1,5 +1,5 @@
 {
- "resetPasswordValidation": {
+  "resetPasswordValidation": {
     "tokenString": "El token debe ser una cadena de texto",
     "tokenRequired": "El token es obligatorio",
     "passwordString": "La contraseña debe ser una cadena de texto",
@@ -17,7 +17,7 @@
     "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo"
   },
- "forgotPasswordValidation": {
+  "forgotPasswordValidation": {
     "emailString": "El correo electrónico debe ser una cadena de texto",
     "emailInvalid": "Introduce una dirección de correo electrónico válida",
     "emailMax": "El correo electrónico debe tener un máximo de 60 caracteres",

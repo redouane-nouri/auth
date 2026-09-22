@@ -42,12 +42,18 @@ export default function Home({ name }: { name: string }) {
             {t("signOut")}
           </Button>
           {mutation.isError && (
-            <Badge color="crimson" className="!p-3 block whitespace-normal break-words">
+            <Badge
+              color="crimson"
+              className="!p-3 block whitespace-normal break-words"
+            >
               {t("error")}
             </Badge>
           )}
           {mutation.isSuccess && (
-            <Badge color="grass" className="!p-3 block whitespace-normal break-words">
+            <Badge
+              color="grass"
+              className="!p-3 block whitespace-normal break-words"
+            >
               {t("successSignout")}
             </Badge>
           )}

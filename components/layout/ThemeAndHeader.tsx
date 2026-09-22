@@ -29,8 +29,17 @@ const ThemeAndHeader = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme accentColor="gray" grayColor="slate" className="flex flex-col min-h-screen" appearance={appearance}>
-        <Header appearance={appearance} setAppearance={setAppearance} initialLocale={initialLocale} />
+      <Theme
+        accentColor="gray"
+        grayColor="slate"
+        className="flex flex-col min-h-screen"
+        appearance={appearance}
+      >
+        <Header
+          appearance={appearance}
+          setAppearance={setAppearance}
+          initialLocale={initialLocale}
+        />
         <Separator className="w-full" />
         {children}
       </Theme>

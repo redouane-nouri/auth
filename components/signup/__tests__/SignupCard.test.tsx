@@ -63,7 +63,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by clicking on the submit button
       */
@@ -74,9 +74,9 @@ describe("Signup Card", () => {
       expect(screen.getByTestId("nameHint")).toHaveTextContent(t.nameRequired);
       expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
-        t.passwordMin
+        t.passwordMin,
       );
-    }
+    },
   );
 
   /*
@@ -92,7 +92,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting long string in email & password inputs.
       */
@@ -106,9 +106,9 @@ describe("Signup Card", () => {
       expect(screen.getByTestId("nameHint")).toHaveTextContent(t.nameMax);
       expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailMax);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
-        t.passwordMax
+        t.passwordMax,
       );
-    }
+    },
   );
 
   /*
@@ -122,7 +122,7 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting invalid regex for password
       */
@@ -162,7 +162,7 @@ describe("Signup Card", () => {
       expect(screen.queryByTestId("nameHint")).not.toBeInTheDocument();
       expect(screen.queryByTestId("emailHint")).not.toBeInTheDocument();
       expect(screen.queryByTestId("passwordHint")).not.toBeInTheDocument();
-    }
+    },
   );
 
   /*
@@ -176,26 +176,26 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Act by inserting non-equal passwords
       */
       await userEvent.type(
         screen.getByTestId("passwordInput"),
-        "ValidPassword1@"
+        "ValidPassword1@",
       );
       await userEvent.type(
         screen.getByTestId("confirmPasswordInput"),
-        "ValidPassword2@"
+        "ValidPassword2@",
       );
       await userEvent.click(screen.getByTestId("submitButton"));
       /*
         Assert password does not match is displayed
       */
       expect(screen.getByTestId("confirmPasswordHint")).toHaveTextContent(
-        t.passwordsDontMatch
+        t.passwordsDontMatch,
       );
-    }
+    },
   );
 
   /*
@@ -223,12 +223,12 @@ describe("Signup Card", () => {
       /*
         Arrange
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert unexpected error is displayed.
       */
       expect(screen.getByTestId("errorBadge")).toHaveTextContent(t.error);
-    }
+    },
   );
 
   /*
@@ -253,12 +253,12 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert axios error is displayed.
       */
       expect(screen.getByTestId("errorBadge")).toHaveTextContent("Axios error");
-    }
+    },
   );
 
   /*
@@ -285,12 +285,12 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert the generic error message is displayed instead of the object.
       */
       expect(screen.getByTestId("errorBadge")).toHaveTextContent(t.error);
-    }
+    },
   );
   /*
     To check switching to signin works from the "Have an account? Sign in now!" message
@@ -349,11 +349,11 @@ describe("Signup Card", () => {
       /*
         Arrange.
       */
-      render(<SignupCard switchToSignin={() => { }} />);
+      render(<SignupCard switchToSignin={() => {}} />);
       /*
         Assert success message is displayed.
       */
       expect(screen.getByTestId("successBadge")).toHaveTextContent(t.success);
-    }
+    },
   );
 });

@@ -1,5 +1,5 @@
 {
- "resetPasswordValidation": {
+  "resetPasswordValidation": {
     "tokenString": "Token must be a string",
     "tokenRequired": "Token is required",
     "passwordString": "Password must be a string",

@@ -48,12 +48,13 @@ export default async function RootLayout({
     <html lang={locale} dir={LanguageCodeToDirection[locale as LanguageCode]}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ThemeAndHeader themeAppearance={appearance} initialLocale={locale as LanguageCode}>
-            {
-              /*
+          <ThemeAndHeader
+            themeAppearance={appearance}
+            initialLocale={locale as LanguageCode}
+          >
+            {/*
                 Change authjs basepath from /api/auth to /api/{version}/auth
-              */
-            }
+              */}
             <SessionProvider basePath={process.env.AUTH_BASEPATH}>
               {children}
             </SessionProvider>

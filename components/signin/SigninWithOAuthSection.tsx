@@ -8,10 +8,7 @@ export default function SigninWithOAuthSection() {
   return (
     <Flex direction="column" gap="2">
       {oAuth2Providers.map((oAuth2Provider, index) => (
-        <OAuth2Provider
-          key={index}
-          oAuth2Provider={oAuth2Provider}
-        />
+        <OAuth2Provider key={index} oAuth2Provider={oAuth2Provider} />
       ))}
     </Flex>
   );

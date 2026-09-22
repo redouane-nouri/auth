@@ -66,9 +66,7 @@ describe("Signin With Credentials Form", () => {
       /*
         Assert that email and password min message (required) is displayed
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(
-        t.emailInvalid,
-      );
+      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
       );

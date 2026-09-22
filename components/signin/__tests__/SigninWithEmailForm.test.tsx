@@ -64,9 +64,7 @@ describe("Signin With Email Form", () => {
       /*
         Assert that the email invalid hint is displayed with the correct language and place
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(
-        t.emailInvalid,
-      );
+      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
     },
   );
   /*
@@ -154,9 +152,8 @@ describe("Signin With Email Form", () => {
     instead of always showing a generic error.
   */
   it("throws the specific code from signIn when there is one", async () => {
-    let capturedMutationFn: (data: {
-      email: string;
-    }) => Promise<void> = () => Promise.resolve();
+    let capturedMutationFn: (data: { email: string }) => Promise<void> = () =>
+      Promise.resolve();
     mockedUseMutation.mockImplementationOnce((config) => {
       capturedMutationFn = config.mutationFn;
       return { isError: false, isSuccess: false, isPending: false };
@@ -182,9 +179,8 @@ describe("Signin With Email Form", () => {
   it("throws the generic error message when signIn fails without a specific code", async () => {
     translationsObject.setCurrentLanguage(LanguageCode.EN);
     const t = translationsObject.getMessages().signinCard;
-    let capturedMutationFn: (data: {
-      email: string;
-    }) => Promise<void> = () => Promise.resolve();
+    let capturedMutationFn: (data: { email: string }) => Promise<void> = () =>
+      Promise.resolve();
     mockedUseMutation.mockImplementationOnce((config) => {
       capturedMutationFn = config.mutationFn;
       return { isError: false, isSuccess: false, isPending: false };
