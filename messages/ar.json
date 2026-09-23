@@ -53,7 +53,6 @@
     "emailPlaceholder": "أدخل البريد الإلكتروني",
     "passwordTitle": "كلمة المرور",
     "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
-    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "logIn": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
     "forgotPassword": "هل نسيت كلمة المرور؟",
@@ -119,8 +118,6 @@
   },
   "header": {
     "authentication": "المصادق",
-    "connect": "اتصل",
-    "home": "الرئيسية",
     "switchToLightMode": "التبديل إلى الوضع الفاتح",
     "switchToDarkMode": "التبديل إلى الوضع الداكن"
   },
@@ -129,7 +126,6 @@
     "signUp": "اشترك"
   },
   "home": {
-    "home": "الرئيسية",
     "hello": "مرحبًا، {name}!",
     "signOut": "تسجيل الخروج",
     "successSignout": "تم تسجيل الخروج بنجاح",

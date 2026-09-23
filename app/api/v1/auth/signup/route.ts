@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../lib/prisma/prisma-client";
 import {
-  getBcryptHashRounds,
+  getBcryptHashRoundsFromEnv,
   getClientIp,
   getSignupSchema,
 } from "../../../../../utils/functions";
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
         email: result.data.email,
         password: await bcrypt.hash(
           result.data.password,
-          getBcryptHashRounds(),
+          getBcryptHashRoundsFromEnv(),
         ),
       },
     });

@@ -1,9 +1,21 @@
 import {
-  getBcryptHashRounds,
+  getAuthAllowGithubDangerousEmailAccountLinkingFromEnv,
+  getAuthAllowGoogleDangerousEmailAccountLinkingFromEnv,
+  getAuthBasepathFromEnv,
+  getBcryptHashRoundsFromEnv,
   getClientIp,
+  getEmailFromFromEnv,
+  getEmailServerAuthClientIdFromEnv,
+  getEmailServerAuthClientSecretFromEnv,
+  getEmailServerAuthRefreshTokenFromEnv,
+  getEmailServerAuthUserFromEnv,
+  getEmailServerHostFromEnv,
+  getEmailServerPortFromEnv,
+  getEmailServerSecureFromEnv,
   getSignInWithCredentialsSchema,
 } from "@/utils/functions";
 import { after } from "next/server";
+import { redirect } from "next/navigation";
 import {
   credentialsSignInEmailRateLimiter,
   credentialsSignInIpRateLimiter,
@@ -108,7 +120,10 @@ const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
   A precomputed hash with no matching password, used to run bcrypt.compare even when no user/password
   is found, so the response time doesn't reveal whether the email is registered (timing side-channel).
 */
-const DUMMY_PASSWORD_HASH = bcrypt.hashSync(uuidv4(), getBcryptHashRounds());
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(
+  uuidv4(),
+  getBcryptHashRoundsFromEnv(),
+);
 /*
   Even we specefied an adapter which authjs automatically uses the "database" strategy, for credentials it uses a "jwt" strategy.
   So if we want to use "database" strategy for a credentials provider, we need to tag the token as coming from credentials provider and modify it in the next step inside the encode method to use a session token.
@@ -343,7 +358,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   /*
     To be able to configure our own ednpoint (/api/v1/auth) instead of (/api/auth)
   */
-  basePath: process.env.AUTH_BASEPATH,
+  basePath: getAuthBasepathFromEnv(),
   /*
     Prisma adapter to control our own db
   */
@@ -363,31 +378,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
       allowDangerousEmailAccountLinking:
-        process.env.AUTH_ALLOW_GOOGLE_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
-        "true",
+        getAuthAllowGoogleDangerousEmailAccountLinkingFromEnv(),
     }),
     GitHub({
       allowDangerousEmailAccountLinking:
-        process.env.AUTH_ALLOW_GITHUB_DANGEROUS_EMAIL_ACCOUNT_LINKING ===
-        "true",
+        getAuthAllowGithubDangerousEmailAccountLinkingFromEnv(),
     }),
     /*
       Configure the Nodemailer provider for signin with magic links using the .env file
     */
     Nodemailer({
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: Number(process.env.EMAIL_SERVER_PORT),
-        secure: process.env.EMAIL_SERVER_SECURE === "true",
+        host: getEmailServerHostFromEnv(),
+        port: getEmailServerPortFromEnv(),
+        secure: getEmailServerSecureFromEnv(),
         auth: {
           type: AUTH_NODEMAILER_OAUTH2_TYPE,
-          user: process.env.EMAIL_SERVER_AUTH_USER,
-          clientId: process.env.EMAIL_SERVER_AUTH_CLIENT_ID,
-          clientSecret: process.env.EMAIL_SERVER_AUTH_CLIENT_SECRET,
-          refreshToken: process.env.EMAIL_SERVER_AUTH_REFRESH_TOKEN,
+          user: getEmailServerAuthUserFromEnv(),
+          clientId: getEmailServerAuthClientIdFromEnv(),
+          clientSecret: getEmailServerAuthClientSecretFromEnv(),
+          refreshToken: getEmailServerAuthRefreshTokenFromEnv(),
         },
       },
-      from: process.env.EMAIL_FROM,
+      from: getEmailFromFromEnv(),
       sendVerificationRequest,
     }),
     Credentials({
@@ -409,3 +422,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     newUser: AUTH_NEW_USER_ENDPOINT,
   },
 });
+/*
+  Redirects to the home page if the user is already authenticated.
+*/
+export async function redirectIfAuthenticated() {
+  if (await auth()) redirect("/");
+}

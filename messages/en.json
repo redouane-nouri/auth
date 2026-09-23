@@ -53,7 +53,6 @@
     "emailPlaceholder": "Enter your email",
     "passwordTitle": "Password",
     "passwordPlaceholder": "Enter your password",
-    "invalidCredentials": "Invalid email or password",
     "logIn": "Log In",
     "sendLoginLink": "Send Login Link",
     "noAccount": "No account?",
@@ -119,8 +118,6 @@
   },
   "header": {
     "authentication": "Authenticator",
-    "connect": "Connect",
-    "home": "Home",
     "switchToLightMode": "Switch to light mode",
     "switchToDarkMode": "Switch to dark mode"
   },
@@ -129,7 +126,6 @@
     "signUp": "Sign up"
   },
   "home": {
-    "home": "Home",
     "hello": "Hello, {name}!",
     "signOut": "Sign Out",
     "successSignout": "Signed out successfully",

@@ -27,3 +27,9 @@ export enum LanguageCode {
   RU = "ru",
   ZH = "zh",
 }
+
+export enum NodeEnv {
+  DEVELOPMENT = "development",
+  PRODUCTION = "production",
+  TEST = "test",
+}

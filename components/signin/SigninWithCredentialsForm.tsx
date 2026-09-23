@@ -82,24 +82,33 @@ export default function SiginnWithCredentialsForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitForm)}>
+    <form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
       <Flex direction="column" gapY="4">
         <Heading>{t("loginHeading")}</Heading>
         <Box>
           <Text>{t("emailTitle")}</Text>
           <TextField.Root
             aria-label={t("emailPlaceholder")}
+            aria-invalid={!!errors.email}
+            aria-describedby="credentials-email-error"
             placeholder={t("emailPlaceholder")}
+            type="email"
+            autoComplete="email"
             size="2"
             {...register("email")}
-            data-testid="emailInput"
+            data-testid="credentialsEmailInput"
           >
             <TextField.Slot>
               <EnvelopeClosedIcon />
             </TextField.Slot>
           </TextField.Root>
           {errors.email && (
-            <Text data-testid="emailHint" color="crimson" size="1">
+            <Text
+              id="credentials-email-error"
+              data-testid="credentialsEmailHint"
+              color="crimson"
+              size="1"
+            >
               {errors.email.message}
             </Text>
           )}
@@ -108,8 +117,11 @@ export default function SiginnWithCredentialsForm() {
           <Text>{t("passwordTitle")}</Text>
           <TextField.Root
             aria-label={t("passwordPlaceholder")}
+            aria-invalid={!!errors.password}
+            aria-describedby="credentials-password-error"
             placeholder={t("passwordPlaceholder")}
             type="password"
+            autoComplete="current-password"
             {...register("password")}
             data-testid="passwordInput"
           >
@@ -118,14 +130,19 @@ export default function SiginnWithCredentialsForm() {
             </TextField.Slot>
           </TextField.Root>
           {errors.password && (
-            <Text data-testid="passwordHint" color="crimson" size="1">
+            <Text
+              id="credentials-password-error"
+              data-testid="passwordHint"
+              color="crimson"
+              size="1"
+            >
               {errors.password.message}
             </Text>
           )}
         </Box>
         {mutation.isError && (
           <Badge
-            data-testid="errorBadge"
+            data-testid="credentialsErrorBadge"
             color="crimson"
             className="!p-3 block whitespace-normal break-words"
           >
@@ -134,7 +151,7 @@ export default function SiginnWithCredentialsForm() {
         )}
         {mutation.isSuccess && (
           <Badge
-            data-testid="successBadge"
+            data-testid="credentialsSuccessBadge"
             color="grass"
             className="!p-3 block whitespace-normal break-words"
           >
@@ -143,7 +160,7 @@ export default function SiginnWithCredentialsForm() {
         )}
         <Button
           type="submit"
-          data-testid="submitButton"
+          data-testid="credentialsSubmitButton"
           loading={mutation.isPending}
           disabled={mutation.isSuccess}
           highContrast

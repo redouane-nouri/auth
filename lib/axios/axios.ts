@@ -1,7 +1,11 @@
 import axios from "axios";
+import {
+  getNextPublicAxiosBasepathFromEnv,
+  getNextPublicUrlFromEnv,
+} from "@/utils/functions";
 
 export const api = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_AXIOS_BASEPATH}`,
+  baseURL: `${getNextPublicUrlFromEnv()}${getNextPublicAxiosBasepathFromEnv()}`,
   headers: {
     "Content-Type": "application/json",
   },

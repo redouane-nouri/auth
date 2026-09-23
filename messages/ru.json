@@ -53,7 +53,6 @@
     "emailPlaceholder": "Введите вашу почту",
     "passwordTitle": "Пароль",
     "passwordPlaceholder": "Введите ваш пароль",
-    "invalidCredentials": "Неверное имя пользователя или пароль",
     "logIn": "Войти",
     "noAccount": "Нет аккаунта?",
     "signUpNow": "Зарегистрируйтесь сейчас!",
@@ -119,8 +118,6 @@
   },
   "header": {
     "authentication": "Аутентификатор",
-    "connect": "Подключиться",
-    "home": "Главная",
     "switchToLightMode": "Переключить на светлый режим",
     "switchToDarkMode": "Переключить на тёмный режим"
   },
@@ -129,7 +126,6 @@
     "signUp": "Зарегистрироваться"
   },
   "home": {
-    "home": "Главная",
     "hello": "Привет, {name}!",
     "signOut": "Выйти",
     "successSignout": "Вы успешно вышли из системы",

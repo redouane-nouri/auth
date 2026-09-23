@@ -53,7 +53,6 @@
     "emailPlaceholder": "Introduce tu correo electrónico",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Introduce tu contraseña",
-    "invalidCredentials": "Nombre de usuario o contraseña inválidos",
     "logIn": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
@@ -119,8 +118,6 @@
   },
   "header": {
     "authentication": "Autenticador",
-    "connect": "Conectar",
-    "home": "Inicio",
     "switchToLightMode": "Cambiar a modo claro",
     "switchToDarkMode": "Cambiar a modo oscuro"
   },
@@ -129,7 +126,6 @@
     "signUp": "Regístrate"
   },
   "home": {
-    "home": "Inicio",
     "hello": "¡Hola, {name}!",
     "signOut": "Cerrar sesión",
     "successSignout": "Cierre de sesión exitoso",

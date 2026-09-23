@@ -8,6 +8,7 @@ import { LanguageCode, ThemeAppearance } from "../utils/enums";
 import { LanguageCodeToDirection } from "../utils/constants";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { getAuthBasepathFromEnv } from "../utils/functions";
 
 export async function generateMetadata(): Promise<Metadata> {
   /*
@@ -55,7 +56,7 @@ export default async function RootLayout({
             {/*
                 Change authjs basepath from /api/auth to /api/{version}/auth
               */}
-            <SessionProvider basePath={process.env.AUTH_BASEPATH}>
+            <SessionProvider basePath={getAuthBasepathFromEnv()}>
               {children}
             </SessionProvider>
           </ThemeAndHeader>

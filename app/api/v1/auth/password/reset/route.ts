@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
 import {
-  getBcryptHashRounds,
+  getBcryptHashRoundsFromEnv,
   getClientIp,
   getResetPasswordSchema,
 } from "@/utils/functions";
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     */
     const hashedPassword = await bcrypt.hash(
       result.data.password,
-      getBcryptHashRounds(),
+      getBcryptHashRoundsFromEnv(),
     );
     /*
       Update the password, delete the token, and revoke every existing session as one transaction.

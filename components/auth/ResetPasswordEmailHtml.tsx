@@ -8,12 +8,13 @@ import {
   Text,
   Link,
 } from "@react-email/components";
+import { getNextPublicUrlFromEnv } from "@/utils/functions";
 
 export default function ResetPasswordEmail({ token }: { token: string }) {
   const ZWSP = "\u200B";
 
   // Build full URL from env + token
-  const baseUrl = process.env.NEXT_PUBLIC_URL!;
+  const baseUrl = getNextPublicUrlFromEnv();
   const resetUrl = `${baseUrl}/reset-password?token=${token}`;
   const host = baseUrl.replace(/^https?:\/\//, "");
   const escapedHost = host.replace(/\./g, `${ZWSP}.`);

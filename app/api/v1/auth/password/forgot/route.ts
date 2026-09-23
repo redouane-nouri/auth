@@ -3,7 +3,12 @@ import { StatusCodes } from "http-status-codes";
 import { after, NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
-import { getClientIp, getForgotPasswordSchema } from "@/utils/functions";
+import {
+  getClientIp,
+  getEmailFromFromEnv,
+  getForgotPasswordSchema,
+  getNextPublicUrlFromEnv,
+} from "@/utils/functions";
 import { render } from "@react-email/render";
 import React from "react";
 import ResetPasswordEmail from "@/components/auth/ResetPasswordEmailHtml";
@@ -125,13 +130,13 @@ async function issueResetTokenAndSendEmail(email: string) {
     /*
       prepare the reset url
     */
-    const baseUrl = process.env.NEXT_PUBLIC_URL!;
+    const baseUrl = getNextPublicUrlFromEnv();
     const resetUrl = `${baseUrl}/reset-password?token=${rawToken}`;
     /*
       Send the password reset email, use React email component rendered to HTML, also include plain text fallback
     */
     await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: getEmailFromFromEnv(),
       to: email,
       subject: "Reset your password",
       html: await render(

@@ -53,7 +53,6 @@
     "emailPlaceholder": "请输入您的邮箱",
     "passwordTitle": "密码",
     "passwordPlaceholder": "输入您的密码",
-    "invalidCredentials": "用户名或密码无效",
     "logIn": "登录",
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
@@ -119,8 +118,6 @@
   },
   "header": {
     "authentication": "身份验证器",
-    "connect": "连接",
-    "home": "首页",
     "switchToLightMode": "切换到浅色模式",
     "switchToDarkMode": "切换到深色模式"
   },
@@ -129,7 +126,6 @@
     "signUp": "注册"
   },
   "home": {
-    "home": "首页",
     "hello": "你好，{name}！",
     "signOut": "退出登录",
     "successSignout": "注销成功",
