@@ -9,8 +9,14 @@ const eslintConfig = [
   },
   ...nextCoreWebVitals,
   ...nextTypescript,
-  testingLibrary.configs["flat/react"],
-  jestDom.configs["flat/recommended"],
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx"],
+    ...testingLibrary.configs["flat/react"],
+  },
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx"],
+    ...jestDom.configs["flat/recommended"],
+  },
 ];
 
 export default eslintConfig;
