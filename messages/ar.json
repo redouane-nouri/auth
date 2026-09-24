@@ -1,6 +1,6 @@
 {
   "resetPasswordValidation": {
-    "tokenString": "يجب أن يكون الرمز النصي",
+    "tokenString": "يجب أن يكون الرمز نصًا",
     "tokenRequired": "الرمز مطلوب",
     "passwordString": "يجب أن تكون كلمة المرور نصية",
     "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
@@ -107,7 +107,7 @@
     "validAttributes": "يقبل الطلب فقط: البريد الإلكتروني، كلمة المرور، وتأكيد كلمة المرور.",
     "passwordMax": "يجب أن تكون كلمة المرور 60 حرفًا كحد أقصى",
     "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
-    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "tooManyRequests": "طلبات كثيرة جدًا. يرجى المحاولة مرة أخرى لاحقًا.",
     "success": "تم تسجيل الدخول بنجاح",
     "error": "حدث خطأ ما. حاول مرة أخرى",
@@ -117,7 +117,7 @@
     "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا"
   },
   "header": {
-    "authentication": "المصادق",
+    "authentication": "AuthForge",
     "switchToLightMode": "التبديل إلى الوضع الفاتح",
     "switchToDarkMode": "التبديل إلى الوضع الداكن"
   },
@@ -135,7 +135,7 @@
     "pageNotFound": "الصفحة غير موجودة"
   },
   "metadata": {
-    "title": "المصادق",
-    "description": "منصة المصادق"
+    "title": "AuthForge",
+    "description": "منصة AuthForge"
   }
 }

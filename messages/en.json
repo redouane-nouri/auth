@@ -117,7 +117,7 @@
     "alreadySignedIn": "You are already signed in"
   },
   "header": {
-    "authentication": "Authenticator",
+    "authentication": "AuthForge",
     "switchToLightMode": "Switch to light mode",
     "switchToDarkMode": "Switch to dark mode"
   },
@@ -133,7 +133,7 @@
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {
-    "title": "Authenticator",
-    "description": "Authenticator Platform"
+    "title": "AuthForge",
+    "description": "AuthForge Platform"
   }
 }
