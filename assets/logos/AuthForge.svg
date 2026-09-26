@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 64" width="264" height="64" role="img" aria-label="AuthForge">
+  <style>
+    .wordmark { fill: #14213D; }
+    @media (prefers-color-scheme: dark) {
+      .wordmark { fill: #D1D7E0; }
+    }
+  </style>
+  <path fill="#14213D" d="M32 4 L10 11 V30 C10 44 19.5 54 32 60 Z"/>
+  <path fill="#22365F" d="M32 4 L54 11 V30 C54 44 44.5 54 32 60 Z"/>
+  <path fill="#FF9F1C" d="M32 15.5 A7.5 7.5 0 0 1 35 29.87 V32 H49 V37 Q43 37.5 38 41 L42 48 H22 L26 41 Q23 36.5 15 32 H29 V29.87 A7.5 7.5 0 0 1 32 15.5 Z"/>
+  <path fill="#FF9F1C" d="M34.9 12.9 L37.7 7.8 L35.2 7.1 Z M40.4 15.9 L47.2 12.3 L45.1 9.9 Z M42.9 21.9 L50.0 22.4 L49.8 19.8 Z"/>
+  <text class="wordmark" x="72" y="43" font-family="Inter, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="31" letter-spacing="-0.6"><tspan font-weight="800">Auth</tspan><tspan font-weight="500">Forge</tspan></text>
+</svg>

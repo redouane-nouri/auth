@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import { encode } from "next-auth/jwt";
 import { after } from "next/server";
+import { redirect } from "next/navigation";
 import { getMailerTransporter } from "../../mailer/mailer";
 import { LanguageCode } from "@/utils/enums";
 import prisma from "../../prisma/prisma-client";
@@ -18,6 +19,7 @@ import {
   encodeSessionToken,
   jwtCallback,
   prismaAdapter,
+  redirectIfAuthenticated,
   sendVerificationRequest,
 } from "../auth";
 import arMessages from "../../../messages/ar.json";
@@ -152,12 +154,19 @@ jest.mock("next/server", () => ({
   after: jest.fn(),
 }));
 /*
+  Mocking next/navigation's redirect.
+*/
+jest.mock("next/navigation", () => ({
+  redirect: jest.fn(),
+}));
+/*
   To control the mock implementation of each mocked import as needed, instead of repeating the same
   cast inline every time it's used.
 */
 const mockedPrismaAdapter = PrismaAdapter as jest.Mock;
 const mockedAfter = after as jest.Mock;
 const mockedAuth = auth as jest.Mock;
+const mockedRedirect = redirect as unknown as jest.Mock;
 const mockedIsRateLimited = isRateLimited as jest.Mock;
 const mockedGetCachedSessionAndUser = getCachedSessionAndUser as jest.Mock;
 const mockedFindUnique = prisma.user.findUnique as jest.Mock;
@@ -202,6 +211,24 @@ describe("jwtCallback", () => {
     } as Parameters<typeof jwtCallback>[0]);
 
     expect(token?.credentials).toBeUndefined();
+  });
+});
+
+describe("redirectIfAuthenticated", () => {
+  it("redirects to the home page when the user is already authenticated", async () => {
+    mockedAuth.mockResolvedValueOnce({ user: {} });
+
+    await redirectIfAuthenticated();
+
+    expect(mockedRedirect).toHaveBeenCalledWith("/");
+  });
+
+  it("does nothing when the user is not authenticated", async () => {
+    mockedAuth.mockResolvedValueOnce(null);
+
+    await redirectIfAuthenticated();
+
+    expect(mockedRedirect).not.toHaveBeenCalled();
   });
 });
 

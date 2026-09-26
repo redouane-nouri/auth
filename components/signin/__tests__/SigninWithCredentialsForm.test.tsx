@@ -62,11 +62,13 @@ describe("Signin With Credentials Form", () => {
       /*
         Act by clicking on the submit button
       */
-      await userEvent.click(screen.getByTestId("submitButton"));
+      await userEvent.click(screen.getByTestId("credentialsSubmitButton"));
       /*
         Assert that email and password min message (required) is displayed
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
+      expect(
+        await screen.findByTestId("credentialsEmailHint"),
+      ).toHaveTextContent(t.emailInvalid);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
       );
@@ -89,20 +91,25 @@ describe("Signin With Credentials Form", () => {
       /*
         Act by inserting long strings in email & password inputs.
       */
-      await userEvent.type(screen.getByTestId("emailInput"), longString);
+      await userEvent.type(
+        screen.getByTestId("credentialsEmailInput"),
+        longString,
+      );
       await userEvent.type(screen.getByTestId("passwordInput"), longString);
-      await userEvent.click(screen.getByTestId("submitButton"));
+      await userEvent.click(screen.getByTestId("credentialsSubmitButton"));
       /*
         Assert that email and password max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailMax);
+      expect(
+        await screen.findByTestId("credentialsEmailHint"),
+      ).toHaveTextContent(t.emailMax);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMax,
       );
     },
   );
   /*
-    Invalid credentials error displayed correctly
+    Login error displayed correctly
   */
   it.each(Object.values(LanguageCode))(
     "Should display login error message in %s language",
@@ -110,23 +117,23 @@ describe("Signin With Credentials Form", () => {
       translationsObject.setCurrentLanguage(languageValueEnum as LanguageCode);
       const t = translationsObject.getMessages().signinCard;
       /*
-        Mock to return an invalid credentials error.
+        Mock to return a login error.
       */
       mockedUseMutation.mockImplementation(() => ({
         isError: true,
         isSuccess: false,
         isPending: false,
-        error: new Error(t.invalidCredentials),
+        error: new Error(t.error),
       }));
       /*
         Arrange
       */
       render(<SigninWithCredentialsForm />);
       /*
-        Assert invalid credentials error is displayed.
+        Assert the login error is displayed.
       */
-      expect(screen.getByTestId("errorBadge")).toHaveTextContent(
-        t.invalidCredentials,
+      expect(screen.getByTestId("credentialsErrorBadge")).toHaveTextContent(
+        t.error,
       );
     },
   );
@@ -153,7 +160,9 @@ describe("Signin With Credentials Form", () => {
       /*
         Assert success message is displayed.
       */
-      expect(screen.getByTestId("successBadge")).toHaveTextContent(t.success);
+      expect(screen.getByTestId("credentialsSuccessBadge")).toHaveTextContent(
+        t.success,
+      );
     },
   );
 });

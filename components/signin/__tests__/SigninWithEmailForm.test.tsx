@@ -60,11 +60,13 @@ describe("Signin With Email Form", () => {
       /*
         Act by clicking on the submit button
       */
-      await userEvent.click(screen.getByTestId("submitButton"));
+      await userEvent.click(screen.getByTestId("magicLinkSubmitButton"));
       /*
         Assert that the email invalid hint is displayed with the correct language and place
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
+      expect(await screen.findByTestId("magicLinkEmailHint")).toHaveTextContent(
+        t.emailInvalid,
+      );
     },
   );
   /*
@@ -84,12 +86,17 @@ describe("Signin With Email Form", () => {
       /*
         Act by inserting a long string in the email input.
       */
-      await userEvent.type(screen.getByTestId("emailInput"), longString);
-      await userEvent.click(screen.getByTestId("submitButton"));
+      await userEvent.type(
+        screen.getByTestId("magicLinkEmailInput"),
+        longString,
+      );
+      await userEvent.click(screen.getByTestId("magicLinkSubmitButton"));
       /*
         Assert that the email max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailMax);
+      expect(await screen.findByTestId("magicLinkEmailHint")).toHaveTextContent(
+        t.emailMax,
+      );
     },
   );
   /*
@@ -116,7 +123,9 @@ describe("Signin With Email Form", () => {
       /*
         Assert unexpected error is displayed.
       */
-      expect(screen.getByTestId("errorBadge")).toHaveTextContent(t.error);
+      expect(screen.getByTestId("magicLinkErrorBadge")).toHaveTextContent(
+        t.error,
+      );
     },
   );
   /*
@@ -142,7 +151,7 @@ describe("Signin With Email Form", () => {
       /*
         Assert check inbox success message is displayed.
       */
-      expect(screen.getByTestId("successBadge")).toHaveTextContent(
+      expect(screen.getByTestId("magicLinkSuccessBadge")).toHaveTextContent(
         t.checkInbox,
       );
     },

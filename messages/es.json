@@ -51,11 +51,8 @@
     "loginHeading": "Iniciar sesión",
     "emailTitle": "Correo electrónico",
     "emailPlaceholder": "Introduce tu correo electrónico",
-    "emailRequiredHint": "Correo electrónico requerido",
     "passwordTitle": "Contraseña",
     "passwordPlaceholder": "Introduce tu contraseña",
-    "passwordRequiredHint": "Contraseña requerida",
-    "invalidCredentials": "Nombre de usuario o contraseña inválidos",
     "logIn": "Iniciar sesión",
     "noAccount": "¿No tienes cuenta?",
     "signUpNow": "¡Regístrate ahora!",
@@ -113,16 +110,14 @@
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "validAttributes": "La solicitud solo acepta los atributos: correo electrónico, contraseña y confirmar contraseña.",
     "passwordString": "La contraseña debe ser una cadena",
-    "invalidCredentials": "Nombre de usuario o contraseña incorrectos",
+    "invalidCredentials": "Correo electrónico o contraseña incorrectos",
     "tooManyRequests": "Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.",
     "success": "Inicio de sesión exitoso",
     "error": "Algo salió mal. Por favor, inténtalo de nuevo",
     "alreadySignedIn": "Ya has iniciado sesión"
   },
   "header": {
-    "authentication": "Autenticador",
-    "connect": "Conectar",
-    "home": "Inicio",
+    "authentication": "AuthForge",
     "switchToLightMode": "Cambiar a modo claro",
     "switchToDarkMode": "Cambiar a modo oscuro"
   },
@@ -131,7 +126,6 @@
     "signUp": "Regístrate"
   },
   "home": {
-    "home": "Inicio",
     "hello": "¡Hola, {name}!",
     "signOut": "Cerrar sesión",
     "successSignout": "Cierre de sesión exitoso",
@@ -141,7 +135,7 @@
     "pageNotFound": "Página no encontrada"
   },
   "metadata": {
-    "title": "Autenticador",
-    "description": "Plataforma Autenticador"
+    "title": "AuthForge",
+    "description": "Plataforma AuthForge"
   }
 }

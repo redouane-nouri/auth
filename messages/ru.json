@@ -51,11 +51,8 @@
     "loginHeading": "Вход",
     "emailTitle": "Электронная почта",
     "emailPlaceholder": "Введите вашу почту",
-    "emailRequiredHint": "Требуется электронная почта",
     "passwordTitle": "Пароль",
     "passwordPlaceholder": "Введите ваш пароль",
-    "passwordRequiredHint": "Требуется пароль",
-    "invalidCredentials": "Неверное имя пользователя или пароль",
     "logIn": "Войти",
     "noAccount": "Нет аккаунта?",
     "signUpNow": "Зарегистрируйтесь сейчас!",
@@ -113,16 +110,14 @@
     "validAttributes": "Запрос принимает только следующие атрибуты: электронная почта, пароль и подтверждение пароля.",
     "passwordMin": "Пароль должен содержать не менее 8 символов",
     "emailMax": "Электронная почта должна содержать не более 60 символов",
-    "invalidCredentials": "Неверное имя пользователя или пароль",
+    "invalidCredentials": "Неверный адрес электронной почты или пароль",
     "tooManyRequests": "Слишком много запросов. Пожалуйста, попробуйте позже.",
     "success": "Вход выполнен успешно",
     "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз",
     "alreadySignedIn": "Вы уже вошли в систему"
   },
   "header": {
-    "authentication": "Аутентификатор",
-    "connect": "Подключиться",
-    "home": "Главная",
+    "authentication": "AuthForge",
     "switchToLightMode": "Переключить на светлый режим",
     "switchToDarkMode": "Переключить на тёмный режим"
   },
@@ -131,7 +126,6 @@
     "signUp": "Зарегистрироваться"
   },
   "home": {
-    "home": "Главная",
     "hello": "Привет, {name}!",
     "signOut": "Выйти",
     "successSignout": "Вы успешно вышли из системы",
@@ -141,7 +135,7 @@
     "pageNotFound": "Страница не найдена"
   },
   "metadata": {
-    "title": "Аутентификатор",
-    "description": "Платформа «Аутентификатор»"
+    "title": "AuthForge",
+    "description": "Платформа AuthForge"
   }
 }

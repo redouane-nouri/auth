@@ -72,14 +72,17 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
     <Box>
       <Container size="1">
         <Card>
-          <form onSubmit={handleSubmit(handleSubmitForm)}>
+          <form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
             <Flex direction="column" gapY="4">
               <Heading>{t("signupHeading")}</Heading>
               <Box>
                 <Text>{t("nameTitle")}</Text>
                 <TextField.Root
                   aria-label={t("namePlaceholder")}
+                  aria-invalid={!!errors.name}
+                  aria-describedby="signup-name-error"
                   placeholder={t("namePlaceholder")}
+                  autoComplete="name"
                   {...register("name")}
                   size="2"
                   data-testid="nameInput"
@@ -89,7 +92,12 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.name && (
-                  <Text data-testid="nameHint" color="crimson" size="1">
+                  <Text
+                    id="signup-name-error"
+                    data-testid="nameHint"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.name.message}
                   </Text>
                 )}
@@ -98,7 +106,11 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 <Text>{t("emailTitle")}</Text>
                 <TextField.Root
                   aria-label={t("emailPlaceholder")}
+                  aria-invalid={!!errors.email}
+                  aria-describedby="signup-email-error"
                   placeholder={t("emailPlaceholder")}
+                  type="email"
+                  autoComplete="email"
                   {...register("email")}
                   size="2"
                   data-testid="emailInput"
@@ -108,7 +120,12 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.email && (
-                  <Text data-testid="emailHint" color="crimson" size="1">
+                  <Text
+                    id="signup-email-error"
+                    data-testid="emailHint"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.email.message}
                   </Text>
                 )}
@@ -118,8 +135,11 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 <TextField.Root
                   {...register("password")}
                   aria-label={t("passwordPlaceholder")}
+                  aria-invalid={!!errors.password}
+                  aria-describedby="signup-password-error"
                   placeholder={t("passwordPlaceholder")}
                   type="password"
+                  autoComplete="new-password"
                   data-testid="passwordInput"
                 >
                   <TextField.Slot>
@@ -127,7 +147,12 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.password && (
-                  <Text data-testid="passwordHint" color="crimson" size="1">
+                  <Text
+                    id="signup-password-error"
+                    data-testid="passwordHint"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.password.message}
                   </Text>
                 )}
@@ -137,8 +162,11 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 <TextField.Root
                   {...register("confirmPassword")}
                   aria-label={t("confirmPasswordPlaceholder")}
+                  aria-invalid={!!errors.confirmPassword}
+                  aria-describedby="signup-confirmPassword-error"
                   placeholder={t("confirmPasswordPlaceholder")}
                   type="password"
+                  autoComplete="new-password"
                   size="2"
                   data-testid="confirmPasswordInput"
                 >
@@ -148,6 +176,7 @@ const SignupCard = ({ switchToSignin }: { switchToSignin: () => void }) => {
                 </TextField.Root>
                 {errors.confirmPassword && (
                   <Text
+                    id="signup-confirmPassword-error"
                     data-testid="confirmPasswordHint"
                     color="crimson"
                     size="1"

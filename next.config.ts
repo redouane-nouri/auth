@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { getNodeEnvFromEnv } from "./utils/functions";
+import { NodeEnv } from "./utils/enums";
 
 const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
 
@@ -10,7 +12,7 @@ const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
 
   'unsafe-eval' is dev-only, for React's dev-mode error-stack reconstruction; not needed in production.
 */
-const isDev = process.env.NODE_ENV === "development";
+const isDev = getNodeEnvFromEnv() === NodeEnv.DEVELOPMENT;
 
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",

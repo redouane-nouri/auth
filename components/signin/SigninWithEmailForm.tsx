@@ -56,30 +56,39 @@ export default function SiginnWithEmailForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitForm)}>
+    <form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
       <Flex direction="column" gapY="4">
         <Box>
           <Text>{t("emailTitle")}</Text>
           <TextField.Root
             aria-label={t("emailPlaceholder")}
+            aria-invalid={!!errors.email}
+            aria-describedby="magicLink-email-error"
             placeholder={t("emailPlaceholder")}
+            type="email"
+            autoComplete="email"
             size="2"
             {...register("email")}
-            data-testid="emailInput"
+            data-testid="magicLinkEmailInput"
           >
             <TextField.Slot>
               <EnvelopeClosedIcon />
             </TextField.Slot>
           </TextField.Root>
           {errors.email && (
-            <Text data-testid="emailHint" color="crimson" size="1">
+            <Text
+              id="magicLink-email-error"
+              data-testid="magicLinkEmailHint"
+              color="crimson"
+              size="1"
+            >
               {errors.email.message}
             </Text>
           )}
         </Box>
         {mutation.isError && (
           <Badge
-            data-testid="errorBadge"
+            data-testid="magicLinkErrorBadge"
             color="crimson"
             className="!p-3 block whitespace-normal break-words"
           >
@@ -88,7 +97,7 @@ export default function SiginnWithEmailForm() {
         )}
         {mutation.isSuccess && (
           <Badge
-            data-testid="successBadge"
+            data-testid="magicLinkSuccessBadge"
             color="grass"
             className="!p-3 block whitespace-normal break-words"
           >
@@ -97,7 +106,7 @@ export default function SiginnWithEmailForm() {
         )}
         <Button
           type="submit"
-          data-testid="submitButton"
+          data-testid="magicLinkSubmitButton"
           variant="ghost"
           className="mx-[1px]"
           loading={mutation.isPending}

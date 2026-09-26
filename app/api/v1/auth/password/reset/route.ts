@@ -4,7 +4,11 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
-import { getClientIp, getResetPasswordSchema } from "@/utils/functions";
+import {
+  getBcryptHashRoundsFromEnv,
+  getClientIp,
+  getResetPasswordSchema,
+} from "@/utils/functions";
 import {
   isRateLimited,
   resetPasswordIpRateLimiter,
@@ -82,7 +86,7 @@ export async function POST(request: NextRequest) {
     */
     const hashedPassword = await bcrypt.hash(
       result.data.password,
-      Number(process.env.BCRYPT_HASH_ROUNDS),
+      getBcryptHashRoundsFromEnv(),
     );
     /*
       Update the password, delete the token, and revoke every existing session as one transaction.
@@ -127,10 +131,8 @@ export async function POST(request: NextRequest) {
       Return success message
     */
     return NextResponse.json({ message: t("success") });
-  } catch {
-    /*
-      Return generic 500 error message
-    */
+  } catch (error) {
+    console.error("POST /api/v1/auth/password/reset failed", error);
     return NextResponse.json(
       { error: t("error") },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },

@@ -51,11 +51,8 @@
     "loginHeading": "登录",
     "emailTitle": "邮箱",
     "emailPlaceholder": "请输入您的邮箱",
-    "emailRequiredHint": "邮箱必填项",
     "passwordTitle": "密码",
     "passwordPlaceholder": "输入您的密码",
-    "passwordRequiredHint": "密码为必填项",
-    "invalidCredentials": "用户名或密码无效",
     "logIn": "登录",
     "noAccount": "没有账户?",
     "signUpNow": "立即注册!",
@@ -88,7 +85,7 @@
     "emailExists": "邮箱已存在",
     "passwordString": "密码必须是字符串",
     "passwordMin": "密码长度至少为8个字符",
-    "passwordMax": "密码长度最多为30个字符",
+    "passwordMax": "密码长度最多为60个字符",
     "emailMax": "电子邮件最多可包含 60 个字符",
     "passwordRegexLowercase": "密码必须包含至少一个小写字母",
     "passwordRegexUppercase": "密码必须包含至少一个大写字母",
@@ -109,20 +106,18 @@
     "emailString": "邮箱必须是字符串",
     "emailInvalid": "请输入有效的邮箱地址",
     "passwordString": "密码必须是字符串",
-    "passwordMax": "密码长度最多为30个字符",
+    "passwordMax": "密码长度最多为60个字符",
     "passwordMin": "密码长度至少为8个字符",
     "validAttributes": "请求仅接受以下属性: 邮箱、密码和确认密码。",
     "emailMax": "电子邮件最多可包含 60 个字符",
-    "invalidCredentials": "用户名或密码不正确",
+    "invalidCredentials": "邮箱或密码不正确",
     "tooManyRequests": "请求过多，请稍后再试。",
     "success": "登录成功",
     "error": "发生错误，请稍后再试",
     "alreadySignedIn": "您已经登录了"
   },
   "header": {
-    "authentication": "身份验证器",
-    "connect": "连接",
-    "home": "首页",
+    "authentication": "AuthForge",
     "switchToLightMode": "切换到浅色模式",
     "switchToDarkMode": "切换到深色模式"
   },
@@ -131,7 +126,6 @@
     "signUp": "注册"
   },
   "home": {
-    "home": "首页",
     "hello": "你好，{name}！",
     "signOut": "退出登录",
     "successSignout": "注销成功",
@@ -141,7 +135,7 @@
     "pageNotFound": "页面未找到"
   },
   "metadata": {
-    "title": "身份验证器",
-    "description": "身份验证器平台"
+    "title": "AuthForge",
+    "description": "AuthForge 平台"
   }
 }

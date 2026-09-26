@@ -51,11 +51,8 @@
     "loginHeading": "Login",
     "emailTitle": "Email",
     "emailPlaceholder": "Enter your email",
-    "emailRequiredHint": "Email required",
     "passwordTitle": "Password",
     "passwordPlaceholder": "Enter your password",
-    "passwordRequiredHint": "Password required",
-    "invalidCredentials": "Invalid email or password",
     "logIn": "Log In",
     "sendLoginLink": "Send Login Link",
     "noAccount": "No account?",
@@ -120,9 +117,7 @@
     "alreadySignedIn": "You are already signed in"
   },
   "header": {
-    "authentication": "Authenticator",
-    "connect": "Connect",
-    "home": "Home",
+    "authentication": "AuthForge",
     "switchToLightMode": "Switch to light mode",
     "switchToDarkMode": "Switch to dark mode"
   },
@@ -131,7 +126,6 @@
     "signUp": "Sign up"
   },
   "home": {
-    "home": "Home",
     "hello": "Hello, {name}!",
     "signOut": "Sign Out",
     "successSignout": "Signed out successfully",
@@ -139,7 +133,7 @@
   },
   "404": { "pageNotFound": "Page not found" },
   "metadata": {
-    "title": "Authenticator",
-    "description": "Authenticator Platform"
+    "title": "AuthForge",
+    "description": "AuthForge Platform"
   }
 }

@@ -119,8 +119,11 @@ const ResetPasswordCard = () => {
                 <TextField.Root
                   {...register("password")}
                   aria-label={t("passwordPlaceholder")}
+                  aria-invalid={!!errors.password}
+                  aria-describedby="resetPassword-password-error"
                   placeholder={t("passwordPlaceholder")}
                   type="password"
+                  autoComplete="new-password"
                   data-testid="passwordInput"
                 >
                   <TextField.Slot>
@@ -128,7 +131,12 @@ const ResetPasswordCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.password && (
-                  <Text data-testid="passwordHint" color="crimson" size="1">
+                  <Text
+                    id="resetPassword-password-error"
+                    data-testid="passwordHint"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.password.message}
                   </Text>
                 )}
@@ -138,8 +146,11 @@ const ResetPasswordCard = () => {
                 <TextField.Root
                   {...register("confirmPassword")}
                   aria-label={t("confirmPasswordPlaceholder")}
+                  aria-invalid={!!errors.confirmPassword}
+                  aria-describedby="resetPassword-confirmPassword-error"
                   placeholder={t("confirmPasswordPlaceholder")}
                   type="password"
+                  autoComplete="new-password"
                   data-testid="confirmPasswordInput"
                 >
                   <TextField.Slot>
@@ -148,6 +159,7 @@ const ResetPasswordCard = () => {
                 </TextField.Root>
                 {errors.confirmPassword && (
                   <Text
+                    id="resetPassword-confirmPassword-error"
                     data-testid="confirmPasswordHint"
                     color="crimson"
                     size="1"

@@ -1,6 +1,16 @@
-import nodemailer from "nodemailer";
+import nodemailer, { Transporter } from "nodemailer";
+import {
+  getEmailServerAuthClientIdFromEnv,
+  getEmailServerAuthClientSecretFromEnv,
+  getEmailServerAuthRefreshTokenFromEnv,
+  getEmailServerAuthUserFromEnv,
+  getEmailServerHostFromEnv,
+  getEmailServerPortFromEnv,
+  getEmailServerSecureFromEnv,
+} from "@/utils/functions";
+import { AUTH_NODEMAILER_OAUTH2_TYPE } from "@/utils/constants";
 
-let transporter: nodemailer.Transporter | null = null;
+let transporter: Transporter | null = null;
 /*
   Returns a singleton nodemailer transporter for sending emails.
 */
@@ -13,15 +23,15 @@ export function getMailerTransporter() {
     Create a new nodemailer transporter using OAuth2 authentication
   */
   transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_SERVER_HOST,
-    port: Number(process.env.EMAIL_SERVER_PORT),
-    secure: process.env.EMAIL_SERVER_SECURE === "true",
+    host: getEmailServerHostFromEnv(),
+    port: getEmailServerPortFromEnv(),
+    secure: getEmailServerSecureFromEnv(),
     auth: {
-      type: "OAuth2",
-      user: process.env.EMAIL_SERVER_AUTH_USER,
-      clientId: process.env.EMAIL_SERVER_AUTH_CLIENT_ID,
-      clientSecret: process.env.EMAIL_SERVER_AUTH_CLIENT_SECRET,
-      refreshToken: process.env.EMAIL_SERVER_AUTH_REFRESH_TOKEN,
+      type: AUTH_NODEMAILER_OAUTH2_TYPE,
+      user: getEmailServerAuthUserFromEnv(),
+      clientId: getEmailServerAuthClientIdFromEnv(),
+      clientSecret: getEmailServerAuthClientSecretFromEnv(),
+      refreshToken: getEmailServerAuthRefreshTokenFromEnv(),
     },
   });
   /*

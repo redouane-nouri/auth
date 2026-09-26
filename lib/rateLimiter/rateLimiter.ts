@@ -28,7 +28,10 @@ export async function isRateLimited(
     await limiter.consume(key);
     return false;
   } catch (rejection) {
-    return rejection instanceof RateLimiterRes;
+    if (rejection instanceof RateLimiterRes) return true;
+
+    console.error("isRateLimited failed, failing open", rejection);
+    return false;
   }
 }
 /*

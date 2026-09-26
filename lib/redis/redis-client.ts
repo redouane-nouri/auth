@@ -1,4 +1,6 @@
 import { createClient } from "redis";
+import { getNodeEnvFromEnv, getRedisUrlFromEnv } from "@/utils/functions";
+import { NodeEnv } from "@/utils/enums";
 /*
   Logs a Redis client failure
 */
@@ -8,7 +10,7 @@ const logRedisError = (err: unknown) =>
  Redis client Singleton factory function.
 */
 const redisClientSingleton = () => {
-  const client = createClient({ url: process.env.REDIS_URL });
+  const client = createClient({ url: getRedisUrlFromEnv() });
   /*
    Connect right away without awaiting it, the client queues up commands issued before the connection.
   */
@@ -29,4 +31,5 @@ const redisClient = globalThis.redisGlobal ?? redisClientSingleton();
 
 export default redisClient;
 
-if (process.env.NODE_ENV !== "production") globalThis.redisGlobal = redisClient;
+if (getNodeEnvFromEnv() !== NodeEnv.PRODUCTION)
+  globalThis.redisGlobal = redisClient;

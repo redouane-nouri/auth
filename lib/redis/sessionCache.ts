@@ -49,7 +49,8 @@ export async function getCachedSessionAndUser(
           : null,
       },
     };
-  } catch {
+  } catch (error) {
+    console.error("getCachedSessionAndUser failed", error);
     return undefined;
   }
 }
@@ -71,10 +72,11 @@ export async function setCachedSessionAndUser(
         expiration: { type: "EX", value: SESSION_CACHE_TTL_SECONDS },
       },
     );
-  } catch {
+  } catch (error) {
     /*
-      Not fataj, just a wasted cache miss later.
+      Not fatal, just a wasted cache miss later
     */
+    console.error("setCachedSessionAndUser failed", error);
   }
 }
 /*
@@ -85,9 +87,10 @@ export async function invalidateCachedSession(
 ): Promise<void> {
   try {
     await redisClient.del(cacheKey(sessionToken));
-  } catch {
+  } catch (error) {
     /*
       Will still expire on its own via its TTL
     */
+    console.error("invalidateCachedSession failed", error);
   }
 }

@@ -3,7 +3,12 @@ import { StatusCodes } from "http-status-codes";
 import { after, NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma/prisma-client";
-import { getClientIp, getForgotPasswordSchema } from "@/utils/functions";
+import {
+  getClientIp,
+  getEmailFromFromEnv,
+  getForgotPasswordSchema,
+  getNextPublicUrlFromEnv,
+} from "@/utils/functions";
 import { render } from "@react-email/render";
 import React from "react";
 import ResetPasswordEmail from "@/components/auth/ResetPasswordEmailHtml";
@@ -71,10 +76,8 @@ export async function POST(request: NextRequest) {
       Return success message anyway to avoid leaking info
     */
     return NextResponse.json({ message: t("success") });
-  } catch {
-    /*
-      Return generic 500 error message
-    */
+  } catch (error) {
+    console.error("POST /api/v1/auth/password/forgot failed", error);
     return NextResponse.json(
       { error: t("error") },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },
@@ -127,13 +130,13 @@ async function issueResetTokenAndSendEmail(email: string) {
     /*
       prepare the reset url
     */
-    const baseUrl = process.env.NEXT_PUBLIC_URL!;
+    const baseUrl = getNextPublicUrlFromEnv();
     const resetUrl = `${baseUrl}/reset-password?token=${rawToken}`;
     /*
       Send the password reset email, use React email component rendered to HTML, also include plain text fallback
     */
     await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: getEmailFromFromEnv(),
       to: email,
       subject: "Reset your password",
       html: await render(
@@ -141,9 +144,11 @@ async function issueResetTokenAndSendEmail(email: string) {
       ),
       text: `Reset your password: ${resetUrl}`,
     });
-  } catch {
+  } catch (error) {
     /*
-      The response was already sent by the time this runs, there is no one left to report the error to
+      The response was already sent by the time this runs, there is no one left to report the error
+      to over HTTP, so log it server-side instead of losing it silently.
     */
+    console.error("issueResetTokenAndSendEmail failed", error);
   }
 }

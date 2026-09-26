@@ -70,14 +70,18 @@ const ForgotPasswordCard = () => {
     <Box my="auto">
       <Container size="1">
         <Card>
-          <form onSubmit={handleSubmit(handleSubmitForm)}>
+          <form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
             <Flex direction="column" gapY="4">
               <Heading>{t("heading")}</Heading>
               <Box>
                 <Text>{t("emailTitle")}</Text>
                 <TextField.Root
                   aria-label={t("emailPlaceholder")}
+                  aria-invalid={!!errors.email}
+                  aria-describedby="forgotPassword-email-error"
                   placeholder={t("emailPlaceholder")}
+                  type="email"
+                  autoComplete="email"
                   {...register("email")}
                   size="2"
                   data-testid="emailInput"
@@ -87,7 +91,12 @@ const ForgotPasswordCard = () => {
                   </TextField.Slot>
                 </TextField.Root>
                 {errors.email && (
-                  <Text data-testid="emailHint" color="crimson" size="1">
+                  <Text
+                    id="forgotPassword-email-error"
+                    data-testid="emailHint"
+                    color="crimson"
+                    size="1"
+                  >
                     {errors.email.message}
                   </Text>
                 )}

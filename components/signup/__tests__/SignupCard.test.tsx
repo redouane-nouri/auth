@@ -71,7 +71,9 @@ describe("Signup Card", () => {
       /*
         Assert that name, email and password min message (required) is displayed with the correct language and place
       */
-      expect(screen.getByTestId("nameHint")).toHaveTextContent(t.nameRequired);
+      expect(await screen.findByTestId("nameHint")).toHaveTextContent(
+        t.nameRequired,
+      );
       expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
@@ -103,7 +105,9 @@ describe("Signup Card", () => {
       /*
         Assert that name, email and password max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("nameHint")).toHaveTextContent(t.nameMax);
+      expect(await screen.findByTestId("nameHint")).toHaveTextContent(
+        t.nameMax,
+      );
       expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailMax);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMax,
@@ -133,7 +137,7 @@ describe("Signup Card", () => {
       await userEvent.type(emailInput, "valid@mail.test");
       await userEvent.type(passwordInput, "lowercase");
       await userEvent.click(screen.getByTestId("submitButton"));
-      const passwordHintSpan = screen.getByTestId("passwordHint");
+      const passwordHintSpan = await screen.findByTestId("passwordHint");
       /*
         Assert that password regex message is displayed with the correct language and place.
       */
@@ -192,9 +196,9 @@ describe("Signup Card", () => {
       /*
         Assert password does not match is displayed
       */
-      expect(screen.getByTestId("confirmPasswordHint")).toHaveTextContent(
-        t.passwordsDontMatch,
-      );
+      expect(
+        await screen.findByTestId("confirmPasswordHint"),
+      ).toHaveTextContent(t.passwordsDontMatch);
     },
   );
 

@@ -1,20 +1,25 @@
-import { auth } from "@/lib/auth/auth";
+import { redirectIfAuthenticated } from "@/lib/auth/auth";
 import ResetPasswordCard from "@/components/resetPassword/ResetPasswordCard";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { Box, Flex, Spinner } from "@radix-ui/themes";
 
 export default async function ResetPasswordPage() {
-  /*
-    If the user is already authenticated then redirect him to home page, this is only for unauthenticated users
-    We can't use this check in the middleware because of the authjs db adapter edge compatibility issue
-  */
-  if (await auth()) redirect("/");
+  await redirectIfAuthenticated();
 
   return (
     /*
       `useSearchParams` inside `ResetPasswordCard` needs a Suspense boundary, otherwise Next.js bails out the whole page to client side rendering.
+      A fallback avoids a blank flash while it resolves.
     */
-    <Suspense>
+    <Suspense
+      fallback={
+        <Box my="auto">
+          <Flex justify="center">
+            <Spinner size="3" />
+          </Flex>
+        </Box>
+      }
+    >
       <ResetPasswordCard />
     </Suspense>
   );
