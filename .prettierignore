@@ -7,3 +7,4 @@ prisma/db
 prisma/migrations
 package-lock.json
 next-env.d.ts
+CHANGELOG.md
