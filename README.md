@@ -76,7 +76,7 @@ See the [Security](#security) section below for the full breakdown.
 ### UI/UX
 
 - **Dark / light theme**, persisted via cookie and resolved server-side.
-- Built on [Radix Themes](https://www.radix-ui.com/themes) for accessible, consistent components.
+- Built on [Radix UI](https://www.radix-ui.com/) for accessible, consistent components.
 - Every form field is fully validated with [Zod](https://zod.dev/) + React Hook Form.
 
 ### Developer Experience
@@ -116,7 +116,7 @@ See the [Security](#security) section below for the full breakdown.
     </td>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/radix-ui.svg" width="64" height="64" alt="Radix UI" /><br />
-      <sub><b>Radix Themes</b></sub>
+      <sub><b>Radix UI</b></sub>
     </td>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/authjs.svg" width="64" height="64" alt="Auth.js" /><br />
@@ -146,7 +146,7 @@ See the [Security](#security) section below for the full breakdown.
     </td>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/testing-library.svg" width="64" height="64" alt="React Testing Library" /><br />
-      <sub><b>Testing Library</b></sub>
+      <sub><b>Testing Lib</b></sub>
     </td>
   </tr>
 </table>
@@ -236,10 +236,9 @@ Also in the mix: **Zod**, **React Hook Form**, **TanStack Query**, **Axios**,
 ## 🏗️ Architecture
 
 ```mermaid
-%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "primaryColor": "#ffffff", "primaryBorderColor": "#94a3b8", "primaryTextColor": "#0f172a", "lineColor": "#64748b"}}}%%
 flowchart TD
 subgraph Client["Client"]
-UI["<b>App Router UI</b><br />Radix Themes, i18n, React Hook Form + Zod"]
+UI["<b>App Router UI</b><br />Radix UI, i18n, React Hook Form + Zod"]
 end
 
 subgraph Server["Server"]

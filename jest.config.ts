@@ -14,6 +14,7 @@ const config: Config = {
   testEnvironment: "jsdom",
   // More setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  silent: true,
 };
 
 export default createJestConfig(config);
