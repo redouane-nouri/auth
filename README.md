@@ -1,10 +1,8 @@
 <div align="center">
-  <img src="./assets/logos/AuthForge.svg" alt="AuthForge" height="120" />
-
-  <h1>AuthForge</h1>
+  <h1><img src="./assets/logos/AuthForge.svg" alt="AuthForge" height="120" /></h1>
 
   <p>
-    <strong>A hardened authentication starter for Next.js.</strong><br />
+    <strong>A hardened authentication starter for Next.js</strong><br />
     Credentials, magic links, and OAuth2/OIDC with rate limiting, session caching, i18n,
     and security hardening.
   </p>
@@ -100,55 +98,55 @@ See the [Security](#security) section below for the full breakdown.
 
 <table align="center">
   <tr>
-    <td align="center" width="110">
-      <img src="./assets/logos/nextjs.svg" width="48" height="48" alt="Next.js" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/nextjs.svg" width="64" height="64" alt="Next.js" /><br />
       <sub><b>Next.js 16</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/react.svg" width="48" height="48" alt="React" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/react.svg" width="64" height="64" alt="React" /><br />
       <sub><b>React 18</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/typescript.svg" width="48" height="48" alt="TypeScript" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/typescript.svg" width="64" height="64" alt="TypeScript" /><br />
       <sub><b>TypeScript</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/tailwind.svg" width="48" height="48" alt="Tailwind CSS" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/tailwind.svg" width="64" height="64" alt="Tailwind CSS" /><br />
       <sub><b>Tailwind CSS</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/radix-ui.svg" width="48" height="48" alt="Radix UI" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/radix-ui.svg" width="64" height="64" alt="Radix UI" /><br />
       <sub><b>Radix Themes</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/authjs.svg" width="48" height="48" alt="Auth.js" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/authjs.svg" width="64" height="64" alt="Auth.js" /><br />
       <sub><b>Auth.js</b></sub>
     </td>
   </tr>
   <tr>
-    <td align="center" width="110">
-      <img src="./assets/logos/prisma.svg" width="48" height="48" alt="Prisma" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/prisma.svg" width="64" height="64" alt="Prisma" /><br />
       <sub><b>Prisma</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/sqlite.svg" width="48" height="48" alt="SQLite" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/sqlite.svg" width="64" height="64" alt="SQLite" /><br />
       <sub><b>SQLite</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/redis.svg" width="48" height="48" alt="Redis" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/redis.svg" width="64" height="64" alt="Redis" /><br />
       <sub><b>Redis</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/docker.svg" width="48" height="48" alt="Docker" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/docker.svg" width="64" height="64" alt="Docker" /><br />
       <sub><b>Docker</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/jest.svg" width="48" height="48" alt="Jest" /><br />
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/jest.svg" width="64" height="64" alt="Jest" /><br />
       <sub><b>Jest</b></sub>
     </td>
-    <td align="center" width="110">
-      <img src="./assets/logos/testing-library.svg" width="48" height="48" alt="React Testing Library" /><br />
-      <sub><b>React Testing Library</b></sub>
+    <td align="center" valign="bottom" width="110">
+      <img src="./assets/logos/testing-library.svg" width="64" height="64" alt="React Testing Library" /><br />
+      <sub><b>Testing Library</b></sub>
     </td>
   </tr>
 </table>
@@ -238,6 +236,7 @@ Also in the mix: **Zod** (schema validation), **React Hook Form**, **TanStack Qu
 ## 🏗️ Architecture
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "primaryColor": "#ffffff", "primaryBorderColor": "#94a3b8", "primaryTextColor": "#0f172a", "lineColor": "#64748b"}}}%%
 flowchart TD
 subgraph Client["Client"]
 UI["<b>App Router UI</b><br />Radix Themes, i18n, React Hook Form + Zod"]
