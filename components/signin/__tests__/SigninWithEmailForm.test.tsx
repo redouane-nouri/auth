@@ -64,7 +64,7 @@ describe("Signin With Email Form", () => {
       /*
         Assert that the email invalid hint is displayed with the correct language and place
       */
-      expect(screen.getByTestId("magicLinkEmailHint")).toHaveTextContent(
+      expect(await screen.findByTestId("magicLinkEmailHint")).toHaveTextContent(
         t.emailInvalid,
       );
     },
@@ -94,7 +94,7 @@ describe("Signin With Email Form", () => {
       /*
         Assert that the email max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("magicLinkEmailHint")).toHaveTextContent(
+      expect(await screen.findByTestId("magicLinkEmailHint")).toHaveTextContent(
         t.emailMax,
       );
     },

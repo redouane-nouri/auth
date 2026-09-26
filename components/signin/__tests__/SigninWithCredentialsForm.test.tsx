@@ -66,9 +66,9 @@ describe("Signin With Credentials Form", () => {
       /*
         Assert that email and password min message (required) is displayed
       */
-      expect(screen.getByTestId("credentialsEmailHint")).toHaveTextContent(
-        t.emailInvalid,
-      );
+      expect(
+        await screen.findByTestId("credentialsEmailHint"),
+      ).toHaveTextContent(t.emailInvalid);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMin,
       );
@@ -100,9 +100,9 @@ describe("Signin With Credentials Form", () => {
       /*
         Assert that email and password max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("credentialsEmailHint")).toHaveTextContent(
-        t.emailMax,
-      );
+      expect(
+        await screen.findByTestId("credentialsEmailHint"),
+      ).toHaveTextContent(t.emailMax);
       expect(screen.getByTestId("passwordHint")).toHaveTextContent(
         t.passwordMax,
       );

@@ -63,7 +63,9 @@ describe("Forgot Password Card", () => {
       /*
         Assert that the email invalid hint is displayed with the correct language and place
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailInvalid);
+      expect(await screen.findByTestId("emailHint")).toHaveTextContent(
+        t.emailInvalid,
+      );
     },
   );
   /*
@@ -88,7 +90,9 @@ describe("Forgot Password Card", () => {
       /*
         Assert that the email max length message is displayed with the correct language and place.
       */
-      expect(screen.getByTestId("emailHint")).toHaveTextContent(t.emailMax);
+      expect(await screen.findByTestId("emailHint")).toHaveTextContent(
+        t.emailMax,
+      );
     },
   );
   /*

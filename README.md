@@ -1,5 +1,5 @@
 <div align="center">
-  <h1><img src="./assets/logos/AuthForge.svg" alt="AuthForge" height="120" /></h1>
+  <h1><img src="./assets/logos/AuthForge.svg" alt="AuthForge" width="330" /></h1>
 
   <p>
     <strong>A hardened authentication starter for Next.js</strong><br />
@@ -13,7 +13,7 @@
 > **AuthForge** started as a way to understand authentication and what a login system has to survive: timing attacks,
 > account enumeration, brute-force attempts, race conditions, and silent misconfiguration. What began as a small Next.js +
 > Auth.js experiment grew, session by session, into a reference implementation with a full test suite, CI/CD, and security
-> measures. This README documents what’s actually in the box.
+> measures.
 
 <br />
 
@@ -60,14 +60,14 @@
 - **DB-backed sessions for every provider, including credentials**: A custom JWT `encode` override
   gives credentials sign-ins a real, revocable, database session instead of a self-contained JWT.
 
-### Security
+### Security Overview
 
 Timing-safe checks, rate limiting, timing side-channel mitigation, atomic writes, and fail-fast environment
 validation are all first-class citizens here, not an afterthought.
 
 See the [Security](#security) section below for the full breakdown.
 
-### Internationalization
+### Internationalization Overview
 
 - **5 languages out of the box**: English, Arabic, Spanish, Russian, Chinese (including
   **RTL layout support** for Arabic).
@@ -100,11 +100,11 @@ See the [Security](#security) section below for the full breakdown.
   <tr>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/nextjs.svg" width="64" height="64" alt="Next.js" /><br />
-      <sub><b>Next.js 16</b></sub>
+      <sub><b>Next.js</b></sub>
     </td>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/react.svg" width="64" height="64" alt="React" /><br />
-      <sub><b>React 18</b></sub>
+      <sub><b>React</b></sub>
     </td>
     <td align="center" valign="bottom" width="110">
       <img src="./assets/logos/typescript.svg" width="64" height="64" alt="TypeScript" /><br />
@@ -151,7 +151,7 @@ See the [Security](#security) section below for the full breakdown.
   </tr>
 </table>
 
-Also in the mix: **Zod** (schema validation), **React Hook Form**, **TanStack Query**, **Axios**,
+Also in the mix: **Zod**, **React Hook Form**, **TanStack Query**, **Axios**,
 **Nodemailer** + **React Email**, **rate-limiter-flexible**, **ESLint** & **Prettier**,
 **Husky** + **lint-staged**, and **Testing Library**.
 
@@ -325,7 +325,7 @@ docker compose -f docker-compose.dev.yml up --build
 ```
 
 This builds the app, starts a Redis container alongside it, runs pending Prisma migrations
-automatically, and serves the app at **http://localhost:3000** (configurable via NEXT_PUBLIC_URL env var) with hot
+automatically, and serves the app at `http://localhost:3000` (configurable via NEXT_PUBLIC_URL env var) with hot
 reload.
 
 ### Manual Setup
@@ -507,7 +507,7 @@ issues get caught locally instead of after a push:
   before the push goes out.
 
 Both are installed automatically the first time you install dependencies (via the `prepare`
-script, which npm, Yarn, pnpm, and Bun all run).
+script).
 
 <a id="license"></a>
 
